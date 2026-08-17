@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>مَسار — من فكرة المشروع إلى تحقيق الأرباح | 99 ريال</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png">
 <meta name="description" content="مَسار منظومة عملية تساعدك تختار المشروع المناسب لك، تحسب أرقامه، تدرس جدواه، وتبدأ تنفيذه بخطوات واضحة نحو أول عميل وأول أرباح. 6 أدوات متكاملة بـ99 ريال فقط.">
 <meta property="og:title" content="مَسار — من فكرة المشروع إلى تحقيق الأرباح">
 <meta property="og:description" content="6 أدوات متكاملة تاخذك من فكرة المشروع إلى تحقيق الأرباح: اختيار، حساب، دراسة، تأسيس، وتنفيذ — بـ99 ريال فقط.">
@@ -150,7 +154,8 @@
     display:flex;align-items:center;justify-content:space-between;
     height:64px;
   }
-  .logo{font-family:var(--ff-display);font-weight:800;font-size:20px;color:var(--gold-500);display:flex;align-items:center;gap:8px;}
+  .logo{display:flex;align-items:center;gap:8px;}
+  .logo img{display:block;border-radius:50%;}
   .header-cta{
     font-family:var(--ff-display);font-weight:700;font-size:14px;
     background:var(--gold-500);color:var(--navy-900);
@@ -256,18 +261,18 @@
   }
   .sc-item{
     position:absolute;width:min(168px,42vw);aspect-ratio:3/4;
-    transition:transform .9s cubic-bezier(.22,1,.36,1), opacity .9s ease;
+    transition:transform .6s cubic-bezier(.22,1,.36,1), opacity .6s ease;
     will-change:transform,opacity;
   }
   .sc-item .sc-glow{
     position:absolute;inset:-16px;border-radius:18px;z-index:-1;
     background:radial-gradient(circle,rgba(201,162,39,0.38),transparent 72%);
-    opacity:0;transition:opacity .9s ease;
+    opacity:0;transition:opacity .6s ease;
   }
   .sc-item img{
     width:100%;height:100%;object-fit:contain;object-position:center;display:block;
     filter:drop-shadow(0 14px 22px rgba(0,0,0,0.4));
-    transition:filter .9s ease;
+    transition:filter .6s ease;
   }
   .sc-item[data-role="active"]{transform:translateX(0) translateY(0) scale(1);opacity:1;z-index:6;}
   .sc-item[data-role="active"] .sc-glow{opacity:1;}
@@ -351,7 +356,7 @@
   .offer-payment{margin-top:8px;}
 
   /* ============ IMAGINE / DESIRE ============ */
-  .imagine{background:linear-gradient(180deg,var(--navy-900),var(--navy-800));padding:84px 0;color:var(--cream);}
+  .imagine{background:linear-gradient(180deg,var(--navy-900),var(--navy-800));padding:58px 0;color:var(--cream);}
   .imagine-grid{display:grid;grid-template-columns:1fr;gap:12px;max-width:760px;margin:0 auto;}
   @media(min-width:700px){.imagine-grid{grid-template-columns:1fr 1fr;}}
   .imagine-item{
@@ -374,7 +379,7 @@
   .imagine .pain-line .accent{color:var(--gold-400);}
 
   /* ============ SOCIAL PROOF ============ */
-  .social-proof{background:var(--cream-2);padding:84px 0;}
+  .social-proof{background:var(--cream-2);padding:58px 0;}
   .rating-summary{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;flex-wrap:wrap;}
   .rating-summary .score-box{
     display:flex;align-items:baseline;gap:4px;
@@ -416,7 +421,7 @@
   .review-card .who .loc{font-size:12px;color:var(--slate-light);}
 
   /* ============ PROBLEM ============ */
-  .problem{background:var(--cream);padding:76px 0;}
+  .problem{background:var(--cream);padding:54px 0;}
   .q-grid{display:grid;grid-template-columns:1fr;gap:12px;}
   @media(min-width:640px){.q-grid{grid-template-columns:1fr 1fr;}}
   @media(min-width:960px){.q-grid{grid-template-columns:1fr 1fr 1fr;}}
@@ -441,7 +446,7 @@
   .big-idea{
     background:linear-gradient(180deg,var(--navy-800),var(--navy-900));
     color:var(--cream);
-    padding:80px 0;
+    padding:54px 0;
     text-align:center;
   }
   .big-idea .container{max-width:780px;}
@@ -450,7 +455,7 @@
   .big-idea p{margin-top:22px;font-size:18px;color:#c4cbdb;line-height:1.9;}
 
   /* ============ WHAT IS MASAR ============ */
-  .what-is{background:var(--white);padding:80px 0;}
+  .what-is{background:var(--white);padding:56px 0;}
   .what-grid{display:grid;grid-template-columns:1fr;gap:40px;align-items:center;}
   @media(min-width:900px){.what-grid{grid-template-columns:1fr 1fr;gap:60px;}}
   .what-is h2{font-size:clamp(26px,4.2vw,38px);color:var(--ink);}
@@ -476,8 +481,11 @@
     backface-visibility:hidden;
     direction:ltr; /* anchor the track's own left edge at 0, independent of page RTL */
   }
-  .what-visual:hover .marquee-track,
-  .what-visual:focus-within .marquee-track{animation-play-state:paused;}
+  /* Only pause on real pointer hover — prevents touch devices getting stuck paused after a tap */
+  @media (hover: hover) and (pointer: fine){
+    .what-visual:hover .marquee-track,
+    .what-visual:focus-within .marquee-track{animation-play-state:paused;}
+  }
   .marquee-track .mq-item{
     flex-shrink:0;width:140px;aspect-ratio:3/4;
     display:flex;align-items:center;justify-content:center;
@@ -495,7 +503,7 @@
   }
 
   /* ============ 6 PART SYSTEM ============ */
-  .system{background:var(--cream-2);padding:84px 0;}
+  .system{background:var(--cream-2);padding:58px 0;}
   .system-grid{display:grid;grid-template-columns:1fr;gap:20px;}
   @media(min-width:640px){.system-grid{grid-template-columns:1fr 1fr;}}
   @media(min-width:1000px){.system-grid{grid-template-columns:1fr 1fr 1fr;}}
@@ -528,7 +536,7 @@
   /* ============ JOURNEY (signature) ============ */
   .journey{
     background:linear-gradient(180deg,var(--navy-900),var(--navy-800) 60%,var(--navy-900));
-    padding:90px 0 70px;
+    padding:62px 0 50px;
     color:var(--cream);
   }
   .path-wrap{position:relative;margin-top:56px;}
@@ -571,7 +579,7 @@
   .step-card p{font-size:14px;color:#b7bfd1;line-height:1.7;}
 
   /* ============ BENEFITS ============ */
-  .benefits{background:var(--white);padding:84px 0;}
+  .benefits{background:var(--white);padding:58px 0;}
   .benefits-grid{display:grid;grid-template-columns:1fr;gap:16px;}
   @media(min-width:640px){.benefits-grid{grid-template-columns:1fr 1fr;}}
   @media(min-width:960px){.benefits-grid{grid-template-columns:1fr 1fr 1fr;}}
@@ -587,7 +595,7 @@
   .benefit-item p{font-size:15.5px;color:var(--ink-soft);line-height:1.7;padding-top:6px;}
 
   /* ============ FIT (هل مَسار مناسب لك؟) ============ */
-  .fit{background:var(--cream-2);padding:84px 0;}
+  .fit{background:var(--cream-2);padding:58px 0;}
   .fit-card{border-radius:var(--radius-lg);padding:32px 28px;}
   .fit-yes{background:var(--white);border:1px solid var(--line);box-shadow:var(--shadow-card);}
   .fit-card h3{font-family:var(--ff-display);font-size:20px;margin-bottom:20px;}
@@ -599,7 +607,7 @@
   .fit-yes .mark{color:var(--green);}
 
   /* ============ PACKAGE VALUE ============ */
-  .value-stack{background:var(--navy-900);padding:80px 0;color:var(--cream);}
+  .value-stack{background:var(--navy-900);padding:56px 0;color:var(--cream);}
   .value-list{max-width:640px;margin:0 auto 32px;display:flex;flex-direction:column;gap:2px;}
   .value-row{
     display:flex;align-items:center;gap:14px;
@@ -632,7 +640,7 @@
     background:
       radial-gradient(ellipse 800px 500px at 50% 0%, rgba(201,162,39,0.14), transparent 60%),
       linear-gradient(180deg,var(--navy-900),var(--navy-800));
-    padding:90px 0;color:var(--cream);
+    padding:60px 0;color:var(--cream);
   }
   .offer-card{
     max-width:640px;margin:0 auto;
@@ -689,7 +697,7 @@
 
   /* ============ FAQ ============ */
   /* ============ AFTER PURCHASE STEPS ============ */
-  .after-purchase{background:var(--cream-2);padding:80px 0;}
+  .after-purchase{background:var(--cream-2);padding:56px 0;}
   .ap-grid{display:grid;grid-template-columns:1fr;gap:16px;max-width:900px;margin:0 auto;}
   @media(min-width:640px){.ap-grid{grid-template-columns:1fr 1fr;}}
   .ap-card{
@@ -709,7 +717,7 @@
     margin-top:6px;font-family:var(--ff-display);font-weight:700;font-size:13px;color:var(--gold-500);
   }
 
-  .faq{background:var(--white);padding:84px 0;}
+  .faq{background:var(--white);padding:58px 0;}
   .faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}
   .faq-item{border:1px solid var(--line);border-radius:var(--radius-md);overflow:hidden;background:var(--cream);}
   .faq-q{
@@ -731,7 +739,7 @@
   /* ============ FINAL CTA ============ */
   .final-cta{
     background:linear-gradient(160deg,var(--navy-800),var(--navy-900));
-    padding:90px 0 100px;text-align:center;color:var(--cream);
+    padding:62px 0 74px;text-align:center;color:var(--cream);
     position:relative;overflow:hidden;
   }
   .final-cta::before{
@@ -754,7 +762,8 @@
     transform:translateY(100%);transition:transform .3s ease;
   }
   .sticky-cta.show{transform:translateY(0);}
-  .sticky-cta .price{font-family:var(--ff-display);color:var(--gold-400);font-weight:800;font-size:16px;}
+  .sticky-cta .price{font-family:var(--ff-display);color:var(--gold-400);font-weight:800;font-size:16px;display:flex;flex-direction:column;line-height:1.35;}
+  .sticky-cta .price .discount{font-size:11px;font-weight:700;color:#7fd8ac;}
   .sticky-cta .btn-gold{padding:12px 22px;font-size:14.5px;}
   @media(min-width:860px){.sticky-cta{display:none;}}
 
@@ -795,20 +804,10 @@
 
 <div class="promo-bar" id="promoBar">
   <span class="promo-msg">عرض اليوم فقط — احصل على مجموعة <strong>مَسار</strong> بـ99 ريال <span class="old">بدل 284 ريال</span></span>
-  <div class="countdown-banner" id="countdownPromo">
-    <span class="cd-label">عرض اليوم ينتهي خلال</span>
-    <span class="cd-clock">
-      <span class="cd-unit"><span class="cd-val cd-h">00</span><span class="cd-sub">س</span></span>
-      <span class="sep">:</span>
-      <span class="cd-unit"><span class="cd-val cd-m">59</span><span class="cd-sub">د</span></span>
-      <span class="sep">:</span>
-      <span class="cd-unit"><span class="cd-val cd-s">00</span><span class="cd-sub">ث</span></span>
-    </span>
-  </div>
 </div>
 <header class="site-header">
   <div class="container">
-    <div class="logo">مَسار</div>
+    <a href="/" class="logo"><img src="/images/logo.webp" alt="مَسار" width="44" height="44"></a>
     <a href="#offer" class="header-cta">ابدأ مَسارك</a>
   </div>
 </header>
@@ -1449,7 +1448,7 @@
 
 <footer class="site-footer">
   <div class="container">
-    <div class="logo">مَسار</div>
+    <div class="logo"><img src="/images/logo.webp" alt="مَسار" width="56" height="56" loading="lazy"></div>
     <div class="flinks">
       <a href="/privacy.html">سياسة الخصوصية</a>
       <a href="/terms.html">الشروط والأحكام</a>
@@ -1461,7 +1460,7 @@
 </footer>
 
 <div class="sticky-cta" id="stickyCta">
-  <span class="price">99 ريال — مَسار</span>
+  <span class="price">99 ريال — مَسار<span class="discount">خصم 65%</span></span>
   <a href="#offer" class="btn btn-gold glow-cta">ابدأ الآن</a>
 </div>
 
@@ -1581,7 +1580,7 @@
     var total = items.length;
     var activeIndex = 0;
     var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var ADVANCE_MS = reducedMotion ? 3200 : 3800;
+    var ADVANCE_MS = reducedMotion ? 1600 : 1900;
     var LABEL_FADE = 200;
     var REVEAL_MS = 1100;
     var timer = null;
