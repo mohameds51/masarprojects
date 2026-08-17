@@ -1617,17 +1617,18 @@
       nameEl.textContent = s.name;
     }
 
-    function goTo(index){
+    function goTo(index, onDone){
       meta.classList.add('fading');
       setTimeout(function(){
         activeIndex = index;
         applyRoles();
         updateLabel();
         meta.classList.remove('fading');
+        if(onDone) onDone();
       }, LABEL_FADE);
     }
 
-    function reveal(){
+    function reveal(onDone){
       stage.classList.add('reveal');
       items.forEach(function(item, i){
         var pos = (i - (total - 1) / 2) * 34;
@@ -1644,23 +1645,30 @@
       setTimeout(function(){
         stage.classList.remove('reveal');
         items.forEach(function(item){ item.style.transform = ''; });
-        goTo(0);
+        goTo(0, onDone);
       }, REVEAL_MS);
     }
 
+    // Each step schedules the next one only once it's actually fully visible,
+    // so every item — including item 1 right after the reveal — gets the full
+    // ADVANCE_MS dwell time instead of losing time to the reveal's own transition.
     function advance(){
       if(activeIndex === total - 1){
-        reveal();
+        reveal(scheduleNext);
       } else {
-        goTo(activeIndex + 1);
+        goTo(activeIndex + 1, scheduleNext);
       }
+    }
+
+    function scheduleNext(){
+      timer = setTimeout(advance, ADVANCE_MS);
     }
 
     applyRoles();
     updateLabel();
 
     // Runs continuously — never pauses on hover, so the product story always keeps moving.
-    function start(){ if(!timer) timer = setInterval(advance, ADVANCE_MS); }
+    function start(){ if(!timer) scheduleNext(); }
     start();
   })();
 

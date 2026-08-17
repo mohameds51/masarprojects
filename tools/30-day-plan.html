@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>📅 خطة أول 30 يوم - من الفكرة إلى أول عميل</title>
+    
+    <!-- صائد الأخطاء المبكر -->
+    <script>
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            alert("حدث خطأ تقني يمنع التشغيل:\n" + msg + "\nالسطر: " + lineNo);
+            return false;
+        };
+    </script>
+
+    <style>
+        /* === الهوية البصرية (Premium, Modern, Clean) === */
+        :root {
+            --primary: #0F172A; /* كحلي داكن */
+            --primary-light: #1E293B;
+            --gold: #D4AF37; /* ذهبي راقي */
+            --gold-hover: #C5A028;
+            --bg-color: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* === الهيكل العام === */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        header h1 {
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        header p {
+            opacity: 0.9;
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* === واجهات الشاشات === */
+        .view-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+            flex: 1;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* === النماذج والحقول === */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: #FAFAFA;
+            color: var(--text-main);
+            -webkit-appearance: none;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--gold);
+            background-color: #FFF;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        select.form-control {
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: left 15px top 50%;
+            background-size: 12px auto;
+        }
+
+        /* === الأزرار === */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        
+        .btn-gold { background: var(--gold); color: var(--primary); }
+        .btn-gold:hover { background: var(--gold-hover); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        
+        .btn-outline { background: transparent; border: 2px solid var(--border-color); color: var(--text-main); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+        .btn-success { background: var(--success); color: white; }
+        .btn-success:hover { filter: brightness(1.1); }
+
+        .btn-danger-outline { background: transparent; border: 1px solid var(--danger); color: var(--danger); }
+        .btn-danger-outline:hover { background: var(--danger); color: white; }
+
+        .btn-block { width: 100%; margin-bottom: 10px; }
+
+        /* === شريط التقدم (Dashboard) === */
+        .dash-header {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            text-align: center;
+        }
+
+        .dash-stat {
+            border-left: 1px solid var(--border-color);
+        }
+        .dash-stat:last-child { border-left: none; }
+        .dash-stat span { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;}
+        .dash-stat strong { font-size: 1.2rem; color: var(--primary); }
+
+        .progress-container {
+            margin-top: 15px;
+        }
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+        .progress-bar-bg {
+            background-color: var(--border-color);
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--gold);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* === قائمة الأيام (Phases) === */
+        .phase-section {
+            margin-bottom: 25px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+        .phase-header {
+            background: #F8FAFC;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: bold;
+            color: var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .phase-days {
+            padding: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+        }
+        .day-btn {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 15px 10px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            color: var(--text-main);
+            position: relative;
+        }
+        .day-btn:hover { border-color: var(--gold); background: #FFFBEB; }
+        .day-btn.completed { background: #ECFDF5; border-color: #A7F3D0; color: #047857; }
+        .day-btn.completed::after {
+            content: "✓";
+            position: absolute;
+            top: 5px; left: 10px;
+            color: var(--success);
+            font-size: 1.1rem;
+        }
+
+        /* === تفاصيل اليوم (Day View) === */
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .day-title { font-size: 1.5rem; color: var(--primary); }
+        .day-meta { font-size: 0.9rem; color: var(--gold); font-weight: bold; background: var(--primary); padding: 4px 12px; border-radius: 20px;}
+        
+        .task-box {
+            background: #FFFBEB;
+            border-right: 4px solid var(--gold);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .task-box h4 { color: var(--primary); margin-bottom: 10px; font-size: 1.1rem;}
+        .task-box p { color: var(--text-main); font-size: 0.95rem; white-space: pre-wrap;}
+
+        .day-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .check-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 20px;
+        }
+        .check-container:hover { border-color: var(--gold); }
+        .check-container.is-done { background: #ECFDF5; border-color: #A7F3D0; }
+        .check-container input { width: 20px; height: 20px; accent-color: var(--success); pointer-events: none; }
+        .check-container label { font-weight: bold; color: var(--primary); cursor: pointer; margin: 0; flex:1;}
+
+        /* === شاشة التقييم النهائي === */
+        .eval-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .eval-metric {
+            background: var(--bg-color);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .eval-metric span { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;}
+        .eval-metric strong { font-size: 1.4rem; color: var(--primary); direction: ltr; display: block;}
+
+        .verdict-box {
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .verdict-green { background: #ECFDF5; border: 2px solid #10B981; color: #047857; }
+        .verdict-yellow { background: #FFFBEB; border: 2px solid #F59E0B; color: #B45309; }
+        .verdict-red { background: #FEF2F2; border: 2px solid #EF4444; color: #B91C1C; }
+        .verdict-box h3 { font-size: 1.5rem; margin-bottom: 10px; }
+        .verdict-box p { font-size: 1rem; }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* === موبايل === */
+        @media (max-width: 768px) {
+            .dash-header { grid-template-columns: 1fr; gap: 10px; }
+            .dash-stat { border-left: none; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;}
+            .dash-stat:last-child { border-bottom: none; padding-bottom: 0;}
+            .day-actions { flex-direction: column-reverse; }
+            .day-actions .btn { width: 100%; justify-content: center;}
+            .phase-days { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* === الطباعة === */
+        @media print {
+            body { background: white; color: black; }
+            .no-print { display: none !important; }
+            .container { max-width: 100%; padding: 0; }
+            header { background: white; color: black; box-shadow: none; border-bottom: 2px solid var(--primary); }
+            header h1 { color: var(--primary); }
+            .card { border: none; box-shadow: none; padding: 0; margin-bottom: 30px; page-break-inside: avoid;}
+            .task-box { background: white; border: 1px solid #ccc; border-right: 4px solid var(--primary); }
+            .view-section { display: block !important; opacity: 1; }
+            
+            /* إظهار محتوى التقرير المطبوع فقط */
+            #print-view { display: block !important; }
+            #view-setup, #view-dashboard, #view-day { display: none !important; }
+            
+            .print-day { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed #ccc; page-break-inside: avoid;}
+            .print-day h4 { color: var(--primary); margin-bottom: 5px; }
+            .print-day .status { font-weight: bold; font-size: 0.85rem; color: #555; }
+            .print-day .note { margin-top: 10px; font-style: italic; white-space: pre-wrap;}
+        }
+
+        #print-view { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="no-print">
+        <h1>📅 خطة أول 30 يوم</h1>
+        <p>من الفكرة إلى أول عميل - مسار تنفيذي لضمان انطلاقة صحيحة لمشروعك</p>
+    </header>
+
+    <!-- أزرار علوية للحفظ والطباعة -->
+    <div class="no-print" style="display: flex; gap: 10px; margin-bottom: 20px; justify-content: flex-end; flex-wrap: wrap;">
+        <button class="btn btn-outline" id="btn-resume-top" onclick="loadDataAndResume()" style="display:none; padding: 8px 15px; font-size: 0.9rem;">📂 استكمال خطتي</button>
+        <button class="btn btn-outline" onclick="window.print()" style="padding: 8px 15px; font-size: 0.9rem;">🖨️ طباعة / PDF</button>
+        <button class="btn btn-danger-outline" onclick="resetPlan()" style="padding: 8px 15px; font-size: 0.9rem;">🗑️ مسح الخطة</button>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 1. شاشة إعداد المشروع (Setup) -->
+    <!-- ============================================== -->
+    <div id="view-setup" class="view-section active no-print">
+        <div class="card">
+            <h2 class="card-title">إعداد خطة المشروع</h2>
+            <p style="margin-bottom: 20px; color: var(--text-muted);">أدخل بيانات مشروعك لنبدأ في بناء خريطة الطريق الخاصة بك للثلاثين يوماً القادمة.</p>
+
+            <div class="form-group">
+                <label>اسم المشروع</label>
+                <input type="text" id="p-name" class="form-control" placeholder="مثال: متجر عطور، خدمة صيانة...">
+            </div>
+            <div class="form-group">
+                <label>رأس المال المتاح (ريال)</label>
+                <input type="number" id="p-capital" class="form-control" placeholder="مثال: 5000">
+            </div>
+            <div class="form-group">
+                <label>الهدف الأساسي خلال 30 يوماً</label>
+                <select id="p-goal" class="form-control">
+                    <option value="الحصول على أول عميل">الحصول على أول عميل</option>
+                    <option value="اختبار فكرة المشروع بالسوق">اختبار فكرة المشروع بالسوق</option>
+                    <option value="تحقيق أول مبيعات">تحقيق أول مبيعات</option>
+                    <option value="تجهيز المشروع للانطلاق">تجهيز المشروع للانطلاق</option>
+                </select>
+            </div>
+            
+            <button class="btn btn-primary btn-block" onclick="startPlan(false)" style="margin-top: 10px; padding: 16px; font-size: 1.1rem;">ابدأ خطة الـ 30 يوم 🚀</button>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 2. لوحة المتابعة (Dashboard) -->
+    <!-- ============================================== -->
+    <div id="view-dashboard" class="view-section no-print">
+        <div class="dash-header">
+            <div class="dash-stat">
+                <span>المشروع</span>
+                <strong id="dash-name">-</strong>
+            </div>
+            <div class="dash-stat">
+                <span>رأس المال</span>
+                <strong id="dash-cap">0 ريال</strong>
+            </div>
+            <div class="dash-stat">
+                <span>الهدف</span>
+                <strong id="dash-goal">-</strong>
+            </div>
+        </div>
+
+        <div class="card" style="padding: 20px;">
+            <div class="progress-text">
+                <span>تقدم الخطة</span>
+                <span id="dash-prog-text">0 / 30 يوم (0%)</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="dash-prog-fill"></div>
+            </div>
+        </div>
+
+        <div id="phases-container">
+            <!-- سيتم توليد المراحل هنا بواسطة JS -->
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 3. شاشة تفاصيل اليوم (Day View) -->
+    <!-- ============================================== -->
+    <div id="view-day" class="view-section no-print">
+        <div class="card">
+            <div class="day-header">
+                <h2 class="day-title" id="day-title">اليوم 1: عنوان المهمة</h2>
+                <div class="day-meta" id="day-phase">المرحلة 1</div>
+            </div>
+
+            <div class="task-box">
+                <h4>🎯 الهدف:</h4>
+                <p id="day-goal">وصف الهدف هنا...</p>
+                <h4 style="margin-top: 15px;">📋 المطلوب إنجازه:</h4>
+                <p id="day-task">تفاصيل المهام هنا...</p>
+            </div>
+
+            <!-- للمهام العادية -->
+            <div id="standard-day-content">
+                <div class="check-container" id="day-check-container" onclick="toggleCurrentDay()">
+                    <input type="checkbox" id="day-checkbox">
+                    <label>أكملت مهمة هذا اليوم بنجاح</label>
+                </div>
+
+                <div class="form-group">
+                    <label>ملاحظاتي ونتائج اليوم:</label>
+                    <textarea id="day-notes" class="form-control" placeholder="اكتب ما أنجزته، الصعوبات، أو أي أفكار هنا..." oninput="saveCurrentDayNotes()"></textarea>
+                </div>
+            </div>
+
+            <!-- لليوم 30 فقط (التقييم النهائي) -->
+            <div id="eval-day-content" style="display: none;">
+                <h3 style="color: var(--primary); margin-bottom: 15px;">📊 أدخل أرقامك الفعلية للتقييم:</h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                    <div class="form-group">
+                        <label>إجمالي ما أنفقته (ريال):</label>
+                        <input type="number" id="eval-spent" class="form-control" placeholder="0" oninput="calcEval()">
+                    </div>
+                    <div class="form-group">
+                        <label>إجمالي الإيرادات (ريال):</label>
+                        <input type="number" id="eval-rev" class="form-control" placeholder="0" oninput="calcEval()">
+                    </div>
+                    <div class="form-group">
+                        <label>عدد من تواصلت معهم / وصلهم العرض:</label>
+                        <input type="number" id="eval-reach" class="form-control" placeholder="0" oninput="calcEval()">
+                    </div>
+                    <div class="form-group">
+                        <label>عدد الاستفسارات والمهتمين:</label>
+                        <input type="number" id="eval-inq" class="form-control" placeholder="0" oninput="calcEval()">
+                    </div>
+                    <div class="form-group">
+                        <label>عدد المبيعات / العملاء الفعليين:</label>
+                        <input type="number" id="eval-sales" class="form-control" placeholder="0" oninput="calcEval()">
+                    </div>
+                </div>
+
+                <div class="eval-grid">
+                    <div class="eval-metric">
+                        <span>الفرق (إيرادات - مصروفات)</span>
+                        <strong id="ev-profit">0</strong>
+                    </div>
+                    <div class="eval-metric">
+                        <span>معدل الاهتمام</span>
+                        <strong id="ev-interest">0%</strong>
+                    </div>
+                    <div class="eval-metric">
+                        <span>معدل التحويل (شراء)</span>
+                        <strong id="ev-conversion">0%</strong>
+                    </div>
+                </div>
+
+                <div id="eval-verdict" style="display: none;"></div>
+
+                <div class="check-container" id="day30-check-container" onclick="toggleCurrentDay()" style="margin-top: 20px;">
+                    <input type="checkbox" id="day30-checkbox">
+                    <label>أنهيت الخطة وسجلت التقييم النهائي</label>
+                </div>
+            </div>
+
+            <div class="day-actions">
+                <button class="btn btn-outline" onclick="showDashboard()">← العودة للخطة</button>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-outline" id="btn-prev-day" onclick="navigateDay(-1)">اليوم السابق</button>
+                    <button class="btn btn-primary" id="btn-next-day" onclick="navigateDay(1)">اليوم التالي</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- شاشة الطباعة (مخفية وتظهر فقط عند الطباعة) -->
+    <!-- ============================================== -->
+    <div id="print-view">
+        <h2 style="text-align: center; border-bottom: 2px solid black; padding-bottom: 10px; margin-bottom: 20px;">تقرير خطة أول 30 يوم</h2>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 30px; font-weight: bold;">
+            <div>المشروع: <span id="print-name"></span></div>
+            <div>رأس المال: <span id="print-cap"></span></div>
+            <div>الهدف: <span id="print-goal"></span></div>
+            <div>الإنجاز: <span id="print-prog"></span></div>
+        </div>
+
+        <div id="print-days-container"></div>
+        
+        <div id="print-eval-container" style="margin-top: 30px; border-top: 2px dashed black; padding-top: 20px; display: none;">
+            <h3>التقييم النهائي</h3>
+            <ul id="print-eval-stats" style="line-height: 2;"></ul>
+            <h4 style="margin-top: 15px;">القرار الإرشادي:</h4>
+            <p id="print-eval-verdict" style="font-weight: bold;"></p>
+        </div>
+    </div>
+
+</div>
+
+<div id="toast" class="toast">تمت العملية</div>
+
+<script>
+    // ==========================================
+    // 1. قاعدة بيانات الأيام (30 Days Content)
+    // ==========================================
+    var phases = [
+        { id: 1, name: "المرحلة 1: تثبيت الفكرة", start: 1, end: 3 },
+        { id: 2, name: "المرحلة 2: تجهيز المشروع", start: 4, end: 7 },
+        { id: 3, name: "المرحلة 3: فهم العميل والعرض", start: 8, end: 12 },
+        { id: 4, name: "المرحلة 4: اختبار السوق", start: 13, end: 17 },
+        { id: 5, name: "المرحلة 5: إطلاق التسويق", start: 18, end: 23 },
+        { id: 6, name: "المرحلة 6: أول عميل", start: 24, end: 27 },
+        { id: 7, name: "المرحلة 7: التقييم والتحسين", start: 28, end: 30 }
+    ];
+
+    var daysContent = [
+        { d: 1, title: "حدد مشروعك بوضوح", goal: "تحديد المشروع الذي ستبدأ به وعدم تشتيت نفسك بين عدة أفكار.", task: "1. اكتب فكرة المشروع في سطر واحد.\n2. حدد المشكلة الرئيسية التي يحلها مشروعك.\n3. تأكد أن رأس المال المتاح لديك منطقي للبدء بـ (الحد الأدنى) من هذا المشروع." },
+        { d: 2, title: "دراسة المنافسين المباشرين", goal: "معرفة من يخدم نفس العميل حالياً وكيف يمكنك التميز.", task: "1. ابحث عن 3 منافسين محليين يقدمون نفس الخدمة/المنتج.\n2. سجل أسعارهم وطريقة عرضهم.\n3. حدد نقطة ضعف لديهم يمكنك جعلها نقطة قوة لك (سرعة، جودة، تغليف، سعر)." },
+        { d: 3, title: "صياغة الميزة التنافسية", goal: "إيجاد سبب مقنع يجعل العميل يشتري منك أنت بالذات.", task: "1. اكتب جملة واحدة تشرح ميزتك التنافسية.\n2. تجنب عبارات مثل (جودة عالية) لأنها مستهلكة، استخدم عبارات محددة مثل (تسليم خلال 24 ساعة، تصميم مخصص، ضمان استرجاع)." },
+        
+        { d: 4, title: "حصر الحد الأدنى للتجهيز (MVP)", goal: "منع إنفاق كامل رأس المال على كماليات قبل التأكد من الطلب.", task: "1. اكتب قائمة بالأدوات/المواد (الضرورية جداً فقط) لتقديم أول خدمة/منتج.\n2. استبعد أي كماليات (ديكور غالي، كميات ضخمة، أجهزة مساعدة غير ضرورية الآن).\n3. حدد تكلفة هذا الحد الأدنى." },
+        { d: 5, title: "تجهيز قنوات التواصل", goal: "توفير مكان احترافي يستقبل فيه العميل وتتلقى طلباته.", task: "1. قم بتحميل وإعداد WhatsApp Business برقم مخصص (إن أمكن).\n2. ضع رسالة ترحيبية، أوقات العمل، والكتالوج المبدئي.\n3. أنشئ حساباً على منصة التواصل الأنسب لجمهورك (Instagram للمنتجات، LinkedIn لـ B2B، أو صفحة Google Maps للخدمات الميدانية)." },
+        { d: 6, title: "آلية الدفع والتسليم", goal: "توضيح كيف سيدفع العميل وكيف سيستلم طلبه.", task: "1. حدد طرق الدفع المقبولة (تحويل بنكي، كاش، رابط دفع إلكتروني).\n2. حدد آلية التوصيل أو التنفيذ الميداني بوضوح وتكلفتها الفعلية عليك.\n3. اكتب سياسة واضحة للتعامل مع الإلغاء أو الاسترجاع." },
+        { d: 7, title: "هوية بصرية بسيطة", goal: "إعطاء انطباع أولي احترافي دون تكاليف باهظة.", task: "1. صمم شعاراً (Logo) بسيطاً جداً ومجاناً (باستخدام Canva مثلاً).\n2. اختر لونين أساسيين لمشروعك والتزم بهما في صور العرض والواتساب.\n3. لا تضيع وقتاً طويلاً هنا، الوضوح أهم من التعقيد الفني." },
+
+        { d: 8, title: "تحديد الشريحة المستهدفة بدقة", goal: "التركيز على العميل الأكثر احتمالية للشراء.", task: "1. اكتب مواصفات عميلك المثالي (عمره، وظيفته، منطقة سكنه، مشكلته).\n2. تخلص من فكرة (أنا أبيع للجميع). التخصص يقلل تكلفة التسويق ويزيد الإقناع." },
+        { d: 9, title: "بناء العرض الذي يصعب رفضه", goal: "صياغة القيمة التي سيحصل عليها العميل مقابل ماله.", task: "1. اربط الخدمة/المنتج بنتيجة واضحة. (مثال: ليس تنظيف سجاد، بل إعادة السجاد وكأنه جديد بضمان الرضا).\n2. أضف (Bonus) مجاني بسيط غير مكلف لك لكنه قيم للعميل لجعل العرض أقوى." },
+        { d: 10, title: "التسعير الأولي", goal: "تحديد سعر يغطي التكلفة ويترك هامش ربح دون تدمير السوق.", task: "1. احسب التكلفة المتغيرة المباشرة لطلب واحد بدقة.\n2. ضع سعراً يضمن لك هامش ربح لا يقل عن 30-50% (حسب نوع المشروع).\n3. تأكد أن السعر منطقي مقارنة بأسعار المنافسين التي رصدتها في اليوم الثاني." },
+        { d: 11, title: "تجهيز نماذج الأعمال (Portfolio)", goal: "إثبات قدرتك على التنفيذ للعميل المتردد.", task: "1. إذا كنت تبيع منتجاً: صور 3 صور واضحة جداً بإضاءة طبيعية.\n2. إذا كانت خدمة: جهز نموذجاً لعمل سابق، أو قدم الخدمة مجاناً لشخص تعرفه مقابل تصوير النتيجة (قبل وبعد)." },
+        { d: 12, title: "صياغة الرسائل والردود الجاهزة", goal: "تسريع الرد والظهور بمظهر احترافي عند استقبال استفسار.", task: "1. اكتب رداً جاهزاً يشرح الخدمة/المنتج وسعره بوضوح ولطف.\n2. اكتب رداً للتعامل مع اعتراض (السعر غالي).\n3. احفظ هذه الردود في ميزة الرد السريع في WhatsApp Business." },
+
+        { d: 13, title: "اختبار السوق المبدئي (شبكة المعارف)", goal: "الحصول على ملاحظات سريعة ومجانية قبل الإطلاق الواسع.", task: "1. اعرض فكرتك ومنتجك على 5 أشخاص من معارفك يمثلون الشريحة المستهدفة.\n2. لا تسألهم (هل الفكرة حلوة؟)، بل قل: (هذا منتجي/خدمتي بهذا السعر، هل تشتريه الآن؟).\n3. سجل ردود فعلهم الحقيقية." },
+        { d: 14, title: "جمع الاعتراضات وتحليلها", goal: "فهم سبب التردد ومعالجته.", task: "1. إذا رفض الأشخاص الشراء، اسألهم عن السبب الحقيقي (السعر؟ عدم الحاجة؟ عدم الثقة؟).\n2. اكتب هذه الاعتراضات، لأنها نفسها التي ستواجهك مع العملاء الغرباء." },
+        { d: 15, title: "تحسين العرض بناءً على الردود", goal: "سد الثغرات في عرضك قبل التسويق المدفوع أو الواسع.", task: "1. إذا كان الاعتراض على السعر: أضف قيمة للعرض (Bonus) بدل خفض السعر مباشرة.\n2. إذا كان الاعتراض على الثقة: أضف ضماناً (ضمان ذهبي، الدفع بعد الاستلام)." },
+        { d: 16, title: "تحديد قناة التسويق الأساسية", goal: "تركيز الجهد في المكان الذي يتواجد فيه عميلك.", task: "1. اختر قناة واحدة للاختبار (مثلاً: B2B يحتاج تواصل مباشر ولينكدإن، المنتجات تحتاج انستغرام وتيك توك، الخدمات الميدانية تحتاج خرائط جوجل وتوزيع محلي).\n2. لا تشتت نفسك في كل القنوات." },
+        { d: 17, title: "تجهيز محتوى الاختبار (أو الإعلان)", goal: "امتلاك مادة جاهزة لجذب أعين العملاء.", task: "1. صمم صورة جذابة أو فيديو قصير (15 ثانية) يشرح المشكلة والحل الذي تقدمه.\n2. اكتب نصاً تسويقياً يركز على (النتيجة) وينتهي بـ (Call to Action) واضح للتواصل." },
+
+        { d: 18, title: "الإطلاق التسويقي الأول", goal: "نشر العرض ومراقبة التفاعل الأولي.", task: "1. انشر المحتوى في قنواتك المختارة.\n2. إذا كانت خطتك تشمل إعلاناً مدفوعاً، أطلق حملة صغيرة جداً (مثلاً بـ 50-100 ريال) لاختبار التفاعل، أو تواصل مباشرة مع 20 عميلاً محتملاً (إذا كان B2B)." },
+        { d: 19, title: "التفاعل والرد على الاستفسارات", goal: "تحويل المارة إلى مهتمين.", task: "1. تواجد للرد السريع على أي استفسار.\n2. استخدم الردود الجاهزة (اليوم 12) ولكن أضف لمسة شخصية لكل عميل.\n3. ركز على فهم حاجة العميل قبل ذكر السعر فوراً." },
+        { d: 20, title: "المتابعة (Follow-up)", goal: "إعادة استهداف من سأل ولم يشترِ.", task: "1. تواصل بلطف مع من سألوا أمس واختفوا.\n2. رسالة مثال: (أهلاً بك، هل لا زلت مهتماً بـ...؟ يسعدني الإجابة على أي استفسار لديك).\n3. المتابعة تجلب 50% من المبيعات المفقودة." },
+        { d: 21, title: "تقديم استشارة/تسعيرة (لخدمات B2B والمشاريع الكبيرة)", goal: "كسر حاجز الثقة الأول.", task: "1. إذا كان مشروعك خدمياً، اعرض تقديم فحص مجاني أو تسعيرة دقيقة في الموقع.\n2. الهدف هنا هو إثبات خبرتك وجديتك للعميل ليدفع لك لاحقاً." },
+        { d: 22, title: "معالجة اعتراضات السوق", goal: "التعديل السريع أثناء الحملة التسويقية.", task: "1. إذا كانت الاستفسارات كثيرة والمبيعات صفر: المشكلة في السعر أو بناء الثقة.\n2. إذا لم يكن هناك استفسارات أصلاً: المشكلة في الإعلان نفسه أو الاستهداف.\n3. عدّل إعلانك أو رسالتك بناءً على ذلك." },
+        { d: 23, title: "تعديل الاستهداف أو توسيعه", goal: "الوصول لشريحة أفضل.", task: "1. إذا نجحت طريقة التواصل في اليوم 18، ضاعف الجهد فيها.\n2. إذا فشلت، جرب زاوية مختلفة (مثلاً: ركز على الجودة بدل السعر، أو استهدف منطقة جغرافية مختلفة)." },
+
+        { d: 24, title: "إغلاق أول بيعة 🎯", goal: "تحقيق أول إيراد فعلي يثبت نجاح الفكرة.", task: "1. ركز اليوم على إغلاق بيعة واحدة فقط.\n2. قدم عرضاً لا يعوض لعميل متردد (خصم خاص، خدمة إضافية مجانية) فقط لتكسر حاجز البيعة الأولى.\n3. سجل أي مبلغ يدخل الصندوق." },
+        { d: 25, title: "التنفيذ الاستثنائي والتسليم", goal: "إبهار العميل الأول ليصبح مسوقاً لك.", task: "1. قدم المنتج/الخدمة بأعلى جودة ممكنة، حتى لو تطلب جهداً إضافياً أو أخذ من وقتك الكثير.\n2. العميل الأول هو أهم أصل إعلاني تمتلكه الآن." },
+        { d: 26, title: "طلب التقييم (Feedback)", goal: "الحصول على دليل اجتماعي (Social Proof).", task: "1. بعد التسليم، تواصل مع العميل وتأكد من رضاه التام.\n2. اطلب منه بلطف كتابة تقييم قصير لك على الواتساب أو خرائط جوجل.\n3. احتفظ بلقطة شاشة للتقييم لاستخدامها في التسويق لاحقاً." },
+        { d: 27, title: "توثيق التجربة (دراسة حالة)", goal: "صناعة محتوى تسويقي قوي جداً.", task: "1. اكتب كيف حللت مشكلة العميل الأول (قبل وبعد).\n2. استخدم هذه القصة كمنشور تسويقي لليوم التالي لجذب عملاء جدد يثقون في النتائج الموثقة." },
+
+        { d: 28, title: "حساب الأرقام الفعلية", goal: "معرفة هل المشروع يربح أم يحرق الأموال.", task: "1. احسب كل ما صرفته في الـ 28 يوماً الماضية (مواد، إعلانات، اشتراكات).\n2. احسب إجمالي ما أدخلته من مبيعات.\n3. احسب تكلفة الاستحواذ على العميل (المبلغ المصروف على التسويق ÷ عدد العملاء)." },
+        { d: 29, title: "تحليل ما نجح وما فشل", goal: "توجيه الجهد المستقبلي بذكاء.", task: "1. ما هي القناة التي جلبت الاستفسارات الأفضل؟\n2. ما هو أكثر اعتراض منع الناس من الشراء؟\n3. هل الخدمة/المنتج متعب جداً مقارنة بالسعر المدفوع؟" },
+        { d: 30, title: "قرار الاستمرار 🚀", goal: "التقييم الشامل واتخاذ قرار علمي.", task: "1. توجه إلى نموذج (أرقام التقييم النهائي) أسفل هذه الصفحة.\n2. أدخل أرقامك.\n3. اتخذ قرارك: هل تستمر وتضخ مالاً للنمو؟ هل تعدل الفكرة والسعر؟ أم تتوقف وتبحث عن مشروع أنسب؟" }
+    ];
+
+    // ==========================================
+    // 2. إدارة البيانات والحالة
+    // ==========================================
+    var initialDays = [];
+    for(var idx = 0; idx < 30; idx++) {
+        initialDays.push({ completed: false, notes: "" });
+    }
+
+    var appData = {
+        name: "",
+        capital: 0,
+        goal: "",
+        days: initialDays,
+        eval: { spent: 0, rev: 0, reach: 0, inq: 0, sales: 0 }
+    };
+
+    var currentDayIndex = 0; // 0 to 29
+
+    function saveData() {
+        try {
+            localStorage.setItem("30DayPlanData", JSON.stringify(appData));
+        } catch(e) {}
+    }
+
+    function checkSavedData() {
+        try {
+            var saved = localStorage.getItem("30DayPlanData");
+            if(saved) {
+                var btn = document.getElementById('btn-resume-top');
+                if(btn) btn.style.display = 'inline-flex';
+            }
+        } catch(e) {}
+    }
+
+    function loadDataAndResume() {
+        try {
+            var saved = localStorage.getItem("30DayPlanData");
+            if(saved) {
+                appData = JSON.parse(saved);
+                
+                if(!appData.days || appData.days.length < 30) {
+                    var newDays = [];
+                    for(var idx = 0; idx < 30; idx++) newDays.push({ completed: false, notes: "" });
+                    appData.days = newDays;
+                }
+                if(!appData.eval) {
+                    appData.eval = { spent: 0, rev: 0, reach: 0, inq: 0, sales: 0 };
+                }
+
+                var pName = document.getElementById('p-name');
+                if(pName) pName.value = appData.name || "";
+                
+                var pCap = document.getElementById('p-capital');
+                if(pCap) pCap.value = appData.capital || "";
+                
+                var pGoal = document.getElementById('p-goal');
+                if(pGoal) pGoal.value = appData.goal || "";
+
+                startPlan(true);
+                showToast("تم استرجاع خطتك 🚀");
+            }
+        } catch(e) {}
+    }
+
+    function resetPlan() {
+        if(confirm("هل أنت متأكد؟ سيتم حذف جميع تقدمك والملاحظات والبدء من الصفر.")) {
+            try {
+                localStorage.removeItem("30DayPlanData");
+            } catch(e) {}
+            location.reload();
+        }
+    }
+
+    // ==========================================
+    // 3. التنقل والواجهات
+    // ==========================================
+    function showView(viewId) {
+        var views = document.querySelectorAll('.view-section');
+        for (var i = 0; i < views.length; i++) {
+            views[i].classList.remove('active');
+        }
+        var target = document.getElementById(viewId);
+        if(target) target.classList.add('active');
+    }
+
+    function startPlan(isResume) {
+        if(isResume !== true) {
+            var nameEl = document.getElementById('p-name');
+            var capEl = document.getElementById('p-capital');
+            var goalEl = document.getElementById('p-goal');
+
+            var n = nameEl ? nameEl.value : "";
+            var c = capEl ? capEl.value : "0";
+            var g = goalEl ? goalEl.value : "";
+
+            // Check if name is empty
+            if(n === null || n === undefined || n.replace(/^\s+|\s+$/g, '') === "") {
+                showToast("يرجى إدخال اسم المشروع أولاً ⚠️");
+                return;
+            }
+
+            appData.name = n;
+            appData.capital = parseFloat(c) || 0;
+            appData.goal = g;
+            saveData();
+        }
+
+        renderDashboard();
+        showView('view-dashboard');
+    }
+
+    function showDashboard() {
+        renderDashboard();
+        showView('view-dashboard');
+        window.scrollTo(0, 0);
+    }
+
+    // ==========================================
+    // 4. بناء لوحة المتابعة (Dashboard)
+    // ==========================================
+    function renderDashboard() {
+        document.getElementById('dash-name').innerText = appData.name || "-";
+        var capStr = appData.capital ? parseFloat(appData.capital).toLocaleString() : "0";
+        document.getElementById('dash-cap').innerText = capStr + " ريال";
+        document.getElementById('dash-goal').innerText = appData.goal || "-";
+
+        var completedCount = 0;
+        for(var k=0; k<appData.days.length; k++) {
+            if(appData.days[k].completed) completedCount++;
+        }
+        var progressPct = Math.round((completedCount / 30) * 100);
+
+        document.getElementById('dash-prog-text').innerText = completedCount + " / 30 يوم (" + progressPct + "%)";
+        document.getElementById('dash-prog-fill').style.width = progressPct + "%";
+
+        var container = document.getElementById('phases-container');
+        if(!container) return;
+        container.innerHTML = "";
+
+        for(var p=0; p<phases.length; p++) {
+            var phase = phases[p];
+            var section = document.createElement('div');
+            section.className = "phase-section";
+            
+            var phaseComp = 0;
+            var phaseTotal = phase.end - phase.start + 1;
+            
+            for(var di = phase.start - 1; di < phase.end; di++) {
+                if(appData.days[di].completed) phaseComp++;
+            }
+            
+            var isPhaseDone = (phaseComp === phaseTotal);
+            var colorPhase = isPhaseDone ? "#10B981" : "#64748B";
+
+            var secHtml = '<div class="phase-header">' +
+                          '<span>' + phase.name + '</span>' +
+                          '<span style="font-size:0.85rem; color: ' + colorPhase + '">' + phaseComp + ' / ' + phaseTotal + '</span>' +
+                          '</div>' +
+                          '<div class="phase-days" id="phase-days-' + phase.id + '"></div>';
+            
+            section.innerHTML = secHtml;
+            container.appendChild(section);
+
+            var daysGrid = document.getElementById('phase-days-' + phase.id);
+            if(daysGrid) {
+                for(var j = phase.start; j <= phase.end; j++) {
+                    var dIndex = j - 1;
+                    var isComp = appData.days[dIndex].completed;
+                    var btn = document.createElement('div');
+                    btn.className = "day-btn" + (isComp ? " completed" : "");
+                    btn.innerText = "اليوم " + j;
+                    
+                    // Create closure to bind the correct index
+                    (function(idx) {
+                        btn.onclick = function() { openDay(idx); };
+                    })(dIndex);
+
+                    daysGrid.appendChild(btn);
+                }
+            }
+        }
+    }
+
+    // ==========================================
+    // 5. بناء وتفاعل صفحة اليوم (Day View)
+    // ==========================================
+    function openDay(index) {
+        currentDayIndex = index;
+        var dContent = daysContent[index];
+        var dData = appData.days[index];
+
+        var phaseName = "";
+        for(var i=0; i<phases.length; i++) {
+            if(dContent.d >= phases[i].start && dContent.d <= phases[i].end) {
+                phaseName = phases[i].name;
+                break;
+            }
+        }
+
+        document.getElementById('day-title').innerText = "اليوم " + dContent.d + ": " + dContent.title;
+        document.getElementById('day-phase').innerText = phaseName.split(':')[0];
+        document.getElementById('day-goal').innerText = dContent.goal;
+        document.getElementById('day-task').innerText = dContent.task;
+
+        document.getElementById('btn-prev-day').style.visibility = (index === 0) ? "hidden" : "visible";
+        document.getElementById('btn-next-day').style.visibility = (index === 29) ? "hidden" : "visible";
+
+        if(index === 29) {
+            document.getElementById('standard-day-content').style.display = "none";
+            document.getElementById('eval-day-content').style.display = "block";
+            
+            document.getElementById('eval-spent').value = appData.eval.spent || "";
+            document.getElementById('eval-rev').value = appData.eval.rev || "";
+            document.getElementById('eval-reach').value = appData.eval.reach || "";
+            document.getElementById('eval-inq').value = appData.eval.inq || "";
+            document.getElementById('eval-sales').value = appData.eval.sales || "";
+            
+            var cbContainer30 = document.getElementById('day30-check-container');
+            var cb30 = document.getElementById('day30-checkbox');
+            if(cb30) cb30.checked = dData.completed;
+            if(cbContainer30) cbContainer30.className = "check-container" + (dData.completed ? " is-done" : "");
+            
+            calcEval();
+        } else {
+            document.getElementById('standard-day-content').style.display = "block";
+            document.getElementById('eval-day-content').style.display = "none";
+
+            document.getElementById('day-notes').value = dData.notes || "";
+            
+            var cbContainer = document.getElementById('day-check-container');
+            var cb = document.getElementById('day-checkbox');
+            if(cb) cb.checked = dData.completed;
+            if(cbContainer) cbContainer.className = "check-container" + (dData.completed ? " is-done" : "");
+        }
+
+        showView('view-day');
+        window.scrollTo(0, 0);
+    }
+
+    function navigateDay(dir) {
+        var newIndex = currentDayIndex + dir;
+        if(newIndex >= 0 && newIndex <= 29) {
+            openDay(newIndex);
+        }
+    }
+
+    function toggleCurrentDay() {
+        var isComp = !appData.days[currentDayIndex].completed;
+        appData.days[currentDayIndex].completed = isComp;
+        
+        var cbId = currentDayIndex === 29 ? 'day30-checkbox' : 'day-checkbox';
+        var contId = currentDayIndex === 29 ? 'day30-check-container' : 'day-check-container';
+        
+        var cb = document.getElementById(cbId);
+        if(cb) cb.checked = isComp;
+        
+        var cont = document.getElementById(contId);
+        if(cont) cont.className = "check-container" + (isComp ? " is-done" : "");
+        
+        saveData();
+    }
+
+    function saveCurrentDayNotes() {
+        if(currentDayIndex !== 29) {
+            appData.days[currentDayIndex].notes = document.getElementById('day-notes').value || "";
+            saveData();
+        }
+    }
+
+    // ==========================================
+    // 6. التقييم النهائي (اليوم 30)
+    // ==========================================
+    function calcEval() {
+        var spent = Math.max(0, parseFloat(document.getElementById('eval-spent').value) || 0);
+        var rev = Math.max(0, parseFloat(document.getElementById('eval-rev').value) || 0);
+        var reach = Math.max(0, parseInt(document.getElementById('eval-reach').value) || 0);
+        var inq = Math.max(0, parseInt(document.getElementById('eval-inq').value) || 0);
+        var sales = Math.max(0, parseInt(document.getElementById('eval-sales').value) || 0);
+
+        appData.eval = { spent: spent, rev: rev, reach: reach, inq: inq, sales: sales };
+        saveData();
+
+        var profit = rev - spent;
+        var interestRate = reach > 0 ? (inq / reach) * 100 : 0;
+        var convRate = inq > 0 ? (sales / inq) * 100 : 0;
+
+        var profEl = document.getElementById('ev-profit');
+        if(profEl) {
+            profEl.innerText = profit.toLocaleString();
+            profEl.style.color = profit < 0 ? "#EF4444" : "#10B981"; 
+        }
+
+        var intEl = document.getElementById('ev-interest');
+        if(intEl) intEl.innerText = interestRate.toFixed(1) + "%";
+        
+        var convEl = document.getElementById('ev-conversion');
+        if(convEl) convEl.innerText = convRate.toFixed(1) + "%";
+
+        var vBox = document.getElementById('eval-verdict');
+        if(!vBox) return;
+        
+        vBox.style.display = "block";
+        
+        if (sales > 0 && profit >= 0) {
+            vBox.className = "verdict-box verdict-green";
+            vBox.innerHTML = "<h3>🟢 مؤشرات ممتازة (استمر وطوّر)</h3>" +
+                             "<p>لديك طلب حقيقي، مبيعات فعلية، ولا تخسر أموالاً. ركز الآن على تحسين ما نجح وتكراره، ولا تغير الفكرة. ابدأ بالتفكير في طرق لتقليل التكلفة وزيادة الوصول لنفس الشريحة.</p>";
+        } else if (sales > 0 && profit < 0) {
+            vBox.className = "verdict-box verdict-yellow";
+            vBox.innerHTML = "<h3>🟡 مبيعات جيدة لكن بتكلفة عالية (راجع التسعير أو التسويق)</h3>" +
+                             "<p>هناك من يشتري، وهذا دليل على جودة العرض! لكنك تصرف أكثر مما تكسب. راجع: هل سعر الخدمة منخفض جداً؟ أم أن تكلفة الإعلان/الوصول للعميل مرتفعة؟ عدّل أحدهما واختبر مرة أخرى.</p>";
+        } else if (inq > 0 && sales === 0) {
+            vBox.className = "verdict-box verdict-yellow";
+            vBox.innerHTML = "<h3>🟡 اهتمام بدون شراء (عدّل العرض واختبر)</h3>" +
+                             "<p>هناك اهتمام بالفكرة (" + inq + " استفسارات)، لكن العرض، السعر، أو بناء الثقة يحتاج إلى تحسين. تحدث مع من استفسروا واسألهم عن سبب عدم الشراء قبل إنفاق أي مبلغ إضافي للتسويق.</p>";
+        } else if (reach > 0 && inq === 0) {
+            vBox.className = "verdict-box verdict-red";
+            vBox.innerHTML = "<h3>🔴 أعد تقييم الفكرة أو الاستهداف (لا تتوسع الآن)</h3>" +
+                             "<p>وصلت لـ " + reach + " شخص ولم يهتم أحد. النتائج الحالية لا تثبت وجود طلب كافٍ. المشكلة إما أن الفكرة غير مطلوبة، أو أنك تعرضها على الشريحة الخطأ تماماً. أوقف الإنفاق فوراً وابحث عن حل لمشكلة حقيقية.</p>";
+        } else {
+            vBox.style.display = "none";
+        }
+    }
+
+    // ==========================================
+    // 7. إعداد صفحة الطباعة
+    // ==========================================
+    window.onbeforeprint = function() {
+        var pName = document.getElementById('print-name');
+        if(pName) pName.innerText = appData.name || "غير محدد";
+        
+        var pCap = document.getElementById('print-cap');
+        if(pCap) pCap.innerText = parseFloat(appData.capital || 0).toLocaleString() + " ريال";
+        
+        var pGoal = document.getElementById('print-goal');
+        if(pGoal) pGoal.innerText = appData.goal || "غير محدد";
+        
+        var compCount = 0;
+        for(var i=0; i<appData.days.length; i++){
+            if(appData.days[i].completed) compCount++;
+        }
+        var pProg = document.getElementById('print-prog');
+        if(pProg) pProg.innerText = compCount + " من 30 يوم";
+
+        var cont = document.getElementById('print-days-container');
+        if(cont) {
+            cont.innerHTML = "";
+            for(var j=0; j<30; j++) {
+                if(j===29) continue; 
+                var dData = appData.days[j];
+                var dContent = daysContent[j];
+                
+                var div = document.createElement('div');
+                div.className = "print-day";
+                var statusStr = dData.completed ? '<span style="color:green;">[مكتمل ✓]</span>' : '<span style="color:red;">[لم يكتمل ✗]</span>';
+                
+                var notesText = dData.notes ? dData.notes.replace(/^\s+|\s+$/g, '') : "";
+                var noteStr = notesText ? '<div class="note">ملاحظاتي: ' + notesText + '</div>' : "";
+                
+                div.innerHTML = "<h4>اليوم " + dContent.d + ": " + dContent.title + " " + statusStr + "</h4>" + noteStr;
+                cont.appendChild(div);
+            }
+        }
+
+        var evalCont = document.getElementById('print-eval-container');
+        if(evalCont) {
+            if(appData.days[29].completed || appData.eval.reach > 0) {
+                evalCont.style.display = "block";
+                var ev = appData.eval;
+                var prof = ev.rev - ev.spent;
+                var intR = ev.reach > 0 ? (ev.inq / ev.reach)*100 : 0;
+                var conR = ev.inq > 0 ? (ev.sales / ev.inq)*100 : 0;
+                
+                var profColor = prof < 0 ? 'red' : 'green';
+
+                var statsEl = document.getElementById('print-eval-stats');
+                if(statsEl) {
+                    statsEl.innerHTML = 
+                        "<li><strong>الوصول (أشخاص شاهدوا العرض):</strong> " + ev.reach + "</li>" +
+                        "<li><strong>الاستفسارات:</strong> " + ev.inq + " (معدل اهتمام: " + intR.toFixed(1) + "%)</li>" +
+                        "<li><strong>العملاء والمبيعات:</strong> " + ev.sales + " (معدل تحويل: " + conR.toFixed(1) + "%)</li>" +
+                        "<li><strong>المصروفات:</strong> " + parseFloat(ev.spent).toLocaleString() + " ريال</li>" +
+                        "<li><strong>الإيرادات:</strong> " + parseFloat(ev.rev).toLocaleString() + " ريال</li>" +
+                        "<li><strong>صافي النتيجة:</strong> <span style='color:" + profColor + ";'>" + parseFloat(prof).toLocaleString() + " ريال</span></li>";
+                }
+
+                var vBox = document.getElementById('eval-verdict');
+                var printVerdict = document.getElementById('print-eval-verdict');
+                if(vBox && vBox.style.display !== "none" && printVerdict) {
+                    printVerdict.innerHTML = vBox.innerText;
+                }
+            } else {
+                evalCont.style.display = "none";
+            }
+        }
+    };
+
+    function showToast(msg) {
+        var toast = document.getElementById("toast");
+        if(!toast) return;
+        toast.innerText = msg;
+        toast.classList.add("show");
+        setTimeout(function() { toast.classList.remove("show"); }, 3000);
+    }
+
+    // Initialize
+    window.onload = function() {
+        checkSavedData();
+    };
+
+</script>
+</body>
+</html>

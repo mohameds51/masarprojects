@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أهلاً بك في مَسار — منظومتك الكاملة</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Noto+Kufi+Arabic:wght@700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Noto+Kufi+Arabic:wght@700;800;900&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Noto+Kufi+Arabic:wght@700;800;900&display=swap"></noscript>
+<style>
+  :root{
+    --navy-900:#0a1220; --navy-800:#0f1c30; --navy-700:#152841;
+    --gold-500:#c9a227; --gold-400:#dab94a;
+    --cream:#f8f5ee; --cream-2:#f1ece0;
+    --ink:#16202e; --ink-soft:#3c4657; --slate:#69728a; --slate-light:#9aa2b5;
+    --line:rgba(22,32,46,0.08);
+    --white:#ffffff;
+    --ff-display:'Noto Kufi Arabic', sans-serif;
+    --ff-body:'Almarai', sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:var(--ff-body);background:var(--cream);color:var(--ink);line-height:1.8;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  .container{max-width:720px;margin:0 auto;padding:0 20px;}
+  h1,h2,h3{font-family:var(--ff-display);font-weight:800;margin:0;}
+
+  .top{
+    background:
+      radial-gradient(ellipse 700px 400px at 80% -10%, rgba(201,162,39,0.16), transparent 60%),
+      linear-gradient(180deg,var(--navy-900),var(--navy-800));
+    color:var(--cream);padding:40px 0 44px;text-align:center;
+  }
+  .logo{width:64px;height:64px;border-radius:50%;margin:0 auto 18px;display:block;}
+  .top .eyebrow{font-family:var(--ff-display);font-size:13px;font-weight:700;color:var(--gold-400);margin-bottom:10px;}
+  .top h1{font-size:clamp(24px,4.5vw,32px);color:var(--white);line-height:1.4;}
+  .top p{margin-top:12px;font-size:15px;color:#c4cbdb;max-width:480px;margin-inline:auto;}
+
+  .journey-strip{
+    background:var(--navy-800);padding:14px 0;overflow-x:auto;
+    border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .journey-strip .track{display:flex;gap:8px;justify-content:center;min-width:max-content;margin:0 auto;padding:0 20px;}
+  .journey-strip span{
+    font-family:var(--ff-display);font-size:12px;font-weight:700;color:#8b93a8;
+    padding:6px 12px;border-radius:100px;background:rgba(255,255,255,0.04);
+    white-space:nowrap;
+  }
+
+  .list{padding:36px 0 60px;}
+  .card{
+    background:var(--white);border:1px solid var(--line);border-radius:16px;
+    padding:18px 20px;margin-bottom:14px;
+    box-shadow:0 10px 26px -14px rgba(10,18,32,0.16);
+    display:flex;flex-direction:column;gap:14px;
+  }
+  .card .info{display:flex;align-items:flex-start;gap:14px;}
+  .card .num{
+    flex-shrink:0;width:38px;height:38px;border-radius:50%;
+    background:var(--navy-800);color:var(--gold-400);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--ff-display);font-weight:800;font-size:14px;
+  }
+  .card .body{flex:1;min-width:0;}
+  .card .verb{font-family:var(--ff-display);font-size:11.5px;font-weight:700;color:var(--gold-500);}
+  .card h3{font-size:16.5px;margin-top:2px;color:var(--ink);}
+  .card p{margin:4px 0 0;font-size:13px;color:var(--slate);}
+  .card .actions{display:flex;flex-direction:column;gap:8px;}
+  .card .go{
+    font-family:var(--ff-display);font-weight:700;font-size:14px;
+    background:var(--gold-500);color:var(--navy-900);
+    padding:12px 18px;border-radius:100px;white-space:nowrap;
+    text-align:center;transition:transform .15s ease;
+  }
+  .card .go:hover{transform:translateY(-1px);}
+  .card .go-secondary{
+    font-family:var(--ff-body);font-weight:700;font-size:12.5px;
+    color:var(--slate);text-align:center;text-decoration:underline;
+    padding:4px;
+  }
+  .card.pdf{border-color:rgba(201,162,39,0.3);background:linear-gradient(160deg,#fff,var(--cream-2));}
+
+  @media(min-width:600px){
+    .card{flex-direction:row;align-items:center;}
+    .card .info{flex:1;}
+    .card .actions{flex-shrink:0;width:170px;}
+  }
+
+  .pdf-note{
+    max-width:600px;margin:14px auto 0;
+    background:var(--cream-2);border:1px solid var(--line);border-radius:12px;
+    padding:14px 16px;font-size:13px;color:var(--slate);text-align:center;line-height:1.8;
+  }
+  .pdf-note strong{color:var(--ink);}
+
+  .help{
+    max-width:600px;margin:34px auto 0;text-align:center;
+    padding-top:24px;border-top:1px solid var(--line);
+  }
+  .help p{font-size:13.5px;color:var(--slate);}
+  .help a{color:var(--gold-500);font-weight:700;text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <img class="logo" src="/images/logo.webp" alt="مَسار" width="64" height="64">
+  <div class="eyebrow">تم الشراء بنجاح</div>
+  <h1>أهلاً بك في مَسار 🎉</h1>
+  <p>هذه صفحتك الخاصة — فيها كل أدوات مَسار الستة. احتفظ برابط هذه الصفحة، تقدر ترجعله في أي وقت.</p>
+</div>
+
+<div class="journey-strip">
+  <div class="track">
+    <span>استكشف</span><span>اكتشف</span><span>احسب</span><span>ادرس</span><span>أسّس</span><span>نفّذ</span>
+  </div>
+</div>
+
+<div class="list">
+  <div class="container">
+
+    <div class="card pdf">
+      <div class="info">
+        <span class="num">١</span>
+        <div class="body">
+        <span class="verb">استكشف</span>
+        <h3>كتاب أفضل 50 مشروعًا في السعودية 2026</h3>
+        <p>447 صفحة، فهرس تفاعلي، 5 شرائح لرأس المال</p>
+      </div>
+      </div>
+      <div class="actions">
+        <a class="go" href="/downloads/masar-best-50-projects.pdf" download="أفضل-50-مشروعًا-في-السعودية-2026.pdf">تحميل الكتاب</a>
+        <a class="go-secondary" href="/downloads/masar-best-50-projects.pdf" target="_blank" rel="noopener">أو افتحه أونلاين بدون تحميل</a>
+      </div>
+    </div>
+    <p class="pdf-note">لو التحميل ما اشتغلش من هنا مباشرة (مثلاً وانت جوه إنستغرام أو فيسبوك)، اضغط على ⋮ أو (⋯) فوق يمين الشاشة واختر <strong>"فتح في المتصفح"</strong>، وجرب تاني.</p>
+
+    <div class="card" style="margin-top:22px;">
+      <div class="info">
+        <span class="num">٢</span>
+        <div class="body">
+        <span class="verb">اكتشف</span>
+        <h3>اختبار اختيار المشروع المناسب</h3>
+        <p>يرشح لك أقرب المشاريع لظروفك ورأس مالك</p>
+      </div>
+      </div>
+      <div class="actions">
+        <a class="go" href="/tools/quiz.html" download="اختبار-اختيار-المشروع.html">تحميل الأداة</a>
+        <a class="go-secondary" href="/tools/quiz.html" target="_blank" rel="noopener">أو افتحها أونلاين بدون تحميل</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="info">
+        <span class="num">٣</span>
+        <div class="body">
+        <span class="verb">احسب</span>
+        <h3>أداة حسابة المشاريع</h3>
+        <p>نقطة التعادل، استرداد رأس المال، الربح المتوقع</p>
+      </div>
+      </div>
+      <div class="actions">
+        <a class="go" href="/tools/calculator.html" download="أداة-حسابة-المشاريع.html">تحميل الأداة</a>
+        <a class="go-secondary" href="/tools/calculator.html" target="_blank" rel="noopener">أو افتحها أونلاين بدون تحميل</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="info">
+        <span class="num">٤</span>
+        <div class="body">
+        <span class="verb">ادرس</span>
+        <h3>قالب دراسة جدوى جاهز لأي فكرة</h3>
+        <p>تقييم أولي مكتوب قبل ما تصرف رأس مالك</p>
+      </div>
+      </div>
+      <div class="actions">
+        <a class="go" href="/tools/feasibility.html" download="قالب-دراسة-الجدوى.html">تحميل الأداة</a>
+        <a class="go-secondary" href="/tools/feasibility.html" target="_blank" rel="noopener">أو افتحها أونلاين بدون تحميل</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="info">
+        <span class="num">٥</span>
+        <div class="body">
+        <span class="verb">أسّس</span>
+        <h3>دليل تأسيس المشروع</h3>
+        <p>خطوات تنفيذية من اختبار السوق لأول عرض</p>
+      </div>
+      </div>
+      <div class="actions">
+        <a class="go" href="/tools/setup-guide.html" download="دليل-تأسيس-المشروع.html">تحميل الأداة</a>
+        <a class="go-secondary" href="/tools/setup-guide.html" target="_blank" rel="noopener">أو افتحها أونلاين بدون تحميل</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="info">
+        <span class="num">٦</span>
+        <div class="body">
+        <span class="verb">نفّذ</span>
+        <h3>خطة أول 30 يوم</h3>
+        <p>خطة يومية لين تحصل أول عميل وأول أرباح</p>
+      </div>
+      </div>
+      <div class="actions">
+        <a class="go" href="/tools/30-day-plan.html" download="خطة-أول-30-يوم.html">تحميل الأداة</a>
+        <a class="go-secondary" href="/tools/30-day-plan.html" target="_blank" rel="noopener">أو افتحها أونلاين بدون تحميل</a>
+      </div>
+    </div>
+
+    <div class="note-box" style="max-width:600px;margin:24px auto 0;background:var(--cream-2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--slate);text-align:center;line-height:1.8;">
+      بعد تحميل أي أداة، هتلاقيها في تطبيق <strong>"الملفات"</strong> على جوالك (أو مجلد Downloads)، وتقدر تفتحها بعد كده في أي وقت حتى من غير إنترنت.
+    </div>
+
+    <div class="help">
+      <p>واجهت أي مشكلة في الوصول لأي أداة؟ راسلنا وهنساعدك فورًا.<br>
+      <a href="/contact.html">تواصل معنا</a></p>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

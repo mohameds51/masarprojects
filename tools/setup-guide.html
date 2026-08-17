@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🛠️ دليل تأسيس المشروع - من الفكرة إلى أول عميل</title>
+    <style>
+        /* === الهوية البصرية (Premium & Professional) === */
+        :root {
+            --primary: #0F172A; /* كحلي داكن فاخر */
+            --primary-light: #1E293B;
+            --gold: #D4AF37; /* ذهبي راقي */
+            --gold-hover: #C5A028;
+            --bg-color: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* === الهيكل العام === */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        header h1 {
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        /* === شريط التقدم والحالة === */
+        .status-bar {
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .status-item {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .status-item strong {
+            color: var(--primary);
+            font-size: 1.05rem;
+            display: block;
+        }
+
+        .progress-wrapper {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .progress-bar-bg {
+            background-color: var(--border-color);
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--gold);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        /* === واجهات الشاشات === */
+        .view-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+            flex: 1;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--bg-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* === النماذج === */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: #FAFAFA;
+            color: var(--text-main);
+            -webkit-appearance: none;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--gold);
+            background-color: #FFF;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        select.form-control {
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: left 15px top 50%;
+            background-size: 12px auto;
+        }
+
+        /* === قوائم التحقق (Checklists) === */
+        .checklist {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: var(--bg-color);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .checklist li:hover {
+            border-color: var(--gold);
+        }
+
+        .checklist input[type="checkbox"] {
+            margin-left: 12px;
+            margin-top: 4px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--gold);
+            cursor: pointer;
+            pointer-events: none; /* يمنع تعارض الضغط المباشر على المربع مع ضغطة السطر */
+        }
+
+        .checklist label {
+            cursor: pointer;
+            margin: 0;
+            font-weight: 500;
+            flex: 1;
+            user-select: none;
+        }
+
+        .checklist li.completed {
+            background: #F0FDF4;
+            border-color: #A7F3D0;
+        }
+        
+        .checklist li.completed label {
+            color: var(--success);
+            text-decoration: line-through;
+            opacity: 0.8;
+        }
+
+        /* === الجداول التفاعلية === */
+        .dynamic-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .dynamic-table th, .dynamic-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: right;
+        }
+
+        .dynamic-table th {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .dynamic-table input, .dynamic-table select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .dynamic-table input:focus, .dynamic-table select:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .btn-remove {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .btn-remove:hover { background: var(--danger); color: white; }
+
+        /* === التنبيهات والألوان === */
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+        .alert-info { background: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE; }
+        .alert-warning { background: #FFFBEB; color: #B45309; border: 1px solid #FDE68A; }
+        .alert-success { background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; }
+        .alert-danger { background: #FEF2F2; color: #B91C1C; border: 1px solid #FECACA; }
+
+        .result-box {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            text-align: center;
+            margin-top: 20px;
+            border-bottom: 4px solid var(--gold);
+        }
+        .result-box h3 { color: var(--gold); margin-bottom: 10px; }
+        .result-box p { font-size: 1.1rem; }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .metric-card {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .metric-card span { display: block; font-size: 0.85rem; opacity: 0.8; margin-bottom: 5px; }
+        .metric-card strong { font-size: 1.4rem; color: var(--gold); direction: ltr; display: block;}
+
+        .auto-generated-box {
+            background: #FFFBEB;
+            border: 2px dashed var(--gold);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--primary);
+        }
+
+        /* === الأزرار === */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        
+        .btn-gold { background: var(--gold); color: var(--primary); }
+        .btn-gold:hover { background: var(--gold-hover); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        
+        .btn-outline { background: transparent; border: 2px solid var(--border-color); color: var(--text-main); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+        .btn-danger-outline { background: transparent; border: 1px solid var(--danger); color: var(--danger); }
+        .btn-danger-outline:hover { background: var(--danger); color: white; }
+
+        .btn-block { width: 100%; margin-bottom: 10px; }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            gap: 15px;
+        }
+
+        /* === رسائل التوست (Toasts) === */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* === التصميم المتجاوب (Mobile First) === */
+        @media (max-width: 768px) {
+            .nav-buttons { flex-direction: column-reverse; }
+            .nav-buttons .btn { width: 100%; }
+            .dynamic-table { display: block; overflow-x: auto; white-space: nowrap; }
+            .status-bar { flex-direction: column; align-items: flex-start; }
+            .status-item { width: 100%; display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;}
+            .status-item:last-child { border-bottom: none; padding-bottom: 0;}
+        }
+
+        /* === الطباعة === */
+        @media print {
+            body { background: white; color: black; }
+            .container { max-width: 100%; padding: 0; }
+            .no-print { display: none !important; }
+            .card { box-shadow: none; border: 1px solid #ccc; padding: 20px; page-break-inside: avoid; }
+            .view-section { display: block !important; opacity: 1; }
+            .status-bar { box-shadow: none; border: 1px solid #ccc; }
+            .result-box { background: white !important; color: black !important; border: 2px solid var(--primary); -webkit-print-color-adjust: exact; }
+            .result-box h3, .metric-card strong { color: var(--primary) !important; }
+            .metric-card { border: 1px solid #ccc; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- رأس الصفحة -->
+    <header class="no-print">
+        <h1>🛠️ دليل تأسيس المشروع</h1>
+        <p>من الفكرة إلى أول عميل</p>
+        <p style="font-size: 0.85rem; margin-top: 10px; color: var(--gold);">خطة عملية تساعدك على تحويل فكرة المشروع إلى مشروع جاهز للبيع، واختبار الطلب، والوصول إلى أول عميل.</p>
+    </header>
+
+    <!-- شاشة الترحيب (Welcome Screen) -->
+    <div id="view-welcome" class="view-section active no-print">
+        <div class="card" style="text-align: center; padding: 40px 20px;">
+            <div style="font-size: 4rem; margin-bottom: 20px;">🗺️</div>
+            <h2 style="color: var(--primary); margin-bottom: 15px;">خارطة طريقك التنفيذية</h2>
+            <p style="color: var(--text-muted); margin-bottom: 30px;">لا تدع فكرتك حبيسة الورق. هذه الأداة ستمسك بيدك خطوة بخطوة لتأسيس مشروعك، اختبار السوق، وتأمين أول عميل بطريقة عملية.</p>
+            
+            <button class="btn btn-primary btn-block" onclick="showView('view-setup')" style="max-width: 300px; margin: 0 auto 15px auto;">ابدأ تأسيس مشروعي →</button>
+            <button class="btn btn-outline btn-block" id="btn-resume" onclick="loadDataAndResume()" style="display: none; max-width: 300px; margin: 0 auto;">📂 استكمال خطتي السابقة</button>
+        </div>
+    </div>
+
+    <!-- شاشة إعداد المشروع الأساسي (Setup Screen) -->
+    <div id="view-setup" class="view-section no-print">
+        <div class="card">
+            <h2 class="card-title">إعدادات المشروع الأساسية</h2>
+            <div class="form-group">
+                <label>اسم المشروع</label>
+                <input type="text" id="init-name" class="form-control" placeholder="اكتب اسم مشروعك...">
+            </div>
+            <div class="form-group">
+                <label>نوع المشروع</label>
+                <select id="init-type" class="form-control">
+                    <option value="خدمة">خدمة</option>
+                    <option value="منتج">منتج ملموس</option>
+                    <option value="مشروع رقمي">مشروع رقمي</option>
+                    <option value="مشروع ميداني">مشروع ميداني</option>
+                    <option value="B2B">مشروع B2B (للشركات)</option>
+                    <option value="B2C">مشروع B2C (للأفراد)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>رأس المال المتاح (ريال)</label>
+                <input type="number" id="init-capital" class="form-control" placeholder="0">
+            </div>
+            <button class="btn btn-primary btn-block" onclick="initProject()">ابدأ الخطة 🚀</button>
+            <button class="btn btn-outline btn-block" onclick="showView('view-welcome')">عودة</button>
+        </div>
+    </div>
+
+    <!-- الشاشة الرئيسية للعمل (Main Workspace) -->
+    <div id="view-workspace" class="view-section">
+        
+        <!-- شريط الحالة الدائم -->
+        <div class="status-bar">
+            <div class="status-item">المشروع: <strong id="stat-name">-</strong></div>
+            <div class="status-item">النوع: <strong id="stat-type">-</strong></div>
+            <div class="status-item">رأس المال المتاح: <strong id="stat-cap">0 ريال</strong></div>
+            
+            <div class="progress-wrapper">
+                <div class="progress-header">
+                    <span id="stat-stage-name">المرحلة 1: تثبيت الفكرة</span>
+                    <span id="stat-progress-text">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="stat-progress-bar"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="no-print" style="display: flex; gap: 10px; margin-bottom: 20px; justify-content: flex-end; flex-wrap: wrap;">
+            <button class="btn btn-outline" onclick="saveData()" style="padding: 8px 15px; font-size: 0.9rem;">💾 حفظ التقدم</button>
+            <button class="btn btn-outline" onclick="window.print()" style="padding: 8px 15px; font-size: 0.9rem;">📄 حفظ خطتي (PDF)</button>
+            <button class="btn btn-danger-outline" onclick="resetProject()" style="padding: 8px 15px; font-size: 0.9rem;">🔄 بدء مشروع جديد</button>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- المرحلة 1: تثبيت الفكرة -->
+        <!-- ============================================== -->
+        <div id="stage-1" class="stage-content">
+            <div class="card">
+                <h2 class="card-title">1️⃣ ثبّت فكرتك</h2>
+                <p class="form-text" style="margin-bottom: 20px;">الهدف من هذه المرحلة هو التأكد أنك تعرف بالضبط ماذا ستبيع ولمن.</p>
+                
+                <div class="form-group">
+                    <label>ما الذي ستبيعه تحديداً؟</label>
+                    <input type="text" id="s1-q1" class="form-control" placeholder="مثال: خدمة غسيل سيارات بالبخار...">
+                </div>
+                <div class="form-group">
+                    <label>ما المشكلة التي يحلها مشروعك؟</label>
+                    <input type="text" id="s1-q2" class="form-control" placeholder="مثال: إضاعة الوقت في طوابير المغاسل...">
+                </div>
+                <div class="form-group">
+                    <label>من هو العميل الذي سيدفع لك؟</label>
+                    <input type="text" id="s1-q3" class="form-control" placeholder="مثال: الموظفون في الشركات الكبرى...">
+                </div>
+                <div class="form-group">
+                    <label>لماذا قد يختارك العميل بدلاً من البدائل الموجودة؟</label>
+                    <input type="text" id="s1-q4" class="form-control" placeholder="مثال: أذهب إليه في موقعه بدلاً من أن يأتيني...">
+                </div>
+                <div class="form-group">
+                    <label>ما هي أهم ميزة تنافسية لديك؟</label>
+                    <input type="text" id="s1-q5" class="form-control" placeholder="مثال: استخدام مواد صديقة للبيئة...">
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h3 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 15px;">قائمة التحقق (Checklist):</h3>
+                    <ul class="checklist" id="chk-s1">
+                        <li onclick="toggleCheck(this)"><input type="checkbox"><label>حددت الخدمة أو المنتج بوضوح</label></li>
+                        <li onclick="toggleCheck(this)"><input type="checkbox"><label>حددت العميل المستهدف</label></li>
+                        <li onclick="toggleCheck(this)"><input type="checkbox"><label>حددت المشكلة التي أحلها</label></li>
+                        <li onclick="toggleCheck(this)"><input type="checkbox"><label>حددت الميزة التي تميزني</label></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- المرحلة 2: اختبار الطلب -->
+        <!-- ============================================== -->
+        <div id="stage-2" class="stage-content" style="display:none;">
+            <div class="card">
+                <h2 class="card-title">2️⃣ اختبر السوق قبل أن تصرف</h2>
+                <p class="form-text" style="margin-bottom: 20px;">الهدف هنا هو عدم إنفاق رأس المال بالكامل قبل التأكد من وجود طلب حقيقي.</p>
+
+                <div style="margin-bottom: 30px;">
+                    <h3 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 15px;">قبل أن تبدأ، تحقق من:</h3>
+                    <ul class="checklist" id="chk-s2">
+                        <li onclick="toggleCheck(this)"><input type="checkbox"><label>بحثت عن المنافسين المباشرين</label></li>
+                        <li onclick="toggleCheck(this)"><input type="checkbox"><label>شاهدت أسعار المنافسين وحللتها</label></li>
+                        <li onclick="toggleCheck(this)"><input type="checkbox"><label>تحدثت مع عملاء محتملين حقيقيين</label></li>
+                        <li onclick="toggleCheck(this)"><input type="checkbox"><label>حصلت على مؤشرات فعلية على وجود طلب</label></li>
+                        <li onclick="toggleCheck(this)"><input type="checkbox"><label>عرفت ما الذي يمكن أن يجعل العميل يشتري مني</label></li>
+                    </ul>
+                </div>
+
+                <hr style="border:0; border-top:1px solid var(--border-color); margin: 30px 0;">
+
+                <h3 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 15px;">اختبار بسيط للطلب (اجمع بيانات فعلية)</h3>
+                <div class="form-group">
+                    <label>عدد الأشخاص الذين سألتهم / تواصلت معهم:</label>
+                    <input type="number" id="s2-contacted" class="form-control" placeholder="0" oninput="calcDemand()">
+                </div>
+                <div class="form-group">
+                    <label>عدد الأشخاص الذين أبدوا اهتماماً حقيقياً:</label>
+                    <input type="number" id="s2-interested" class="form-control" placeholder="0" oninput="calcDemand()">
+                </div>
+                <div class="form-group">
+                    <label>عدد الأشخاص الذين طلبوا السعر أو التفاصيل:</label>
+                    <input type="number" id="s2-asked" class="form-control" placeholder="0" oninput="calcDemand()">
+                </div>
+                <div class="form-group">
+                    <label>عدد الأشخاص الذين وافقوا على تجربة/شراء الخدمة:</label>
+                    <input type="number" id="s2-agreed" class="form-control" placeholder="0" oninput="calcDemand()">
+                </div>
+
+                <div id="s2-result" style="margin-top: 20px;"></div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- المرحلة 3: التجهيز -->
+        <!-- ============================================== -->
+        <div id="stage-3" class="stage-content" style="display:none;">
+            <div class="card">
+                <h2 class="card-title">3️⃣ جهّز الحد الأدنى للانطلاق</h2>
+                <p class="form-text" style="margin-bottom: 20px;">(Minimum Viable Setup) جهز فقط ما يسمح لك ببدء المشروع واختبار السوق، لا تشتري كل شيء الآن.</p>
+
+                <ul class="checklist" id="chk-s3" style="margin-bottom: 30px;">
+                    <li onclick="toggleCheck(this)"><input type="checkbox"><label>الأدوات الأساسية للعمل جاهزة</label></li>
+                    <li onclick="toggleCheck(this)"><input type="checkbox"><label>المواد أو المخزون الأولي متوفر</label></li>
+                    <li onclick="toggleCheck(this)"><input type="checkbox"><label>وسيلة تنفيذ وتوصيل الخدمة جاهزة</label></li>
+                    <li onclick="toggleCheck(this)"><input type="checkbox"><label>وسيلة استقبال المدفوعات مفعلة</label></li>
+                    <li onclick="toggleCheck(this)"><input type="checkbox"><label>رقم / قناة تواصل مخصصة للعملاء</label></li>
+                    <li onclick="toggleCheck(this)"><input type="checkbox"><label>اسم المشروع والهوية البصرية البسيطة جاهزة</label></li>
+                    <li onclick="toggleCheck(this)"><input type="checkbox"><label>حسابات التواصل الاجتماعي مفعلة</label></li>
+                    <li onclick="toggleCheck(this)"><input type="checkbox"><label>نموذج واضح لتسجيل الطلبات</label></li>
+                </ul>
+
+                <hr style="border:0; border-top:1px solid var(--border-color); margin: 30px 0;">
+
+                <h3 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 15px;">ما الذي أحتاج شراءه فعلاً؟</h3>
+                <table class="dynamic-table" id="setup-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50%;">العنصر</th>
+                            <th style="width: 25%;">التكلفة (ريال)</th>
+                            <th style="width: 20%;">ضروري الآن؟</th>
+                            <th style="width: 5%;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="setup-body">
+                        <!-- Rows added by JS -->
+                    </tbody>
+                </table>
+                <button class="btn btn-outline-gold no-print" onclick="addSetupRow()" style="padding: 8px 15px; font-size: 0.9rem; margin-bottom: 20px;">+ إضافة عنصر</button>
+
+                <div style="background: #F8FAFC; padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <div style="display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: bold; color: var(--primary);">
+                        <span>إجمالي تكلفة التجهيز الأولي:</span>
+                        <span id="s3-total-cost">0 ريال</span>
+                    </div>
+                    <div id="s3-alert" style="margin-top: 15px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- المرحلة 4: بناء العرض -->
+        <!-- ============================================== -->
+        <div id="stage-4" class="stage-content" style="display:none;">
+            <div class="card">
+                <h2 class="card-title">4️⃣ جهّز عرضًا يصعب رفضه</h2>
+                <p class="form-text" style="margin-bottom: 20px;">العميل لا يشتري المنتج، بل يشتري النتيجة. لنصيغ عرضك الجذاب.</p>
+
+                <div class="form-group">
+                    <label>اسم المنتج / الخدمة النهائي:</label>
+                    <input type="text" id="s4-name" class="form-control" placeholder="مثال: باقة التلميع الساطع..." oninput="generateOffer()">
+                </div>
+                <div class="form-group">
+                    <label>السعر (ريال):</label>
+                    <input type="number" id="s4-price" class="form-control" placeholder="مثال: 250" oninput="generateOffer()">
+                </div>
+                <div class="form-group">
+                    <label>ماذا يحصل العميل بالتحديد؟ (الخصائص)</label>
+                    <textarea id="s4-features" class="form-control" placeholder="مثال: غسيل بخار خارجي، تلميع ديكور داخلي، تعطير..." oninput="generateOffer()"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>أهم نتيجة يحصل عليها العميل: (الفائدة)</label>
+                    <input type="text" id="s4-result" class="form-control" placeholder="مثال: سيارة تعود وكأنها جديدة خلال 45 دقيقة..." oninput="generateOffer()">
+                </div>
+                <div class="form-group">
+                    <label>هل يوجد Bonus إضافي مجاني؟ (اختياري)</label>
+                    <input type="text" id="s4-bonus" class="form-control" placeholder="مثال: تلميع الأنوار الأمامية مجاناً..." oninput="generateOffer()">
+                </div>
+                <div class="form-group">
+                    <label>لماذا يشتري الآن؟ / هل يوجد عرض افتتاحي؟</label>
+                    <input type="text" id="s4-urgency" class="form-control" placeholder="مثال: خصم 20% لأول 10 عملاء فقط..." oninput="generateOffer()">
+                </div>
+
+                <div class="auto-generated-box">
+                    <div style="font-weight: bold; margin-bottom: 10px; color: var(--text-muted); font-size: 0.9rem;">مسودة العرض التلقائية:</div>
+                    <div id="s4-offer-text">أدخل البيانات بالأعلى ليتم صياغة العرض الترويجي هنا تلقائياً...</div>
+                </div>
+                <button class="btn btn-outline-gold no-print" onclick="copyOffer()" style="margin-top: 15px; width: 100%;">📋 نسخ العرض للتسويق</button>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- المرحلة 5: التسويق -->
+        <!-- ============================================== -->
+        <div id="stage-5" class="stage-content" style="display:none;">
+            <div class="card">
+                <h2 class="card-title">5️⃣ كيف ستصل لأول عميل؟</h2>
+                <p class="form-text" style="margin-bottom: 20px;">اختر القنوات التي تناسب نوع مشروعك وميزانيتك الحالية.</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                    <div>
+                        <h4 style="color: var(--success); margin-bottom: 10px;">🟢 طرق مجانية / عضوية</h4>
+                        <ul class="checklist" id="chk-s5-free" style="margin-bottom: 0;">
+                            <li onclick="toggleCheck(this)"><input type="checkbox" value="WhatsApp"><label>رسائل وقوائم WhatsApp</label></li>
+                            <li onclick="toggleCheck(this)"><input type="checkbox" value="Instagram Organic"><label>محتوى Instagram</label></li>
+                            <li onclick="toggleCheck(this)"><input type="checkbox" value="TikTok"><label>مقاطع TikTok الرائجة</label></li>
+                            <li onclick="toggleCheck(this)"><input type="checkbox" value="Network"><label>المعارف والشبكة الشخصية</label></li>
+                            <li onclick="toggleCheck(this)"><input type="checkbox" value="Communities"><label>مجتمعات ومجموعات متخصصة</label></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--warning); margin-bottom: 10px;">🟡 طرق مدفوعة</h4>
+                        <ul class="checklist" id="chk-s5-paid" style="margin-bottom: 0;">
+                            <li onclick="toggleCheck(this)"><input type="checkbox" value="Meta Ads"><label>إعلانات ممولة (Meta)</label></li>
+                            <li onclick="toggleCheck(this)"><input type="checkbox" value="Google Ads"><label>إعلانات بحث (Google Ads)</label></li>
+                            <li onclick="toggleCheck(this)"><input type="checkbox" value="Influencers"><label>مؤثرين محليين (Influencers)</label></li>
+                            <li onclick="toggleCheck(this)"><input type="checkbox" value="Local Print"><label>توزيع مطبوعات محلية</label></li>
+                            <li onclick="toggleCheck(this)"><input type="checkbox" value="B2B Outreach"><label>تواصل مباشر مع شركات (B2B)</label></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <hr style="border:0; border-top:1px solid var(--border-color); margin: 30px 0;">
+
+                <h3 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 15px;">خطة التسويق الأولى</h3>
+                <div class="form-group">
+                    <label>أين سأجد العميل تحديداً؟</label>
+                    <input type="text" id="s5-where" class="form-control" placeholder="مثال: في جروبات أهالي الحي، أو عبر إعلان انستغرام موجه...">
+                </div>
+                <div class="form-group">
+                    <label>كيف سيطلب الخدمة / المنتج؟ (Call to Action)</label>
+                    <input type="text" id="s5-cta" class="form-control" placeholder="مثال: الضغط على الرابط للواتساب وإرسال كلمة (طلب)...">
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- المرحلة 6: أول عميل -->
+        <!-- ============================================== -->
+        <div id="stage-6" class="stage-content" style="display:none;">
+            <div class="card">
+                <h2 class="card-title">6️⃣ خطة 7 أيام للحصول على أول عميل</h2>
+                <p class="form-text" style="margin-bottom: 20px;">خريطة عمل يومية لضمان الإنجاز وعدم التسويف.</p>
+
+                <div style="display: grid; gap: 15px;">
+                    <div style="background: var(--bg-color); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <h4 style="color: var(--primary); margin-bottom: 10px;">اليوم 1: التجهيز</h4>
+                        <ul class="checklist" style="margin:0;">
+                            <li onclick="toggleCheck(this)"><input type="checkbox"><label>جهزت المنتج / الخدمة للاختبار</label></li>
+                            <li onclick="toggleCheck(this)"><input type="checkbox"><label>جهزت نص العرض الترويجي</label></li>
+                            <li onclick="toggleCheck(this)"><input type="checkbox"><label>تأكدت من عمل طريقة استقبال الطلبات</label></li>
+                        </ul>
+                    </div>
+
+                    <div style="background: var(--bg-color); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <h4 style="color: var(--primary); margin-bottom: 10px;">اليوم 2 و 3: الإطالق</h4>
+                        <ul class="checklist" style="margin:0;">
+                            <li onclick="toggleCheck(this)"><input type="checkbox"><label>جهزت قائمة بـ <input type="number" id="s6-target-num" value="20" style="width:60px; padding:2px; border:1px solid #ccc; text-align:center;"> عميل محتمل</label></li>
+                            <li onclick="toggleCheck(this)"><input type="checkbox"><label>نشرت العرض / أطلقت الحملة / تواصلت مع القائمة</label></li>
+                        </ul>
+                    </div>
+
+                    <div style="background: var(--bg-color); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <h4 style="color: var(--primary); margin-bottom: 10px;">اليوم 4 و 5: المتابعة (Follow up)</h4>
+                        <ul class="checklist" style="margin:0;">
+                            <li onclick="toggleCheck(this)"><input type="checkbox"><label>تابعت وتواصلت مع من أظهروا اهتماماً مبدئياً</label></li>
+                            <li onclick="toggleCheck(this)"><input type="checkbox"><label>رديت على كل الاستفسارات بوضوح</label></li>
+                        </ul>
+                    </div>
+
+                    <div style="background: var(--bg-color); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <h4 style="color: var(--primary); margin-bottom: 10px;">اليوم 6 و 7: التحسين</h4>
+                        <ul class="checklist" style="margin:0;">
+                            <li onclick="toggleCheck(this)"><input type="checkbox"><label>عدلت العرض أو السعر بناءً على اعتراضات العملاء</label></li>
+                            <li onclick="toggleCheck(this)"><input type="checkbox"><label>أعدت نشر العرض المحسن</label></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- المرحلة 7: النتائج -->
+        <!-- ============================================== -->
+        <div id="stage-7" class="stage-content" style="display:none;">
+            <div class="card">
+                <h2 class="card-title">7️⃣ ماذا حدث؟ (تسجيل النتائج)</h2>
+                <p class="form-text" style="margin-bottom: 20px;">بعد انتهاء خطة الأيام السبعة، أدخل الأرقام الفعلية التي حصلت عليها لتحليل أداء مشروعك.</p>
+
+                <div class="form-group">
+                    <label>إجمالي عدد الأشخاص الذين وصلهم العرض / تواصلت معهم:</label>
+                    <input type="number" id="s7-reach" class="form-control" placeholder="0" oninput="calcResults()">
+                </div>
+                <div class="form-group">
+                    <label>عدد الأشخاص الذين تفاعلوا أو استفسروا:</label>
+                    <input type="number" id="s7-interact" class="form-control" placeholder="0" oninput="calcResults()">
+                </div>
+                <div class="form-group">
+                    <label>عدد العملاء الفعليين الذين اشتروا / دفعوا:</label>
+                    <input type="number" id="s7-bought" class="form-control" placeholder="0" oninput="calcResults()">
+                </div>
+                <div class="form-group">
+                    <label>إجمالي المبيعات المحققة (ريال):</label>
+                    <input type="number" id="s7-revenue" class="form-control" placeholder="0" oninput="calcResults()">
+                </div>
+
+                <div class="result-box" id="s7-metrics" style="display: none;">
+                    <h3 style="color: white; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; margin-bottom: 15px;">مؤشرات الأداء الفعلية</h3>
+                    <div class="metric-grid">
+                        <div class="metric-card">
+                            <span>معدل الاهتمام والتفاعل</span>
+                            <strong id="m-interest">0%</strong>
+                        </div>
+                        <div class="metric-card">
+                            <span>معدل التحويل (شراء)</span>
+                            <strong id="m-conversion">0%</strong>
+                        </div>
+                        <div class="metric-card">
+                            <span>متوسط قيمة العميل</span>
+                            <strong id="m-aov">0 ريال</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- المرحلة 8: قرار الاستمرار -->
+        <!-- ============================================== -->
+        <div id="stage-8" class="stage-content" style="display:none;">
+            <div class="card">
+                <h2 class="card-title">8️⃣ هل يستحق المشروع الاستمرار؟</h2>
+                <p class="form-text" style="margin-bottom: 20px;">بناءً على الأرقام والنتائج التي سجلتها، هذا هو التقييم التقديري لمدى قابلية المشروع للاستمرار.</p>
+
+                <div id="s8-decision-box" style="padding: 30px; border-radius: 12px; text-align: center; margin-bottom: 30px; border: 2px dashed var(--border-color);">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 15px;" id="s8-decision-title">يرجى استكمال إدخال النتائج في المرحلة السابقة</h3>
+                    <p style="font-size: 1.1rem; opacity: 0.9;" id="s8-decision-desc">نحتاج أرقام المبيعات والتفاعل لتقديم تحليل منطقي.</p>
+                </div>
+
+                <h3 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 15px;">مراجعة ذاتية لقرارك:</h3>
+                <ul class="checklist" style="margin-bottom: 30px;">
+                    <li onclick="toggleCheck(this)"><input type="checkbox"><label><strong>الطلب:</strong> هل حصلت على اهتمام حقيقي يدعو للتفاؤل؟</label></li>
+                    <li onclick="toggleCheck(this)"><input type="checkbox"><label><strong>المبيعات:</strong> هل نجحت فعلاً في إتمام عمليات بيع وتحصيل أموال؟</label></li>
+                    <li onclick="toggleCheck(this)"><input type="checkbox"><label><strong>الربحية:</strong> هل السعر يغطي تكلفتك المتغيرة ويترك هامشاً منطقياً؟</label></li>
+                    <li onclick="toggleCheck(this)"><input type="checkbox"><label><strong>التسويق:</strong> هل تستطيع تكرار الوصول لعملاء جدد بتكلفة منطقية؟</label></li>
+                    <li onclick="toggleCheck(this)"><input type="checkbox"><label><strong>التنفيذ:</strong> هل استطعت تقديم الخدمة/المنتج بجودة أرضت العملاء؟</label></li>
+                </ul>
+
+                <div style="background: var(--bg-color); padding: 15px; border-radius: 8px; text-align: center; font-size: 0.9rem; color: var(--text-muted);">
+                    تذكر: هذا الدليل صمم ليكون خطوتك الأولى. القرار النهائي بالاستثمار وضخ رأس المال يعود دائماً لتقييمك الشخصي وإمكانياتك.
+                </div>
+            </div>
+        </div>
+
+        <!-- أزرار التنقل السفلية -->
+        <div class="nav-buttons no-print">
+            <button class="btn btn-outline" id="btn-prev" onclick="changeStage(-1)">السابق</button>
+            <button class="btn btn-primary" id="btn-next" onclick="changeStage(1)">التالي ←</button>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- رسائل التوست -->
+<div id="toast" class="toast">تمت العملية بنجاح</div>
+
+<script>
+    // ==========================================
+    // إعدادات الحالة والتنقل
+    // ==========================================
+    var currentStage = 0; // 0 = welcome, 1-8 = stages
+    var totalStages = 8;
+    
+    var stageNames = [
+        "",
+        "1: تثبيت الفكرة",
+        "2: اختبار الطلب",
+        "3: التجهيز الأولي",
+        "4: بناء العرض",
+        "5: خطة التسويق",
+        "6: أول عميل",
+        "7: تسجيل النتائج",
+        "8: قرار الاستمرار"
+    ];
+
+    function showView(viewId) {
+        var views = document.querySelectorAll('.view-section');
+        for (var i = 0; i < views.length; i++) {
+            views[i].classList.remove('active');
+        }
+        document.getElementById(viewId).classList.add('active');
+    }
+
+    function initProject() {
+        var name = document.getElementById('init-name').value;
+        var type = document.getElementById('init-type').value;
+        var cap = document.getElementById('init-capital').value;
+
+        if (!name.trim()) {
+            showToast("يرجى كتابة اسم المشروع أولاً ⚠️");
+            return;
+        }
+
+        document.getElementById('stat-name').innerText = name;
+        document.getElementById('stat-type').innerText = type;
+        document.getElementById('stat-cap').innerText = (cap ? parseFloat(cap).toLocaleString() : "0") + " ريال";
+
+        currentStage = 1;
+        updateStageUI();
+        showView('view-workspace');
+        saveData();
+    }
+
+    function changeStage(dir) {
+        if (dir === 1 && currentStage === totalStages) {
+            window.print();
+            return;
+        }
+
+        document.getElementById('stage-' + currentStage).style.display = 'none';
+        currentStage += dir;
+        document.getElementById('stage-' + currentStage).style.display = 'block';
+        
+        updateStageUI();
+        window.scrollTo(0, 0);
+        saveData();
+    }
+
+    function updateStageUI() {
+        // تحديث شريط التقدم
+        document.getElementById('stat-stage-name').innerText = "المرحلة " + stageNames[currentStage];
+        var progress = Math.round((currentStage / totalStages) * 100);
+        document.getElementById('stat-progress-text').innerText = progress + "%";
+        document.getElementById('stat-progress-bar').style.width = progress + "%";
+
+        // تحديث الأزرار
+        document.getElementById('btn-prev').style.visibility = (currentStage === 1) ? "hidden" : "visible";
+        if (currentStage === totalStages) {
+            document.getElementById('btn-next').innerText = "📄 حفظ/طباعة الخطة";
+            makeDecision(); // تحديث شاشة القرار النهائي
+        } else {
+            document.getElementById('btn-next').innerText = "التالي ←";
+        }
+    }
+
+    // ==========================================
+    // تفاعلات UI و Checklists
+    // ==========================================
+    function toggleCheck(li) {
+        var cb = li.querySelector('input[type="checkbox"]');
+        cb.checked = !cb.checked;
+        if (cb.checked) {
+            li.classList.add('completed');
+        } else {
+            li.classList.remove('completed');
+        }
+        saveData();
+    }
+
+    // استعادة حالة الكليكس عند تحميل البيانات
+    function syncChecklistsUI() {
+        var lists = document.querySelectorAll('.checklist li');
+        for (var i = 0; i < lists.length; i++) {
+            var cb = lists[i].querySelector('input[type="checkbox"]');
+            if (cb.checked) {
+                lists[i].classList.add('completed');
+            } else {
+                lists[i].classList.remove('completed');
+            }
+        }
+    }
+
+    // ==========================================
+    // الحسابات والمنطق البرمجي (Stages 2, 3, 4, 7, 8)
+    // ==========================================
+    
+    // Stage 2: حساب مؤشر الطلب
+    function calcDemand() {
+        var contacted = Math.max(0, parseInt(document.getElementById('s2-contacted').value) || 0);
+        var interested = Math.max(0, parseInt(document.getElementById('s2-interested').value) || 0);
+        var resDiv = document.getElementById('s2-result');
+
+        if (contacted === 0) {
+            resDiv.innerHTML = "";
+            return;
+        }
+
+        var rate = (interested / contacted) * 100;
+        var html = `<div style="font-weight:bold; font-size:1.1rem; margin-bottom:10px;">نسبة الاهتمام المبدئي: <span dir="ltr">${rate.toFixed(1)}%</span></div>`;
+        
+        if (rate < 5 && contacted > 20) {
+            html += `<div class="alert alert-danger">⚠️ النسبة ضعيفة. العرض أو الشريحة المستهدفة تحتاج لتعديل قبل إنفاق رأس المال.</div>`;
+        } else if (rate >= 5 && rate < 15) {
+            html += `<div class="alert alert-warning">🟡 هناك اهتمام متوسط. حاول تحسين ميزتك التنافسية أو توضيح العرض أكثر.</div>`;
+        } else if (rate >= 15) {
+            html += `<div class="alert alert-success">✅ مؤشر ممتاز! هناك طلب مبدئي واضح، يمكنك الانتقال لتجهيز الخدمة.</div>`;
+        } else {
+            html += `<div class="alert alert-info">🔹 استمر في سؤال المزيد من الأشخاص للحصول على مؤشر أدق.</div>`;
+        }
+
+        resDiv.innerHTML = html;
+        saveData();
+    }
+
+    // Stage 3: جدول التجهيز
+    function addSetupRow(item, cost, essential) {
+        item = item || "";
+        cost = cost || "";
+        essential = essential || "نعم";
+        
+        var tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td><input type="text" class="st-item" value="${item}" placeholder="مثال: مواد خام..." oninput="calcSetup()"></td>
+            <td><input type="number" class="st-cost" value="${cost}" placeholder="0" oninput="calcSetup()"></td>
+            <td>
+                <select class="st-ess" onchange="calcSetup()">
+                    <option value="نعم" ${essential==='نعم'?'selected':''}>نعم</option>
+                    <option value="لا" ${essential==='لا'?'selected':''}>لا</option>
+                </select>
+            </td>
+            <td><button class="btn-remove no-print" onclick="this.parentElement.parentElement.remove(); calcSetup();">X</button></td>
+        `;
+        document.getElementById("setup-body").appendChild(tr);
+        calcSetup();
+    }
+
+    function calcSetup() {
+        var total = 0;
+        var essTotal = 0;
+        var costs = document.querySelectorAll(".st-cost");
+        var esses = document.querySelectorAll(".st-ess");
+        
+        for(var i=0; i<costs.length; i++){
+            var c = Math.max(0, parseFloat(costs[i].value) || 0);
+            total += c;
+            if(esses[i].value === 'نعم') {
+                essTotal += c;
+            }
+        }
+        
+        document.getElementById("s3-total-cost").innerText = total.toLocaleString() + " ريال";
+        
+        var cap = parseFloat(document.getElementById('init-capital').value) || 0;
+        var alertDiv = document.getElementById("s3-alert");
+        
+        if (total === 0) {
+            alertDiv.innerHTML = "";
+            return;
+        }
+
+        var msg = `المبلغ المطلوب للعناصر الضرورية (الحد الأدنى) هو: <strong>${essTotal.toLocaleString()} ريال</strong>.<br>`;
+        if (cap > 0 && essTotal > cap) {
+            msg += `<span style="color:var(--danger)">⚠️ رأس مالك لا يغطي الضروريات الحالية. ابحث عن بدائل أو أدوات مستعملة.</span>`;
+        } else if (cap > 0 && total > cap) {
+            msg += `<span style="color:var(--warning)">🟡 رأس مالك يغطي الضروريات، لكنه لا يغطي كل القائمة. استبعد العناصر غير الضرورية الآن.</span>`;
+        } else {
+            msg += `<span style="color:var(--success)">✅ ممتاز، لا تنفق كامل رأس المال على التجهيز، احتفظ بالباقي للتسويق والتشغيل.</span>`;
+        }
+        
+        alertDiv.innerHTML = msg;
+        saveData();
+    }
+
+    // Stage 4: بناء العرض
+    function generateOffer() {
+        var name = document.getElementById('s4-name').value || "[اسم الخدمة/المنتج]";
+        var price = document.getElementById('s4-price').value || "[السعر]";
+        var result = document.getElementById('s4-result').value || "[النتيجة أو الفائدة المطلوبة]";
+        var bonus = document.getElementById('s4-bonus').value;
+        var urgency = document.getElementById('s4-urgency').value;
+
+        var text = `نقدم لك ${name} لمساعدتك على ${result} بسعر ${price} ريال فقط.`;
+        if(bonus) text += `
+🎁 واحصل أيضاً على: ${bonus} مجاناً.`;
+        if(urgency) text += `
+⏳ ${urgency}.`;
+
+        document.getElementById('s4-offer-text').innerText = text;
+        saveData();
+    }
+
+    function copyOffer() {
+        var text = document.getElementById('s4-offer-text').innerText;
+        if(navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(function() {
+                showToast("تم نسخ العرض بنجاح 📋");
+            });
+        }
+    }
+
+    // Stage 7: حساب النتائج
+    function calcResults() {
+        var reach = Math.max(0, parseInt(document.getElementById('s7-reach').value) || 0);
+        var interact = Math.max(0, parseInt(document.getElementById('s7-interact').value) || 0);
+        var bought = Math.max(0, parseInt(document.getElementById('s7-bought').value) || 0);
+        var rev = Math.max(0, parseFloat(document.getElementById('s7-revenue').value) || 0);
+
+        var box = document.getElementById('s7-metrics');
+        if (reach > 0 || interact > 0 || bought > 0) {
+            box.style.display = 'block';
+            
+            var interestRate = reach > 0 ? (interact / reach) * 100 : 0;
+            var convRate = interact > 0 ? (bought / interact) * 100 : 0;
+            var aov = bought > 0 ? (rev / bought) : 0;
+
+            document.getElementById('m-interest').innerText = interestRate.toFixed(1) + "%";
+            document.getElementById('m-conversion').innerText = convRate.toFixed(1) + "%";
+            document.getElementById('m-aov').innerText = aov.toFixed(0) + " ريال";
+        } else {
+            box.style.display = 'none';
+        }
+        saveData();
+    }
+
+    // Stage 8: قرار الاستمرار
+    function makeDecision() {
+        var bought = Math.max(0, parseInt(document.getElementById('s7-bought').value) || 0);
+        var interact = Math.max(0, parseInt(document.getElementById('s7-interact').value) || 0);
+        var reach = Math.max(0, parseInt(document.getElementById('s7-reach').value) || 0);
+        
+        var title = document.getElementById('s8-decision-title');
+        var desc = document.getElementById('s8-decision-desc');
+        var box = document.getElementById('s8-decision-box');
+
+        if (reach === 0 && interact === 0 && bought === 0) {
+            title.innerText = "يرجى استكمال إدخال النتائج في المرحلة السابقة";
+            desc.innerText = "نحتاج أرقام المبيعات والتفاعل لتقديم تحليل منطقي.";
+            box.style.backgroundColor = "transparent";
+            box.style.borderColor = "var(--border-color)";
+            box.style.color = "var(--text-main)";
+            return;
+        }
+
+        if (bought > 0) {
+            // Green
+            title.innerText = "🟢 استمر وطوّر";
+            desc.innerText = `لقد نجحت في الحصول على ${bought} عملاء فعليين! النموذج قابل للعمل. ركز الآن على تحسين جودة التسليم، وزيادة جهود التسويق في القنوات التي جلبت لك هؤلاء العملاء.`;
+            box.style.backgroundColor = "#ECFDF5";
+            box.style.borderColor = "#10B981";
+            box.style.color = "#047857";
+        } else if (interact > 0 && bought === 0) {
+            // Yellow
+            title.innerText = "🟡 عدّل واختبر مرة أخرى";
+            desc.innerText = `يوجد اهتمام حقيقي (${interact} أشخاص تفاعلوا)، لكن هناك عقبة منعتهم من الدفع. راجع سعرك، أو عرضك، أو طريقة ردك على الاستفسارات، ثم اختبر مرة أخرى.`;
+            box.style.backgroundColor = "#FFFBEB";
+            box.style.borderColor = "#F59E0B";
+            box.style.color = "#B45309";
+        } else {
+            // Red
+            title.innerText = "🔴 لا تتوسع الآن (غيّر الفكرة أو الطريقة)";
+            desc.innerText = `تواصلت مع ${reach} أشخاص ولم يظهروا أي اهتمام. المشكلة غالباً في الفكرة نفسها أو أنك تستهدف الشريحة الخطأ تماماً. لا تنفق المزيد من المال، وابحث عن حل لمشكلة حقيقية.`;
+            box.style.backgroundColor = "#FEF2F2";
+            box.style.borderColor = "#EF4444";
+            box.style.color = "#B91C1C";
+        }
+    }
+
+    // ==========================================
+    // حفظ واسترجاع البيانات (LocalStorage)
+    // ==========================================
+    function getFormData() {
+        var data = {
+            currentStage: currentStage,
+            inputs: {},
+            checkboxes: [],
+            setupRows: []
+        };
+
+        // Inputs & Selects & Textareas
+        var inputs = document.querySelectorAll("input[type=text], input[type=number], textarea, select");
+        for(var i=0; i<inputs.length; i++) {
+            if(inputs[i].id && !inputs[i].classList.contains('st-item') && !inputs[i].classList.contains('st-cost')) {
+                data.inputs[inputs[i].id] = inputs[i].value;
+            }
+        }
+
+        // Checkboxes
+        var checks = document.querySelectorAll('input[type="checkbox"]');
+        for(var i=0; i<checks.length; i++) {
+            data.checkboxes.push(checks[i].checked);
+        }
+
+        // Setup Table
+        var items = document.querySelectorAll(".st-item");
+        var costs = document.querySelectorAll(".st-cost");
+        var esses = document.querySelectorAll(".st-ess");
+        for(var i=0; i<items.length; i++){
+            data.setupRows.push({
+                item: items[i].value,
+                cost: costs[i].value,
+                ess: esses[i].value
+            });
+        }
+
+        return data;
+    }
+
+    function saveData() {
+        // لا نحفظ إذا كنا في شاشة البداية لتجنب حفظ بيانات فارغة مع stage 0
+        if(currentStage === 0) return; 
+        
+        try {
+            var data = getFormData();
+            localStorage.setItem("projectGuideData", JSON.stringify(data));
+        } catch(e) {
+            console.log("Saving failed");
+        }
+    }
+
+    function checkSavedResult() {
+        if(localStorage.getItem("projectGuideData")) {
+            document.getElementById('btn-resume').style.display = 'block';
+        }
+    }
+
+    function loadDataAndResume() {
+        var saved = localStorage.getItem("projectGuideData");
+        if(!saved) return;
+        
+        var data = JSON.parse(saved);
+        
+        // Restore Inputs
+        for (var key in data.inputs) {
+            if (document.getElementById(key)) {
+                document.getElementById(key).value = data.inputs[key];
+            }
+        }
+
+        // Restore Checkboxes
+        var checks = document.querySelectorAll('input[type="checkbox"]');
+        for(var i=0; i<checks.length && i<data.checkboxes.length; i++) {
+            checks[i].checked = data.checkboxes[i];
+        }
+        syncChecklistsUI();
+
+        // Restore Table
+        document.getElementById("setup-body").innerHTML = "";
+        if(data.setupRows && data.setupRows.length > 0) {
+            data.setupRows.forEach(function(r) { addSetupRow(r.item, r.cost, r.ess); });
+        } else {
+            addSetupRow();
+        }
+
+        // Setup Header Info
+        var name = document.getElementById('init-name').value;
+        var type = document.getElementById('init-type').value;
+        var cap = document.getElementById('init-capital').value;
+        document.getElementById('stat-name').innerText = name || "-";
+        document.getElementById('stat-type').innerText = type || "-";
+        document.getElementById('stat-cap').innerText = (cap ? parseFloat(cap).toLocaleString() : "0") + " ريال";
+
+        // Recalculate
+        calcDemand();
+        generateOffer();
+        calcResults();
+
+        // Resume Stage
+        currentStage = data.currentStage || 1;
+        // إخفاء كل ال stages أولاً
+        var stages = document.querySelectorAll('.stage-content');
+        for(var i=0; i<stages.length; i++) stages[i].style.display = 'none';
+        
+        document.getElementById('stage-' + currentStage).style.display = 'block';
+        
+        updateStageUI();
+        showView('view-workspace');
+        showToast("مرحباً بعودتك! تم استرجاع خطتك 🚀");
+    }
+
+    function resetProject() {
+        if(confirm("هل أنت متأكد؟ سيتم حذف بيانات المشروع الحالية والبدء من جديد.")) {
+            localStorage.removeItem("projectGuideData");
+            location.reload();
+        }
+    }
+
+    function showToast(msg) {
+        var toast = document.getElementById("toast");
+        toast.innerText = msg;
+        toast.classList.add("show");
+        setTimeout(function() { toast.classList.remove("show"); }, 3000);
+    }
+
+    // Initialize on load
+    window.onload = function() {
+        checkSavedResult();
+        // أضف صفاً فارغاً أولياً في جدول التجهيز
+        if(document.getElementById("setup-body").children.length === 0){
+            addSetupRow();
+        }
+    };
+
+    // حفظ تلقائي عند التعديل في أي مكان
+    document.addEventListener('input', function(e) {
+        if(currentStage > 0) saveData();
+    });
+    document.addEventListener('change', function(e) {
+        if(currentStage > 0) saveData();
+    });
+
+</script>
+</body>
+</html>

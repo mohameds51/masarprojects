@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>📊 قالب دراسة الجدوى الأولية</title>
+    <style>
+        /* === المتغيرات والألوان (الهوية البصرية) === */
+        :root {
+            --primary: #0F172A; /* أزرق/كحلي داكن */
+            --primary-light: #1E293B;
+            --gold: #D4AF37; /* ذهبي راقي */
+            --gold-hover: #C5A028;
+            --bg-color: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* === الهيكل الأساسي === */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        header h1 {
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        /* === شريط التقدم === */
+        .progress-wrapper {
+            margin-bottom: 30px;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .progress-bar-bg {
+            background-color: var(--border-color);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--gold);
+            width: 14%; /* Step 1 */
+            transition: width 0.4s ease;
+        }
+
+        /* === الخطوات (Wizard) === */
+        .step-container {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .step-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--bg-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* === النماذج والحقول === */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: #FAFAFA;
+            color: var(--text-main);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--gold);
+            background-color: #FFF;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: left 15px top 50%;
+            background-size: 12px auto;
+        }
+
+        .form-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* === الجداول الديناميكية === */
+        .dynamic-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .dynamic-table th, .dynamic-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: right;
+        }
+
+        .dynamic-table th {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .dynamic-table input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .dynamic-table input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .btn-remove {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .btn-remove:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* === الأزرار === */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        
+        .btn-gold { background: var(--gold); color: var(--primary); }
+        .btn-gold:hover { background: var(--gold-hover); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        
+        .btn-outline { background: transparent; border: 2px solid var(--border-color); color: var(--text-main); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+        
+        .btn-outline-gold { background: transparent; border: 2px solid var(--gold); color: var(--primary); }
+        .btn-outline-gold:hover { background: var(--gold); color: var(--primary); }
+
+        .btn-danger-outline { background: transparent; border: 1px solid var(--danger); color: var(--danger); }
+        .btn-danger-outline:hover { background: var(--danger); color: white; }
+
+        .btn-block { width: 100%; }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* === رسائل التنبيه === */
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+        .alert-info { background: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE; }
+        .alert-warning { background: #FFFBEB; color: #B45309; border: 1px solid #FDE68A; }
+        .alert-success { background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; }
+        .alert-danger { background: #FEF2F2; color: #B91C1C; border: 1px solid #FECACA; }
+
+        /* === التقييم (Sliders) === */
+        .slider-container {
+            margin-bottom: 25px;
+        }
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .slider-header label { margin: 0; }
+        .slider-value { font-weight: bold; color: var(--gold); background: var(--primary); padding: 2px 10px; border-radius: 12px; font-size: 0.9rem;}
+        
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]:focus { outline: none; }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: var(--gold);
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        /* === التقرير النهائي (Report) === */
+        #report-view { display: none; }
+        
+        .report-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 4px solid var(--gold);
+        }
+        .report-header h2 { color: var(--primary); font-size: 2.5rem; margin-bottom: 10px; }
+        .report-header p { color: var(--text-muted); font-size: 1.1rem; }
+
+        .report-section {
+            margin-bottom: 40px;
+        }
+        .report-section-title {
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            border-right: 4px solid var(--gold);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .dash-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+        .dash-card.highlight {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+        }
+        .dash-card.highlight .dash-title { color: #E2E8F0; }
+        .dash-card.highlight .dash-value { color: var(--gold); }
+        .dash-title { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px; font-weight: 600; }
+        .dash-value { font-size: 1.6rem; font-weight: bold; color: var(--primary); direction: ltr; }
+
+        .scenarios-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+        }
+        .scenarios-table th, .scenarios-table td {
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .scenarios-table th { background: var(--bg-color); color: var(--primary); font-weight: bold; }
+        .scenarios-table tr:nth-child(even) { background-color: #FAFAFA; }
+        .scenarios-table .highlight-col { background-color: rgba(212, 175, 55, 0.1); font-weight: bold; }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .info-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            border-right: 4px solid var(--gold);
+        }
+        .info-box h4 { color: var(--primary); margin-bottom: 10px; font-size: 1.1rem; }
+        .info-box p { color: var(--text-muted); white-space: pre-wrap; font-size: 0.95rem;}
+
+        .verdict-box {
+            background: #F8FAFC;
+            border: 2px dashed var(--primary);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .verdict-box h3 { color: var(--primary); font-size: 1.5rem; margin-bottom: 15px; }
+        .verdict-box p { font-size: 1.1rem; margin-bottom: 25px; }
+        
+        .test-list {
+            text-align: right;
+            background: white;
+            padding: 20px 30px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .test-list li { margin-bottom: 15px; font-weight: bold; color: var(--primary); }
+
+        .print-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* === الموبايل والطباعة === */
+        @media (max-width: 768px) {
+            .info-grid { grid-template-columns: 1fr; }
+            .scenarios-table { display: block; overflow-x: auto; white-space: nowrap; }
+            .nav-buttons { flex-direction: column-reverse; gap: 15px; }
+            .nav-buttons .btn { width: 100%; }
+            .print-actions { flex-direction: column; }
+        }
+
+        @media print {
+            body { background: white; color: black; }
+            .container { max-width: 100%; padding: 0; }
+            .no-print { display: none !important; }
+            .card { box-shadow: none; border: none; padding: 0; }
+            .report-header { margin-top: 0; padding-top: 0; }
+            .dash-card { border: 1px solid #ccc; break-inside: avoid; }
+            .dash-card.highlight { background: white !important; color: black !important; border: 2px solid var(--primary); -webkit-print-color-adjust: exact; }
+            .dash-card.highlight .dash-title { color: black !important; }
+            .dash-card.highlight .dash-value { color: var(--primary) !important; }
+            .info-box { break-inside: avoid; border: 1px solid #ccc; border-right: 4px solid var(--primary); }
+            .verdict-box { border: 2px solid var(--primary); break-inside: avoid; }
+            .scenarios-table th { background-color: #f0f0f0 !important; -webkit-print-color-adjust: exact; }
+            .report-section { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header class="no-print">
+        <h1>📊 قالب دراسة الجدوى</h1>
+        <p>حّول فكرة مشروعك إلى دراسة جدوى أولية واضحة خلال دقائق</p>
+    </header>
+
+    <!-- Wizard View -->
+    <div id="wizard-view">
+        
+        <!-- Progress Bar -->
+        <div class="progress-wrapper">
+            <div class="progress-header">
+                <span id="step-title">1. معلومات المشروع</span>
+                <span id="step-count">الخطوة 1 من 7</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- أزرار الحفظ في الأعلى -->
+        <div class="no-print" style="display: flex; gap: 10px; margin-bottom: 20px; justify-content: flex-end;">
+            <button class="btn btn-outline" onclick="loadData()" style="padding: 8px 15px; font-size: 0.9rem;">📂 فتح دراسة محفوظة</button>
+            <button class="btn btn-outline" onclick="saveData()" style="padding: 8px 15px; font-size: 0.9rem;">💾 حفظ مؤقت</button>
+            <button class="btn btn-danger-outline" onclick="clearData()" style="padding: 8px 15px; font-size: 0.9rem;">🗑️ مسح الكل</button>
+        </div>
+
+        <!-- Step 1: Info -->
+        <div class="step-container active" id="step-1">
+            <div class="card">
+                <h2 class="card-title">معلومات المشروع</h2>
+                <div class="form-group">
+                    <label>اسم المشروع</label>
+                    <input type="text" id="p-name" class="form-control" placeholder="مثال: مغسلة سيارات متنقلة">
+                </div>
+                <div class="form-group">
+                    <label>وصف مختصر للفكرة</label>
+                    <textarea id="p-desc" class="form-control" placeholder="اكتب سطرين تلخص فيهم الفكرة..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>نوع المشروع</label>
+                    <select id="p-type" class="form-control">
+                        <option value="خدمة">خدمة</option>
+                        <option value="منتج">منتج ملموس</option>
+                        <option value="متجر إلكتروني">متجر إلكتروني</option>
+                        <option value="مشروع ميداني">مشروع ميداني</option>
+                        <option value="مشروع B2B">مشروع B2B (للشركات)</option>
+                        <option value="مشروع رقمي">مشروع رقمي / تقني</option>
+                        <option value="أخرى">أخرى</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>المدينة / المنطقة (اختياري)</label>
+                    <input type="text" id="p-city" class="form-control" placeholder="الرياض، جدة، المنطقة الشرقية...">
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Market -->
+        <div class="step-container" id="step-2">
+            <div class="card">
+                <h2 class="card-title">العميل والسوق</h2>
+                <div class="form-group">
+                    <label>من هو العميل المستهدف؟</label>
+                    <input type="text" id="m-target" class="form-control" placeholder="مثال: موظفو المكاتب، الأمهات العاملات...">
+                </div>
+                <div class="form-group">
+                    <label>ما المشكلة التي يحلها المشروع؟</label>
+                    <textarea id="m-problem" class="form-control" placeholder="مثال: صعوبة إيجاد وقت للذهاب للمغسلة التقليدية..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>ما الذي سيدفع العميل مقابله؟ (القيمة المقدمة)</label>
+                    <input type="text" id="m-value" class="form-control" placeholder="مثال: توفير الوقت والراحة والتنظيف العميق في الموقع">
+                </div>
+                <div class="form-group">
+                    <label>كيف سيصل المشروع إلى العملاء؟ (قنوات التسويق)</label>
+                    <input type="text" id="m-channels" class="form-control" placeholder="مثال: إعلانات انستغرام، توزيع منشورات، تعاقد مع شركات">
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>حجم الطلب المتوقع</label>
+                        <select id="m-demand" class="form-control">
+                            <option value="مرتفع">مرتفع (احتياج أساسي أو يومي)</option>
+                            <option value="متوسط">متوسط (حسب المواسم أو الرغبة)</option>
+                            <option value="منخفض">منخفض (منتج متخصص جداً/نادر)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>مستوى المنافسة</label>
+                        <select id="m-comp" class="form-control">
+                            <option value="منخفضة">منخفضة (فكرة جديدة أو غير مخدومة جيداً)</option>
+                            <option value="متوسطة">متوسطة</option>
+                            <option value="مرتفعة">مرتفعة (سوق مزدحم بالخيارات)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>ميزة المشروع التنافسية (ما الذي يجعلك أفضل؟)</label>
+                    <input type="text" id="m-advantage" class="form-control" placeholder="مثال: سرعة الاستجابة، تغليف فاخر، سعر منافس...">
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Capital -->
+        <div class="step-container" id="step-3">
+            <div class="card">
+                <h2 class="card-title">رأس المال والتأسيس</h2>
+                
+                <div class="form-group">
+                    <label>رأس المال المتاح للبدء (ريال)</label>
+                    <input type="number" id="c-available" class="form-control" placeholder="0" oninput="calcCapital()">
+                </div>
+
+                <div style="margin-top: 30px; margin-bottom: 10px; font-weight: bold; color: var(--primary);">بنود التأسيس (التي تدفع مرة واحدة قبل البدء)</div>
+                
+                <table class="dynamic-table" id="capital-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 60%;">البند</th>
+                            <th style="width: 30%;">التكلفة (ريال)</th>
+                            <th style="width: 10%;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="capital-body">
+                        <!-- Rows added by JS -->
+                    </tbody>
+                </table>
+                <button class="btn btn-outline-gold" onclick="addCapitalRow()" style="padding: 8px 15px; font-size: 0.9rem;">+ إضافة بند</button>
+
+                <div style="margin-top: 30px; background: #F8FAFC; padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 1.1rem;">
+                        <span>إجمالي التأسيس المطلوب:</span>
+                        <strong id="c-total-req" style="color: var(--primary);">0 ريال</strong>
+                    </div>
+                    <div id="c-alert"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: Revenues -->
+        <div class="step-container" id="step-4">
+            <div class="card">
+                <h2 class="card-title">نموذج الإيرادات (المبيعات الشهرية)</h2>
+                <p class="form-text" style="margin-bottom: 20px;">أدخل المنتجات أو الخدمات التي ستقدمها، وتوقعاتك لمبيعاتها خلال <strong>شهر واحد</strong> (في الوضع الطبيعي).</p>
+
+                <table class="dynamic-table" id="rev-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%;">المنتج / الخدمة</th>
+                            <th style="width: 25%;">السعر (ريال)</th>
+                            <th style="width: 25%;">العدد المتوقع شهرياً</th>
+                            <th style="width: 10%;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="rev-body">
+                        <!-- Rows added by JS -->
+                    </tbody>
+                </table>
+                <button class="btn btn-outline-gold" onclick="addRevRow()" style="padding: 8px 15px; font-size: 0.9rem;">+ إضافة مصدر دخل</button>
+
+                <div style="margin-top: 30px; background: #ECFDF5; padding: 20px; border-radius: 8px; border: 1px solid #A7F3D0;">
+                    <div style="display: flex; justify-content: space-between; font-size: 1.2rem; color: #047857; font-weight: bold;">
+                        <span>الإيرادات الشهرية المتوقعة:</span>
+                        <span id="r-total-rev">0 ريال</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.95rem; color: #065F46;">
+                        <span>إجمالي عدد الطلبات/المبيعات:</span>
+                        <span id="r-total-qty">0 طلب</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 5: Costs -->
+        <div class="step-container" id="step-5">
+            <div class="card">
+                <h2 class="card-title">التكاليف والمصروفات الشهرية</h2>
+                
+                <div style="margin-bottom: 30px;">
+                    <h3 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 10px;">1. التكلفة المتغيرة</h3>
+                    <p class="form-text" style="margin-bottom: 15px;">هي التكلفة التي ترتبط بتنفيذ الطلب الواحد (مثل: مواد خام للطلب، عمولة منصة لكل بيعة، تغليف، توصيل مجاني، إلخ). لا تضع هنا المصاريف الثابتة كالإيجار.</p>
+                    
+                    <div class="form-group">
+                        <label>متوسط التكلفة المتغيرة للطلب الواحد (ريال)</label>
+                        <input type="number" id="v-cost-per-order" class="form-control" placeholder="مثال: 50" oninput="calcFinancials()">
+                    </div>
+                    <div id="v-alert" style="margin-top: 10px;"></div>
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 30px 0;">
+
+                <div>
+                    <h3 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 10px;">2. المصروفات الشهرية الثابتة</h3>
+                    <p class="form-text" style="margin-bottom: 15px;">هي المصاريف التي تدفعها شهرياً سواء بعت أم لم تبع (مثل: إيجار، رواتب ثابتة، اشتراكات برامج، إعلانات شهرية ثابتة).</p>
+                    
+                    <table class="dynamic-table" id="exp-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 60%;">بند المصروف الثابت</th>
+                                <th style="width: 30%;">المبلغ الشهري (ريال)</th>
+                                <th style="width: 10%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="exp-body">
+                            <!-- Rows added by JS -->
+                        </tbody>
+                    </table>
+                    <button class="btn btn-outline-gold" onclick="addExpRow()" style="padding: 8px 15px; font-size: 0.9rem;">+ إضافة مصروف</button>
+                </div>
+
+                <div style="margin-top: 30px; background: #FEF2F2; padding: 20px; border-radius: 8px; border: 1px solid #FECACA;">
+                    <div style="display: flex; justify-content: space-between; font-size: 1.2rem; color: #B91C1C; font-weight: bold;">
+                        <span>إجمالي المصروفات الثابتة شهرياً:</span>
+                        <span id="e-total">0 ريال</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 6: Scenarios -->
+        <div class="step-container" id="step-6">
+            <div class="card">
+                <h2 class="card-title">سيناريوهات الأداء</h2>
+                <p class="form-text" style="margin-bottom: 20px;">قمنا بجلب العدد المتوقع للمبيعات الذي أدخلته سابقاً كـ "سيناريو متوسط". بناءً عليه نقترح لك 3 سيناريوهات للتخطيط (محافظ 60%، متوسط 100%، قوي 150%). يمكنك تعديل الرقم الأساسي هنا لاختبار سيناريوهات مختلفة.</p>
+
+                <div class="form-group" style="max-width: 300px;">
+                    <label>العدد المتوقع للمبيعات (السيناريو المتوسط)</label>
+                    <input type="number" id="scen-base-qty" class="form-control" oninput="updateScenarios()">
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table class="scenarios-table" style="margin-top: 20px;">
+                        <thead>
+                            <tr>
+                                <th>المؤشر المالي</th>
+                                <th>محافظ (60%)</th>
+                                <th class="highlight-col">متوسط (100%)</th>
+                                <th>قوي (150%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>عدد الطلبات/المبيعات</td>
+                                <td id="scen-qty-1">0</td>
+                                <td id="scen-qty-2" class="highlight-col">0</td>
+                                <td id="scen-qty-3">0</td>
+                            </tr>
+                            <tr>
+                                <td>الإيرادات الشهرية</td>
+                                <td id="scen-rev-1">0</td>
+                                <td id="scen-rev-2" class="highlight-col">0</td>
+                                <td id="scen-rev-3">0</td>
+                            </tr>
+                            <tr>
+                                <td>التكاليف المتغيرة</td>
+                                <td id="scen-vc-1">0</td>
+                                <td id="scen-vc-2" class="highlight-col">0</td>
+                                <td id="scen-vc-3">0</td>
+                            </tr>
+                            <tr>
+                                <td>المصروفات الثابتة</td>
+                                <td id="scen-fc-1">0</td>
+                                <td id="scen-fc-2" class="highlight-col">0</td>
+                                <td id="scen-fc-3">0</td>
+                            </tr>
+                            <tr style="font-weight: bold; font-size: 1.1rem;">
+                                <td>الربح التشغيلي التقريبي</td>
+                                <td id="scen-prof-1">0</td>
+                                <td id="scen-prof-2" class="highlight-col">0</td>
+                                <td id="scen-prof-3">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 7: Evaluation -->
+        <div class="step-container" id="step-7">
+            <div class="card">
+                <h2 class="card-title">التقييم النوعي والتحليل</h2>
+                <p class="form-text" style="margin-bottom: 25px;">كيف تقيّم هذا المشروع شخصياً من 1 إلى 10؟ (10 تعني ممتاز ومناسب جداً)</p>
+
+                <div class="slider-container">
+                    <div class="slider-header">
+                        <label>قوة الطلب</label>
+                        <span class="slider-value" id="val-s1">7</span>
+                    </div>
+                    <input type="range" id="sl-demand" min="1" max="10" value="7" oninput="document.getElementById('val-s1').innerText=this.value">
+                </div>
+
+                <div class="slider-container">
+                    <div class="slider-header">
+                        <label>سهولة التشغيل والبدء</label>
+                        <span class="slider-value" id="val-s2">6</span>
+                    </div>
+                    <input type="range" id="sl-ease" min="1" max="10" value="6" oninput="document.getElementById('val-s2').innerText=this.value">
+                </div>
+
+                <div class="slider-container">
+                    <div class="slider-header">
+                        <label>ضعف المنافسة (10=لا يوجد منافسين، 1=منافسة شرسة)</label>
+                        <span class="slider-value" id="val-s3">5</span>
+                    </div>
+                    <input type="range" id="sl-comp" min="1" max="10" value="5" oninput="document.getElementById('val-s3').innerText=this.value">
+                </div>
+
+                <div class="slider-container">
+                    <div class="slider-header">
+                        <label>مدى ملاءمة المشروع لخبرتك وشغفك</label>
+                        <span class="slider-value" id="val-s4">8</span>
+                    </div>
+                    <input type="range" id="sl-fit" min="1" max="10" value="8" oninput="document.getElementById('val-s4').innerText=this.value">
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 30px 0;">
+
+                <div class="form-group">
+                    <label>ما هي أهم نقاط قوة هذا المشروع؟</label>
+                    <textarea id="t-strengths" class="form-control" placeholder="مثال: هامش ربح عالي، لا يحتاج إيجار محل..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>ما هي أهم التحديات والمخاطر؟</label>
+                    <textarea id="t-risks" class="form-control" placeholder="مثال: صعوبة إيجاد عمالة ماهرة، منافسة الأسعار..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>كيف يمكن تقليل هذه المخاطر؟</label>
+                    <textarea id="t-mitigation" class="form-control" placeholder="مثال: تقديم عروض اشتراك شهري لضمان الولاء..."></textarea>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 20px;">
+                    <div class="form-group">
+                        <label>قابلية التوسع مستقبلاً</label>
+                        <select id="t-scale-level" class="form-control">
+                            <option value="عالية جداً">عالية جداً</option>
+                            <option value="متوسطة">متوسطة</option>
+                            <option value="منخفضة (محدودة بوقتي)">منخفضة (محدودة بوقتي)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>كيف يمكن توسيعه؟</label>
+                        <input type="text" id="t-scale-how" class="form-control" placeholder="مثال: فتح فروع أخرى، إعطاء فرنشايز، توظيف مندوبين...">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-buttons no-print">
+            <button class="btn btn-outline" id="btn-prev" onclick="changeStep(-1)">السابق</button>
+            <button class="btn btn-primary" id="btn-next" onclick="changeStep(1)">التالي</button>
+        </div>
+
+    </div>
+
+    <!-- Report View -->
+    <div id="report-view">
+        <div class="report-header">
+            <h2 class="no-print">دراسة جدوى أولية</h2>
+            <h2 class="print-only" style="display:none; color:black;">دراسة جدوى أولية</h2>
+            <h3 id="rep-name" style="color: var(--gold); font-size: 1.8rem; margin-bottom: 5px;">[اسم المشروع]</h3>
+            <p id="rep-desc">[وصف المشروع]</p>
+        </div>
+
+        <!-- ملخص المشروع -->
+        <div class="report-section">
+            <div class="report-section-title">ملخص المشروع والسوق</div>
+            <div class="info-grid">
+                <div class="info-box">
+                    <h4>معلومات أساسية</h4>
+                    <p><strong>النوع:</strong> <span id="rep-type"></span></p>
+                    <p><strong>المدينة:</strong> <span id="rep-city"></span></p>
+                    <p><strong>العميل المستهدف:</strong> <span id="rep-target"></span></p>
+                </div>
+                <div class="info-box">
+                    <h4>تحليل السوق</h4>
+                    <p><strong>المشكلة والحل:</strong> <span id="rep-problem"></span></p>
+                    <p><strong>الميزة التنافسية:</strong> <span id="rep-adv"></span></p>
+                    <p><strong>الطلب:</strong> <span id="rep-demand"></span> | <strong>المنافسة:</strong> <span id="rep-comp"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- المؤشرات المالية -->
+        <div class="report-section">
+            <div class="report-section-title">المؤشرات المالية (متوسط شهري)</div>
+            
+            <div class="dashboard-grid">
+                <div class="dash-card highlight">
+                    <div class="dash-title">الربح التشغيلي التقريبي</div>
+                    <div class="dash-value" id="rep-profit">0</div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-title">الإيرادات المتوقعة</div>
+                    <div class="dash-value" id="rep-rev">0</div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-title">رأس المال المطلوب</div>
+                    <div class="dash-value" id="rep-cap-req">0</div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-title">هامش الربح</div>
+                    <div class="dash-value" id="rep-margin-pct">0%</div>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-box">
+                    <h4>تحليل نقطة التعادل</h4>
+                    <p id="rep-breakeven-text" style="font-weight: bold; font-size: 1.1rem; color: var(--primary);"></p>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">لتغطية مصاريفك الثابتة البالغة <span id="rep-fc-val"></span> ريال، بناءً على هامش مساهمة للطلب يبلغ <span id="rep-cm-val"></span> ريال.</p>
+                </div>
+                <div class="info-box">
+                    <h4>استرداد رأس المال</h4>
+                    <p id="rep-payback-text" style="font-weight: bold; font-size: 1.1rem; color: var(--primary);"></p>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">رأس المال المطلوب: <span id="rep-cap-val"></span> ريال، بربح متوقع قدره <span id="rep-prof-val"></span> ريال شهرياً.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- تفاصيل القوائم -->
+        <div class="report-section">
+            <div class="report-section-title">التفاصيل والأرقام</div>
+            <div class="info-grid">
+                <div class="info-box">
+                    <h4>بنود التأسيس</h4>
+                    <ul id="rep-cap-list" style="padding-right: 20px; color: var(--text-muted);"></ul>
+                </div>
+                <div class="info-box">
+                    <h4>المصروفات الشهرية</h4>
+                    <ul id="rep-exp-list" style="padding-right: 20px; color: var(--text-muted);"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- السيناريوهات -->
+        <div class="report-section">
+            <div class="report-section-title">سيناريوهات الأداء التخطيطية</div>
+            <div id="rep-scenarios-container">
+                <!-- Table cloned from step 6 -->
+            </div>
+        </div>
+
+        <!-- التحليل النوعي -->
+        <div class="report-section">
+            <div class="report-section-title">التحليل النوعي والمخاطر</div>
+            <div class="info-grid">
+                <div class="info-box">
+                    <h4>نقاط القوة</h4>
+                    <p id="rep-str"></p>
+                </div>
+                <div class="info-box">
+                    <h4>التحديات والمخاطر</h4>
+                    <p id="rep-rsk"></p>
+                    <h4 style="margin-top:15px; font-size: 1rem;">الحد من المخاطر:</h4>
+                    <p id="rep-mit"></p>
+                </div>
+            </div>
+            <div class="info-box" style="margin-top: 15px;">
+                <h4>التقييم الشخصي للفكرة</h4>
+                <p>التقييم العام: <strong id="rep-eval-score" style="color:var(--gold); font-size: 1.2rem;">0 / 10</strong></p>
+                <p style="margin-top: 5px;">قابلية التوسع: <span id="rep-scale"></span></p>
+            </div>
+        </div>
+
+        <!-- الحكم النهائي -->
+        <div class="verdict-box">
+            <h3>الحكم النهائي التقديري</h3>
+            <p id="rep-verdict-text"></p>
+            
+            <div class="test-list">
+                <h4 style="color: var(--text-main); margin-bottom: 10px;">أهم 3 أشياء يجب اختبارها قبل التنفيذ:</h4>
+                <ol id="rep-test-list" style="padding-right: 20px;">
+                    <!-- Auto generated -->
+                </ol>
+            </div>
+            
+            <p style="margin-top: 25px; font-size: 0.85rem; color: var(--text-muted);">
+                * ملاحظة: هذه الدراسة مبنية على البيانات التي أدخلتها، وتهدف إلى مساعدتك في تقييم الفكرة مبدئياً. النتائج تقديرية لتنظيم الأفكار وليست ضماناً للنجاح أو الربح.
+            </p>
+        </div>
+
+        <!-- Print & Actions -->
+        <div class="print-actions no-print">
+            <button class="btn btn-outline" onclick="editStudy()">✏️ تعديل البيانات</button>
+            <button class="btn btn-primary" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+        </div>
+    </div>
+
+</div>
+
+<div id="toast" class="toast">تمت العملية</div>
+
+<script>
+    // ==========================================
+    // Format Numbers safely
+    // ==========================================
+    function formatNum(num) {
+        if (isNaN(num)) return "0";
+        var str = parseFloat(num).toFixed(1);
+        var parts = str.split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        if (parts[1] === '0') return parts[0];
+        return parts.join('.');
+    }
+
+    function formatMoney(num) {
+        return formatNum(num) + " ريال";
+    }
+
+    // ==========================================
+    // Wizard Navigation
+    // ==========================================
+    var currentStep = 1;
+    var totalSteps = 7;
+    var stepTitles = [
+        "1. معلومات المشروع", "2. العميل والسوق", "3. التأسيس ورأس المال", 
+        "4. نموذج الإيرادات", "5. التكاليف والمصروفات", "6. سيناريوهات الأداء", "7. التقييم النوعي"
+    ];
+
+    function changeStep(dir) {
+        if(dir === 1 && currentStep === totalSteps) {
+            generateReport();
+            return;
+        }
+
+        var oldStep = document.getElementById("step-" + currentStep);
+        oldStep.classList.remove("active");
+        
+        currentStep += dir;
+        
+        var newStep = document.getElementById("step-" + currentStep);
+        newStep.classList.add("active");
+
+        // Update Progress
+        document.getElementById("step-title").innerText = stepTitles[currentStep-1];
+        document.getElementById("step-count").innerText = "الخطوة " + currentStep + " من " + totalSteps;
+        document.getElementById("progress-fill").style.width = ((currentStep / totalSteps) * 100) + "%";
+
+        // Update Buttons
+        document.getElementById("btn-prev").style.visibility = (currentStep === 1) ? "hidden" : "visible";
+        
+        if (currentStep === totalSteps) {
+            document.getElementById("btn-next").innerText = "إنشاء دراسة الجدوى 🚀";
+        } else {
+            document.getElementById("btn-next").innerText = "التالي ←";
+        }
+        
+        window.scrollTo(0, 0);
+    }
+
+    function editStudy() {
+        document.getElementById("report-view").style.display = "none";
+        document.getElementById("wizard-view").style.display = "block";
+        window.scrollTo(0, 0);
+    }
+
+    // ==========================================
+    // Dynamic Tables & Calculations
+    // ==========================================
+    
+    // CAPITAL
+    function addCapitalRow(name, cost) {
+        name = name || "";
+        cost = cost || "";
+        var tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td><input type="text" class="c-name" value="${name}" placeholder="مثال: معدات" oninput="calcCapital()"></td>
+            <td><input type="number" class="c-cost" value="${cost}" placeholder="0" oninput="calcCapital()"></td>
+            <td><button class="btn-remove" onclick="this.parentElement.parentElement.remove(); calcCapital();">X</button></td>
+        `;
+        document.getElementById("capital-body").appendChild(tr);
+        calcCapital();
+    }
+
+    var totalCapitalReq = 0;
+    function calcCapital() {
+        totalCapitalReq = 0;
+        var costs = document.querySelectorAll(".c-cost");
+        costs.forEach(function(input) {
+            totalCapitalReq += Math.max(0, parseFloat(input.value) || 0);
+        });
+        document.getElementById("c-total-req").innerText = formatMoney(totalCapitalReq);
+
+        var available = Math.max(0, parseFloat(document.getElementById("c-available").value) || 0);
+        var alertDiv = document.getElementById("c-alert");
+        
+        if(totalCapitalReq === 0) {
+            alertDiv.innerHTML = "";
+            return;
+        }
+
+        if(available < totalCapitalReq) {
+            var diff = totalCapitalReq - available;
+            alertDiv.innerHTML = `<div class="alert alert-warning">⚠️ يبدو أن رأس المال المتاح أقل من المطلوب بـ ${formatMoney(diff)}. حاول تقليل تكاليف التأسيس أو تدبير تمويل إضافي.</div>`;
+        } else {
+            alertDiv.innerHTML = `<div class="alert alert-success">✅ ممتاز، رأس المال المتاح يغطي تكاليف التأسيس براحة.</div>`;
+        }
+    }
+
+    // REVENUES
+    function addRevRow(name, price, qty) {
+        name = name || "";
+        price = price || "";
+        qty = qty || "";
+        var tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td><input type="text" class="r-name" value="${name}" placeholder="الخدمة/المنتج" oninput="calcFinancials()"></td>
+            <td><input type="number" class="r-price" value="${price}" placeholder="السعر" oninput="calcFinancials()"></td>
+            <td><input type="number" class="r-qty" value="${qty}" placeholder="العدد" oninput="calcFinancials()"></td>
+            <td><button class="btn-remove" onclick="this.parentElement.parentElement.remove(); calcFinancials();">X</button></td>
+        `;
+        document.getElementById("rev-body").appendChild(tr);
+        calcFinancials();
+    }
+
+    // EXPENSES
+    function addExpRow(name, cost) {
+        name = name || "";
+        cost = cost || "";
+        var tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td><input type="text" class="e-name" value="${name}" placeholder="بند المصروف" oninput="calcFinancials()"></td>
+            <td><input type="number" class="e-cost" value="${cost}" placeholder="0" oninput="calcFinancials()"></td>
+            <td><button class="btn-remove" onclick="this.parentElement.parentElement.remove(); calcFinancials();">X</button></td>
+        `;
+        document.getElementById("exp-body").appendChild(tr);
+        calcFinancials();
+    }
+
+    // CORE FINANCIAL LOGIC
+    var totalRev = 0, totalQty = 0, avgPrice = 0;
+    var totalFixedCosts = 0;
+    var varCostPerOrder = 0, totalVarCost = 0;
+    var contributionMargin = 0, opProfit = 0, cmPerOrder = 0;
+
+    function calcFinancials() {
+        // Rev
+        totalRev = 0;
+        totalQty = 0;
+        var rPrices = document.querySelectorAll(".r-price");
+        var rQtys = document.querySelectorAll(".r-qty");
+        for(var i=0; i<rPrices.length; i++) {
+            var p = Math.max(0, parseFloat(rPrices[i].value) || 0);
+            var q = Math.max(0, parseFloat(rQtys[i].value) || 0);
+            totalRev += (p * q);
+            totalQty += q;
+        }
+        avgPrice = totalQty > 0 ? (totalRev / totalQty) : 0;
+        
+        document.getElementById("r-total-rev").innerText = formatMoney(totalRev);
+        document.getElementById("r-total-qty").innerText = formatNum(totalQty) + " طلب";
+
+        // Exp
+        totalFixedCosts = 0;
+        var eCosts = document.querySelectorAll(".e-cost");
+        eCosts.forEach(function(input) {
+            totalFixedCosts += Math.max(0, parseFloat(input.value) || 0);
+        });
+        document.getElementById("e-total").innerText = formatMoney(totalFixedCosts);
+
+        // Var Cost
+        varCostPerOrder = Math.max(0, parseFloat(document.getElementById("v-cost-per-order").value) || 0);
+        totalVarCost = varCostPerOrder * totalQty;
+        contributionMargin = totalRev - totalVarCost;
+        cmPerOrder = avgPrice - varCostPerOrder;
+
+        // Warnings for Var Cost
+        var vAlert = document.getElementById("v-alert");
+        if(totalQty > 0 && varCostPerOrder >= avgPrice && avgPrice > 0) {
+            vAlert.innerHTML = `<div class="alert alert-danger">❌ انتبه: التكلفة المتغيرة للطلب أعلى من أو تساوي متوسط سعر البيع! المشروع يخسر في كل طلب يتم تنفيذه.</div>`;
+        } else {
+            vAlert.innerHTML = "";
+        }
+
+        // Update Scenario Base Input automatically if user hasn't typed in it recently
+        document.getElementById("scen-base-qty").value = totalQty;
+        updateScenarios();
+    }
+
+    // SCENARIOS
+    function updateScenarios() {
+        var baseQty = Math.max(0, parseFloat(document.getElementById("scen-base-qty").value) || 0);
+        
+        // Use average price and average var cost per order
+        var _avgP = avgPrice;
+        var _vcO = varCostPerOrder;
+        var _fc = totalFixedCosts;
+
+        var ratios = [0.6, 1.0, 1.5]; // 60%, 100%, 150%
+        
+        for(var i=0; i<ratios.length; i++) {
+            var col = i + 1;
+            var sqty = Math.round(baseQty * ratios[i]);
+            var srev = sqty * _avgP;
+            var svc = sqty * _vcO;
+            var sprof = srev - svc - _fc;
+
+            document.getElementById("scen-qty-"+col).innerText = formatNum(sqty);
+            document.getElementById("scen-rev-"+col).innerText = formatNum(srev);
+            document.getElementById("scen-vc-"+col).innerText = formatNum(svc);
+            document.getElementById("scen-fc-"+col).innerText = formatNum(_fc);
+            document.getElementById("scen-prof-"+col).innerText = formatNum(sprof);
+            document.getElementById("scen-prof-"+col).style.color = sprof < 0 ? "red" : "inherit";
+        }
+    }
+
+    // ==========================================
+    // REPORT GENERATION
+    // ==========================================
+    function generateReport() {
+        // Ensure latest calculations
+        calcCapital();
+        calcFinancials();
+
+        // Populate Info & Market
+        document.getElementById("rep-name").innerText = document.getElementById("p-name").value || "مشروع بدون اسم";
+        document.getElementById("rep-desc").innerText = document.getElementById("p-desc").value || "-";
+        document.getElementById("rep-type").innerText = document.getElementById("p-type").value;
+        document.getElementById("rep-city").innerText = document.getElementById("p-city").value || "غير محدد";
+        document.getElementById("rep-target").innerText = document.getElementById("m-target").value || "-";
+        document.getElementById("rep-problem").innerText = document.getElementById("m-problem").value || "-";
+        document.getElementById("rep-adv").innerText = document.getElementById("m-advantage").value || "-";
+        document.getElementById("rep-demand").innerText = document.getElementById("m-demand").value;
+        document.getElementById("rep-comp").innerText = document.getElementById("m-comp").value;
+
+        // Populate Financials
+        opProfit = totalRev - totalVarCost - totalFixedCosts;
+        var opMargin = totalRev > 0 ? (opProfit / totalRev) * 100 : 0;
+
+        document.getElementById("rep-profit").innerText = formatMoney(opProfit);
+        document.getElementById("rep-rev").innerText = formatMoney(totalRev);
+        document.getElementById("rep-cap-req").innerText = formatMoney(totalCapitalReq);
+        document.getElementById("rep-margin-pct").innerText = formatNum(opMargin) + "%";
+
+        // Breakeven
+        var beText = "-";
+        if(cmPerOrder > 0) {
+            var beQty = Math.ceil(totalFixedCosts / cmPerOrder);
+            beText = "تحتاج حوالي " + formatNum(beQty) + " طلب شهرياً";
+        } else if (totalFixedCosts === 0) {
+            beText = "لا يوجد مصاريف ثابتة، التعادل من الطلب الأول";
+        } else {
+            beText = "لا يمكن الحساب (هامش المساهمة سالب)";
+        }
+        document.getElementById("rep-breakeven-text").innerText = beText;
+        document.getElementById("rep-fc-val").innerText = formatNum(totalFixedCosts);
+        document.getElementById("rep-cm-val").innerText = formatNum(cmPerOrder);
+
+        // Payback
+        var pbText = "-";
+        if(opProfit > 0) {
+            var pbMonths = totalCapitalReq / opProfit;
+            pbText = "خلال " + formatNum(pbMonths) + " شهر تقريباً";
+        } else {
+            pbText = "المشروع غير مربح حالياً لتقدير الاسترداد";
+        }
+        document.getElementById("rep-payback-text").innerText = pbText;
+        document.getElementById("rep-cap-val").innerText = formatNum(totalCapitalReq);
+        document.getElementById("rep-prof-val").innerText = formatNum(opProfit);
+
+        // Lists (Cap & Exp)
+        var cNames = document.querySelectorAll(".c-name");
+        var cCosts = document.querySelectorAll(".c-cost");
+        var cList = "";
+        for(var i=0; i<cNames.length; i++){
+            if(cNames[i].value || cCosts[i].value) {
+                cList += `<li>${cNames[i].value || 'بند'}: <strong>${formatMoney(cCosts[i].value)}</strong></li>`;
+            }
+        }
+        document.getElementById("rep-cap-list").innerHTML = cList || "<li>لا يوجد بنود مدخلة</li>";
+
+        var eNames = document.querySelectorAll(".e-name");
+        var eCosts = document.querySelectorAll(".e-cost");
+        var eList = "";
+        for(var i=0; i<eNames.length; i++){
+            if(eNames[i].value || eCosts[i].value) {
+                eList += `<li>${eNames[i].value || 'بند'}: <strong>${formatMoney(eCosts[i].value)}</strong></li>`;
+            }
+        }
+        document.getElementById("rep-exp-list").innerHTML = eList || "<li>لا يوجد بنود مدخلة</li>";
+
+        // Scenarios clone
+        var scenTable = document.querySelector(".scenarios-table").cloneNode(true);
+        document.getElementById("rep-scenarios-container").innerHTML = "";
+        document.getElementById("rep-scenarios-container").appendChild(scenTable);
+
+        // Qualitative
+        document.getElementById("rep-str").innerText = document.getElementById("t-strengths").value || "-";
+        document.getElementById("rep-rsk").innerText = document.getElementById("t-risks").value || "-";
+        document.getElementById("rep-mit").innerText = document.getElementById("t-mitigation").value || "-";
+        
+        var avgEval = (
+            parseInt(document.getElementById("sl-demand").value) +
+            parseInt(document.getElementById("sl-ease").value) +
+            parseInt(document.getElementById("sl-comp").value) +
+            parseInt(document.getElementById("sl-fit").value)
+        ) / 4;
+        document.getElementById("rep-eval-score").innerText = formatNum(avgEval) + " / 10";
+        document.getElementById("rep-scale").innerText = document.getElementById("t-scale-level").value + " (" + (document.getElementById("t-scale-how").value || "بدون تفصيل") + ")";
+
+        // Verdict & Top 3 Tests
+        var verdict = "";
+        var tests = [];
+
+        var availableCap = Math.max(0, parseFloat(document.getElementById("c-available").value) || 0);
+
+        if(opProfit > 0 && opMargin >= 15 && totalQty > 0) {
+            verdict = "بناءً على الأرقام المدخلة، يبدو أن المشروع يملك نموذجاً مالياً مبشراً وقابلاً للنجاح، لكن التنفيذ الفعلي والوصول للعملاء هو التحدي الحقيقي.";
+        } else if (opProfit > 0 && opMargin < 15) {
+            verdict = "المشروع يحقق ربحاً لكن هامش الربح ضيق جداً، مما يجعله حساساً لأي تغير في التكاليف أو المبيعات. يحتاج لمراجعة التسعير.";
+        } else if (opProfit <= 0 && totalQty > 0) {
+            verdict = "النموذج الحالي خاسر تشغيلياً أو بالكاد يغطي تكاليفه. يجب رفع الأسعار، أو خفض المصاريف الثابتة، أو زيادة هدف المبيعات بشكل كبير.";
+        } else {
+            verdict = "البيانات المدخلة غير كافية لتقييم النموذج المالي بوضوح، يرجى إدخال توقعات مبيعات وتكاليف منطقية.";
+        }
+        document.getElementById("rep-verdict-text").innerText = verdict;
+
+        // Dynamic Tests
+        if(opProfit <= 0) {
+            tests.push(`كيف ستعالج عجز الأرباح الحالي؟ (التكاليف الثابتة ${formatNum(totalFixedCosts)} أكبر من هامش المبيعات).`);
+        } else {
+            var beQty = Math.ceil(totalFixedCosts / cmPerOrder);
+            tests.push(`هل تستطيع تسويقياً وبيعيّاً الوصول إلى ${formatNum(beQty)} طلب شهرياً فقط لتغطية التكاليف (نقطة التعادل)؟`);
+        }
+
+        tests.push(`هل العميل المستهدف (${document.getElementById("m-target").value || 'السوق'}) مستعد فعلاً لدفع متوسط ${formatNum(avgPrice)} ريال مقابل هذه الخدمة/المنتج؟`);
+        
+        if(availableCap < totalCapitalReq) {
+            tests.push(`كيف ستغطي العجز في رأس مال التأسيس البالغ ${formatNum(totalCapitalReq - availableCap)} ريال قبل البدء؟`);
+        } else {
+            tests.push(`هل التكلفة التأسيسية البالغة ${formatNum(totalCapitalReq)} ريال دقيقة وتم تسعيرها من موردين حقيقيين أم أنها مجرد تخمين؟`);
+        }
+
+        var testHtml = "";
+        for(var t=0; t<tests.length; t++){
+            testHtml += `<li>${tests[t]}</li>`;
+        }
+        document.getElementById("rep-test-list").innerHTML = testHtml;
+
+        // Switch Views
+        document.getElementById("wizard-view").style.display = "none";
+        document.getElementById("report-view").style.display = "block";
+        window.scrollTo(0, 0);
+    }
+
+    // ==========================================
+    // Save, Load, Clear Data
+    // ==========================================
+    function getFormData() {
+        var data = {};
+        var inputs = document.querySelectorAll("input, textarea, select");
+        inputs.forEach(function(el) {
+            if(el.id) {
+                data[el.id] = el.value;
+            }
+        });
+        
+        // Also save dynamic rows
+        data.capRows = [];
+        var cNames = document.querySelectorAll(".c-name");
+        var cCosts = document.querySelectorAll(".c-cost");
+        for(var i=0; i<cNames.length; i++){
+            data.capRows.push({name: cNames[i].value, cost: cCosts[i].value});
+        }
+
+        data.revRows = [];
+        var rNames = document.querySelectorAll(".r-name");
+        var rPrices = document.querySelectorAll(".r-price");
+        var rQtys = document.querySelectorAll(".r-qty");
+        for(var i=0; i<rNames.length; i++){
+            data.revRows.push({name: rNames[i].value, price: rPrices[i].value, qty: rQtys[i].value});
+        }
+
+        data.expRows = [];
+        var eNames = document.querySelectorAll(".e-name");
+        var eCosts = document.querySelectorAll(".e-cost");
+        for(var i=0; i<eNames.length; i++){
+            data.expRows.push({name: eNames[i].value, cost: eCosts[i].value});
+        }
+
+        return data;
+    }
+
+    function saveData() {
+        try {
+            var data = getFormData();
+            localStorage.setItem("feasibilityTemplateData", JSON.stringify(data));
+            showToast("تم الحفظ بنجاح 💾");
+        } catch(e) {
+            showToast("تعذر الحفظ في المتصفح");
+        }
+    }
+
+    function loadData() {
+        var saved = localStorage.getItem("feasibilityTemplateData");
+        if(!saved) {
+            showToast("لا توجد بيانات محفوظة مسبقاً.");
+            return;
+        }
+        
+        var data = JSON.parse(saved);
+        var inputs = document.querySelectorAll("input, textarea, select");
+        inputs.forEach(function(el) {
+            if(el.id && data[el.id] !== undefined) {
+                el.value = data[el.id];
+                // Update slider text if it's a slider
+                if(el.type === 'range') {
+                    var textSpan = el.previousElementSibling.querySelector('.slider-value');
+                    if(textSpan) textSpan.innerText = el.value;
+                }
+            }
+        });
+
+        // Restore dynamic rows
+        document.getElementById("capital-body").innerHTML = "";
+        if(data.capRows) {
+            data.capRows.forEach(function(r) { addCapitalRow(r.name, r.cost); });
+        }
+        if(!data.capRows || data.capRows.length === 0) addCapitalRow();
+
+        document.getElementById("rev-body").innerHTML = "";
+        if(data.revRows) {
+            data.revRows.forEach(function(r) { addRevRow(r.name, r.price, r.qty); });
+        }
+        if(!data.revRows || data.revRows.length === 0) addRevRow();
+
+        document.getElementById("exp-body").innerHTML = "";
+        if(data.expRows) {
+            data.expRows.forEach(function(r) { addExpRow(r.name, r.cost); });
+        }
+        if(!data.expRows || data.expRows.length === 0) addExpRow();
+
+        calcCapital();
+        calcFinancials();
+        showToast("تم تحميل البيانات 📂");
+    }
+
+    function clearData() {
+        if(confirm("هل أنت متأكد من مسح جميع البيانات المدخلة؟")) {
+            var inputs = document.querySelectorAll("input[type=text], input[type=number], textarea");
+            inputs.forEach(function(el) { el.value = ""; });
+            
+            document.getElementById("capital-body").innerHTML = ""; addCapitalRow();
+            document.getElementById("rev-body").innerHTML = ""; addRevRow();
+            document.getElementById("exp-body").innerHTML = ""; addExpRow();
+            
+            calcCapital();
+            calcFinancials();
+            showToast("تم مسح البيانات 🗑️");
+        }
+    }
+
+    function showToast(msg) {
+        var toast = document.getElementById("toast");
+        toast.innerText = msg;
+        toast.classList.add("show");
+        setTimeout(function() { toast.classList.remove("show"); }, 3000);
+    }
+
+    // Initialize
+    window.onload = function() {
+        addCapitalRow();
+        addRevRow();
+        addExpRow();
+    };
+
+</script>
+</body>
+</html>

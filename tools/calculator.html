@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>حاسبة المشاريع | Project Calculator</title>
+    <style>
+        /* === الأساسيات (Reset & Base) === */
+        :root {
+            --primary: #2C0E37;
+            --primary-light: #4A1C5A;
+            --gold: #D4AF37;
+            --gold-light: #F3E5AB;
+            --bg-color: #F8F9FA;
+            --card-bg: #FFFFFF;
+            --text-main: #000000;
+            --text-muted: #555555;
+            --border-color: #E2E8F0;
+            --success: #198754;
+            --danger: #DC3545;
+            --warning: #FFC107;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* === الهيكل والتخطيط (Layout) === */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 25px 15px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .disclaimer {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--gold);
+            border-right: 4px solid var(--gold);
+            padding: 10px;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            border-radius: 4px;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        @media (min-width: 992px) {
+            .grid-layout {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+        }
+
+        .card-header {
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* === النماذج والمدخلات (Forms) === */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            background-color: #FAFAFA;
+            /* منع الآيفون من عمل زووم تلقائي */
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+            background-color: #FFF;
+        }
+
+        .form-text {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* === النتائج (Results) === */
+        .results-section {
+            grid-column: 1 / -1;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .result-box {
+            background: var(--bg-color);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .result-box.highlight {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            grid-column: 1 / -1;
+        }
+
+        @media (min-width: 768px) {
+            .result-box.highlight {
+                grid-column: auto;
+            }
+        }
+
+        .result-box.highlight .result-value {
+            color: var(--gold);
+        }
+
+        .result-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+        }
+        
+        .result-box.highlight .result-title {
+            color: #E2E8F0;
+        }
+
+        .result-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* === التنبيهات الذكية (Smart Alerts) === */
+        .alerts-container {
+            margin-top: 15px;
+        }
+        
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .alert-success { background: #E8F5E9; color: #2E7D32; border: 1px solid #C8E6C9; }
+        .alert-danger { background: #FFEBEE; color: #C62828; border: 1px solid #FFCDD2; }
+        .alert-warning { background: #FFF8E1; color: #F57F17; border: 1px solid #FFECB3; }
+
+        /* === السيناريوهات (Scenarios) === */
+        .scenarios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .scenario-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .scenario-header {
+            text-align: center;
+            font-weight: bold;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #DDD;
+            color: var(--primary);
+        }
+
+        .scenario-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .scenario-row.total {
+            font-weight: bold;
+            border-top: 1px dashed #CCC;
+            padding-top: 8px;
+            color: var(--primary);
+        }
+
+        /* === الأزرار (Buttons) === */
+        .actions-bar {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        
+        @media (min-width: 768px) {
+            .actions-bar {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        .btn {
+            padding: 12px 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            text-align: center;
+        }
+
+        .btn-primary { background-color: var(--primary); color: white; }
+        .btn-gold { background-color: var(--gold); color: var(--primary); }
+        .btn-outline { background-color: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        .btn-danger { background-color: transparent; border: 2px solid var(--danger); color: var(--danger); }
+        
+        .full-width { grid-column: 1 / -1; }
+
+        .toast-msg {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        
+        .toast-msg.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* === الطباعة (Print) === */
+        @media print {
+            body { background: white; }
+            .no-print { display: none !important; }
+            .container { max-width: 100%; padding: 0; }
+            .grid-layout { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 15px !important; }
+            .card { box-shadow: none !important; border: 1px solid #ddd !important; break-inside: avoid; margin-bottom: 15px; padding: 15px; }
+            header { background: white; color: black; box-shadow: none; border-bottom: 2px solid var(--primary); padding: 15px; margin-bottom: 20px; }
+            header h1 { color: var(--primary); }
+            .result-box.highlight { background: white !important; color: black !important; border: 2px solid var(--primary) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .result-box.highlight .result-value { color: var(--primary) !important; }
+            .result-box.highlight .result-title { color: black !important; }
+            input { border: none !important; border-bottom: 1px solid #aaa !important; background: transparent !important; border-radius: 0 !important; box-shadow: none !important; font-weight: bold !important; color: var(--primary) !important; padding: 5px 0 !important; }
+            .form-text { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- الرأس -->
+        <header>
+            <h1>حاسبة المشاريع</h1>
+            <p>احسب تكلفة مشروعك، أرباحك، نقطة التعادل، ومدة استرداد رأس المال</p>
+            <div class="disclaimer">
+                تنبيه: النتائج المعروضة هي تقديرية لأغراض التخطيط واتخاذ القرار، وليست ضماناً للأرباح أو بديلاً عن المحاسبة المالية الرسمية.
+            </div>
+            <div class="disclaimer no-print" style="margin-top: 10px; font-size: 0.8rem; border-color: transparent; background: transparent;">
+                🔒 جميع بياناتك تتم معالجتها محلياً داخل جهازك، ولا يتم إرسالها إلى أي خادم.
+            </div>
+        </header>
+
+        <!-- منطقة الأخطاء التقنية (مخفية إلا في حالة حدوث مشكلة) -->
+        <div id="debug-log" style="display:none; background:#fee; color:#c00; padding:10px; border-radius:8px; margin-bottom:15px; font-family:monospace; text-align:left; direction:ltr; font-size:12px;"></div>
+
+        <div class="grid-layout">
+            
+            <!-- العمود الأول: المدخلات -->
+            <div>
+                <div class="card">
+                    <div class="card-header">1. بيانات المشروع</div>
+                    <div class="form-group">
+                        <label for="projectName">اسم المشروع</label>
+                        <input type="text" id="projectName" value="تنظيف المفروشات والسجاد">
+                    </div>
+                    <div class="form-group">
+                        <label for="capital">رأس المال المبدئي (ريال)</label>
+                        <input type="text" inputmode="decimal" id="capital" value="6000">
+                        <div class="form-text">المبلغ الذي تحتاجه لتجهيز المشروع والبدء.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">2. المبيعات الشهرية المتوقعة</div>
+                    <div class="form-group">
+                        <label for="price">سعر البيع / متوسط قيمة الطلب (ريال)</label>
+                        <input type="text" inputmode="decimal" id="price" value="350">
+                    </div>
+                    <div class="form-group">
+                        <label for="orders">عدد الطلبات شهرياً</label>
+                        <input type="text" inputmode="decimal" id="orders" value="20">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">3. التكاليف المتغيرة للطلب الواحد</div>
+                    <div class="form-group">
+                        <label for="varCost">التكلفة المتغيرة الأساسية (ريال)</label>
+                        <input type="text" inputmode="decimal" id="varCost" value="40">
+                        <div class="form-text">تكلفة تتغير مع كل طلب (مثل المواد الخام، التغليف).</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addVarCost">تكلفة إضافية اختيارية (ريال)</label>
+                        <input type="text" inputmode="decimal" id="addVarCost" value="0">
+                        <div class="form-text">أجور عامل، عمولة مندوب، تكلفة توصيل... إلخ.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- العمود الثاني: المصاريف الثابتة -->
+            <div>
+                <div class="card">
+                    <div class="card-header">4. المصاريف الشهرية الثابتة</div>
+                    <div class="form-group">
+                        <label for="rent">الإيجار (ريال)</label>
+                        <input type="text" inputmode="decimal" id="rent" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="marketing">تسويق وإعلانات (ريال)</label>
+                        <input type="text" inputmode="decimal" id="marketing" value="400">
+                    </div>
+                    <div class="form-group">
+                        <label for="comms">اتصالات وإنترنت (ريال)</label>
+                        <input type="text" inputmode="decimal" id="comms" value="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="salaries">رواتب / أجور ثابتة (ريال)</label>
+                        <input type="text" inputmode="decimal" id="salaries" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="subs">اشتراكات وبرامج (ريال)</label>
+                        <input type="text" inputmode="decimal" id="subs" value="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="others">مصاريف أخرى (ريال)</label>
+                        <input type="text" inputmode="decimal" id="others" value="100">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- النتائج الرئيسية -->
+        <div class="card results-section">
+            <div class="card-header" style="justify-content: center; font-size: 1.6rem;">النتائج والتحليل المالي</div>
+            
+            <div class="results-grid">
+                <div class="result-box highlight">
+                    <div class="result-title">الربح التشغيلي التقريبي</div>
+                    <div class="result-value" id="resProfit">0</div>
+                </div>
+                <div class="result-box">
+                    <div class="result-title">الإيرادات الشهرية</div>
+                    <div class="result-value" id="resRevenue">0</div>
+                </div>
+                <div class="result-box">
+                    <div class="result-title">إجمالي التكاليف المتغيرة</div>
+                    <div class="result-value" id="resTotalVar">0</div>
+                </div>
+                <div class="result-box">
+                    <div class="result-title">إجمالي المصاريف الثابتة</div>
+                    <div class="result-value" id="resTotalFixed">0</div>
+                </div>
+            </div>
+
+            <div class="results-grid">
+                <div class="result-box">
+                    <div class="result-title">هامش المساهمة (للطلب)</div>
+                    <div class="result-value" id="resMarginValue">0</div>
+                </div>
+                <div class="result-box">
+                    <div class="result-title">نسبة هامش المساهمة</div>
+                    <div class="result-value" id="resMarginPercent">0%</div>
+                </div>
+                <div class="result-box">
+                    <div class="result-title">نقطة التعادل (طلبات)</div>
+                    <div class="result-value" id="resBreakeven">0</div>
+                </div>
+                <div class="result-box">
+                    <div class="result-title">استرداد رأس المال</div>
+                    <div class="result-value" id="resRecovery">0</div>
+                </div>
+                <div class="result-box">
+                    <div class="result-title">العائد التشغيلي (شهرياً)</div>
+                    <div class="result-value" id="resRoC">0%</div>
+                </div>
+            </div>
+
+            <!-- التنبيهات الذكية -->
+            <div class="alerts-container no-print" id="alertsContainer"></div>
+        </div>
+
+        <!-- سيناريوهات الأداء -->
+        <div class="card results-section">
+            <div class="card-header">سيناريوهات الأداء</div>
+            <p class="no-print" style="font-size: 0.85rem; color: #666; margin-bottom: 15px;">ملاحظة: تفترض هذه السيناريوهات ثبات المصاريف الثابتة. في الواقع، قد ترتفع بعض المصاريف عند زيادة حجم المبيعات بشكل كبير.</p>
+            
+            <div class="scenarios-grid">
+                <div class="scenario-card">
+                    <div class="scenario-header">سيناريو محافظ (50%)</div>
+                    <div class="scenario-row"><span>الطلبات:</span> <strong id="sc1Orders">0</strong></div>
+                    <div class="scenario-row"><span>الإيرادات:</span> <strong id="sc1Rev">0</strong></div>
+                    <div class="scenario-row"><span>تكاليف متغيرة:</span> <strong id="sc1Var">0</strong></div>
+                    <div class="scenario-row"><span>مصاريف ثابتة:</span> <strong id="sc1Fix">0</strong></div>
+                    <div class="scenario-row total"><span>الربح التشغيلي:</span> <strong id="sc1Profit">0</strong></div>
+                </div>
+                <div class="scenario-card" style="border-color: var(--primary); box-shadow: 0 0 10px rgba(44,14,55,0.1);">
+                    <div class="scenario-header" style="color: var(--primary);">سيناريو متوسط (100%)</div>
+                    <div class="scenario-row"><span>الطلبات:</span> <strong id="sc2Orders">0</strong></div>
+                    <div class="scenario-row"><span>الإيرادات:</span> <strong id="sc2Rev">0</strong></div>
+                    <div class="scenario-row"><span>تكاليف متغيرة:</span> <strong id="sc2Var">0</strong></div>
+                    <div class="scenario-row"><span>مصاريف ثابتة:</span> <strong id="sc2Fix">0</strong></div>
+                    <div class="scenario-row total"><span>الربح التشغيلي:</span> <strong id="sc2Profit">0</strong></div>
+                </div>
+                <div class="scenario-card">
+                    <div class="scenario-header" style="color: var(--success);">سيناريو قوي (150%)</div>
+                    <div class="scenario-row"><span>الطلبات:</span> <strong id="sc3Orders">0</strong></div>
+                    <div class="scenario-row"><span>الإيرادات:</span> <strong id="sc3Rev">0</strong></div>
+                    <div class="scenario-row"><span>تكاليف متغيرة:</span> <strong id="sc3Var">0</strong></div>
+                    <div class="scenario-row"><span>مصاريف ثابتة:</span> <strong id="sc3Fix">0</strong></div>
+                    <div class="scenario-row total"><span>الربح التشغيلي:</span> <strong id="sc3Profit">0</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الأزرار -->
+        <div class="actions-bar no-print">
+            <button class="btn btn-primary" onclick="saveData()">💾 حفظ</button>
+            <button class="btn btn-outline" onclick="loadData()">📂 تحميل</button>
+            <button class="btn btn-gold full-width" onclick="window.print()">🖨️ طباعة / PDF</button>
+            <button class="btn btn-outline" onclick="shareData()">🔗 مشاركة</button>
+            <button class="btn btn-danger" onclick="resetData()">🔄 تفريغ</button>
+        </div>
+    </div>
+
+    <div id="toast" class="toast-msg no-print">تمت العملية بنجاح</div>
+
+    <script>
+        // التقاط أي أخطاء وظيفية وعرضها على الشاشة (للتشخيص فقط)
+        window.onerror = function(message, source, lineno, colno, error) {
+            var log = document.getElementById('debug-log');
+            if (log) {
+                log.style.display = 'block';
+                log.innerHTML += "Error: " + message + " (Line: " + lineno + ")<br>";
+            }
+        };
+
+        try {
+            var formatNum = function(num) {
+                if (isNaN(num)) return "0";
+                var str = parseFloat(num).toFixed(1);
+                var parts = str.split('.');
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                if (parts[1] === '0') return parts[0];
+                return parts.join('.');
+            };
+
+            var formatMoney = function(num) {
+                return formatNum(num) + ' ريال';
+            };
+
+            var getVal = function(id) {
+                var el = document.getElementById(id);
+                if (!el || !el.value) return 0;
+                
+                var val = el.value.toString();
+                val = val.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d) { return d.charCodeAt(0) - 1632; })
+                         .replace(/[۰۱۲۳۴۵۶۷۸۹]/g, function (d) { return d.charCodeAt(0) - 1776; });
+                
+                val = val.replace(/[^0-9.]/g, '');
+                var parsed = parseFloat(val);
+                return isNaN(parsed) ? 0 : Math.max(0, parsed);
+            };
+
+            function calculate() {
+                try {
+                    var capital = getVal('capital');
+                    var price = getVal('price');
+                    var orders = getVal('orders');
+                    var varCost = getVal('varCost');
+                    var addVarCost = getVal('addVarCost');
+                    
+                    var rent = getVal('rent');
+                    var marketing = getVal('marketing');
+                    var comms = getVal('comms');
+                    var salaries = getVal('salaries');
+                    var subs = getVal('subs');
+                    var others = getVal('others');
+
+                    var revenue = price * orders;
+                    
+                    var singleVarCost = varCost + addVarCost;
+                    var totalVarCost = singleVarCost * orders;
+                    
+                    var totalFixedCost = rent + marketing + comms + salaries + subs + others;
+                    
+                    var marginValue = price - singleVarCost;
+                    var marginPercent = price > 0 ? (marginValue / price) * 100 : 0;
+                    
+                    var profit = revenue - totalVarCost - totalFixedCost;
+                    
+                    var breakEvenText = "-";
+                    if (marginValue > 0) {
+                        var breakEven = Math.ceil(totalFixedCost / marginValue);
+                        breakEvenText = formatNum(breakEven) + ' طلبات';
+                    } else {
+                        breakEvenText = "غير ممكن";
+                    }
+                    
+                    var recoveryText = "-";
+                    if (profit > 0) {
+                        var recoveryMonths = capital / profit;
+                        if (recoveryMonths < 1) {
+                            var days = Math.ceil(recoveryMonths * 30);
+                            recoveryText = formatNum(recoveryMonths) + ' شهر (' + days + ' يوم)';
+                        } else {
+                            recoveryText = formatNum(recoveryMonths) + ' شهر';
+                        }
+                    } else {
+                        recoveryText = "غير ممكن";
+                    }
+
+                    var roc = capital > 0 ? (profit / capital) * 100 : 0;
+
+                    document.getElementById('resRevenue').innerHTML = formatMoney(revenue);
+                    document.getElementById('resTotalVar').innerHTML = formatMoney(totalVarCost);
+                    document.getElementById('resTotalFixed').innerHTML = formatMoney(totalFixedCost);
+                    document.getElementById('resProfit').innerHTML = formatMoney(profit);
+                    
+                    document.getElementById('resMarginValue').innerHTML = formatMoney(marginValue);
+                    document.getElementById('resMarginPercent').innerHTML = formatNum(marginPercent) + '%';
+                    document.getElementById('resBreakeven').innerHTML = breakEvenText;
+                    document.getElementById('resRecovery').innerHTML = recoveryText;
+                    document.getElementById('resRoC').innerHTML = formatNum(roc) + '%';
+
+                    document.getElementById('resProfit').style.color = profit < 0 ? '#ffcccc' : 'var(--gold)';
+
+                    updateScenarios(orders, price, singleVarCost, totalFixedCost);
+                    updateAlerts(profit, marginValue, marginPercent, totalFixedCost, orders);
+                } catch(e) {
+                    var log = document.getElementById('debug-log');
+                    if (log) {
+                        log.style.display = 'block';
+                        log.innerHTML += "Calc Error: " + e.message + "<br>";
+                    }
+                }
+            }
+
+            function updateScenarios(baseOrders, price, singleVarCost, fixedCost) {
+                var ratios = [0.5, 1.0, 1.5];
+                
+                for(var idx = 0; idx < ratios.length; idx++) {
+                    var ratio = ratios[idx];
+                    var i = idx + 1;
+                    var scenOrders = Math.round(baseOrders * ratio);
+                    var scenRev = scenOrders * price;
+                    var scenVar = scenOrders * singleVarCost;
+                    var scenProfit = scenRev - scenVar - fixedCost;
+                    
+                    document.getElementById('sc'+i+'Orders').innerHTML = formatNum(scenOrders);
+                    document.getElementById('sc'+i+'Rev').innerHTML = formatNum(scenRev);
+                    document.getElementById('sc'+i+'Var').innerHTML = formatNum(scenVar);
+                    document.getElementById('sc'+i+'Fix').innerHTML = formatNum(fixedCost);
+                    document.getElementById('sc'+i+'Profit').innerHTML = formatNum(scenProfit);
+                    
+                    document.getElementById('sc'+i+'Profit').style.color = scenProfit < 0 ? 'red' : 'inherit';
+                }
+            }
+
+            function updateAlerts(profit, marginValue, marginPercent, fixedCost, orders) {
+                var container = document.getElementById('alertsContainer');
+                container.innerHTML = '';
+                
+                var alertsHTML = '';
+                
+                if (marginValue <= 0) {
+                    alertsHTML += '<div class="alert alert-danger">⚠️ هامش المساهمة غير موجب. راجع التسعير.</div>';
+                } else {
+                    var breakEven = Math.ceil(fixedCost / marginValue);
+                    if (breakEven > orders && orders > 0) {
+                        alertsHTML += '<div class="alert alert-warning">⚠️ نقطة التعادل مرتفعة مقارنة بمبيعاتك الحالية.</div>';
+                    }
+                }
+                
+                if (profit > 0) {
+                    alertsHTML += '<div class="alert alert-success">✅ النموذج الحالي يحقق ربحاً تشغيلياً.</div>';
+                } else if (profit < 0) {
+                    alertsHTML += '<div class="alert alert-danger">❌ المشروع يخسر تشغيلياً.</div>';
+                }
+
+                if (marginPercent > 0 && marginPercent < 20) {
+                    alertsHTML += '<div class="alert alert-warning">⚠️ هامش المساهمة منخفض جداً (' + formatNum(marginPercent) + '%).</div>';
+                }
+
+                container.innerHTML = alertsHTML;
+            }
+
+            function saveData() {
+                try {
+                    var data = {};
+                    var inputs = document.getElementsByTagName('input');
+                    for(var i = 0; i < inputs.length; i++) {
+                        data[inputs[i].id] = inputs[i].value;
+                    }
+                    localStorage.setItem('projectCalcData', JSON.stringify(data));
+                    showToast('تم الحفظ بنجاح.');
+                } catch(e) {
+                    showToast('تعذر الحفظ في هذا المتصفح.');
+                }
+            }
+
+            function loadData() {
+                try {
+                    var data = JSON.parse(localStorage.getItem('projectCalcData'));
+                    if (data) {
+                        var inputs = document.getElementsByTagName('input');
+                        for(var i = 0; i < inputs.length; i++) {
+                            if (data[inputs[i].id] !== undefined) inputs[i].value = data[inputs[i].id];
+                        }
+                        calculate();
+                        showToast('تم تحميل الحسبة.');
+                    } else {
+                        showToast('لا توجد بيانات محفوظة.');
+                    }
+                } catch(e) {
+                    showToast('تعذر التحميل.');
+                }
+            }
+
+            function resetData() {
+                var defaultData = {
+                    projectName: "تنظيف المفروشات والسجاد", capital: "6000", price: "350", orders: "20",
+                    varCost: "40", addVarCost: "0", rent: "0", marketing: "400", comms: "100",
+                    salaries: "0", subs: "100", others: "100"
+                };
+                var inputs = document.getElementsByTagName('input');
+                for(var i = 0; i < inputs.length; i++) {
+                    if (defaultData[inputs[i].id] !== undefined) inputs[i].value = defaultData[inputs[i].id];
+                }
+                calculate();
+                showToast('تم إعادة التعيين.');
+            }
+
+            function shareData() {
+                var capital = getVal('capital');
+                var profit = document.getElementById('resProfit').innerHTML;
+                var text = "حاسبة المشاريع\nرأس المال: " + formatNum(capital) + "\nالربح التقريبي: " + profit;
+                
+                if (navigator.share) {
+                    navigator.share({ title: 'نتيجتي', text: text }).catch(function(e){});
+                } else {
+                    showToast('المشاركة غير مدعومة هنا.');
+                }
+            }
+
+            function showToast(msg) {
+                var toast = document.getElementById('toast');
+                toast.innerHTML = msg;
+                toast.classList.add('show');
+                setTimeout(function() { toast.classList.remove('show'); }, 3000);
+            }
+
+            // تنفيذ الأوامر مباشرة أسفل الملف دون انتظار نافذة onload التي لا تعمل في عارض الملفات
+            var initApp = function() {
+                try {
+                    var inputs = document.getElementsByTagName('input');
+                    for(var i = 0; i < inputs.length; i++) {
+                        inputs[i].oninput = calculate;
+                        inputs[i].onchange = calculate;
+                        inputs[i].onkeyup = calculate;
+                    }
+                    calculate();
+                } catch(e) {
+                    var log = document.getElementById('debug-log');
+                    if (log) {
+                        log.style.display = 'block';
+                        log.innerHTML += "Init Error: " + e.message + "<br>";
+                    }
+                }
+            };
+
+            // تشغيل التطبيق حالاً
+            initApp();
+
+        } catch(globalError) {
+            var log = document.getElementById('debug-log');
+            if (log) {
+                log.style.display = 'block';
+                log.innerHTML += "Global Error: " + globalError.message + "<br>";
+            }
+        }
+    </script>
+</body>
+</html>

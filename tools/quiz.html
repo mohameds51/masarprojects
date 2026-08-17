@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🎯 اختبار اختيار المشروع</title>
+    <style>
+        /* === الهوية البصرية (Premium & Clean) === */
+        :root {
+            --primary: #0F172A; /* أزرق داكن جدًا / كحلي */
+            --primary-light: #1E293B;
+            --gold: #D4AF37; /* ذهبي راقي */
+            --gold-hover: #C5A028;
+            --bg-color: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #000000; /* بناءً على التوجيهات */
+            --text-muted: #475569;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --danger: #EF4444;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Tahoma, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        /* === الحاويات الأساسية === */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .screen {
+            display: none;
+            flex: 1;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === شاشة البداية === */
+        .splash-screen {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .splash-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .splash-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .splash-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .splash-features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .feature-badge {
+            background: var(--card-bg);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+            color: var(--primary);
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* === شاشة الاختبار === */
+        .quiz-header {
+            margin-bottom: 30px;
+        }
+
+        .progress-container {
+            background-color: #E2E8F0;
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--gold);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .question-counter {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .question-box {
+            background: var(--card-bg);
+            padding: 30px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: var(--bg-color);
+            border: 2px solid var(--border-color);
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            color: var(--text-main);
+            text-align: right;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .option-btn:hover {
+            border-color: var(--gold);
+            background: #FFFBEB;
+        }
+
+        .option-btn.selected {
+            border-color: var(--gold);
+            background: #FFFBEB;
+            box-shadow: 0 0 0 1px var(--gold);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        /* === شاشة التحميل === */
+        .loading-screen {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--border-color);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* === شاشة النتائج === */
+        .results-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .results-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .top-match-card {
+            background: linear-gradient(145deg, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: var(--radius);
+            padding: 30px 20px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 4px solid var(--gold);
+        }
+
+        .match-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--gold);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .project-name {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: var(--gold);
+            margin-bottom: 15px;
+            margin-top: 10px;
+            line-height: 1.3;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .meta-tag {
+            background: rgba(255,255,255,0.1);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .reasons-box {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .reasons-title {
+            font-size: 1rem;
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .reasons-list {
+            list-style: none;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .reasons-list li {
+            margin-bottom: 8px;
+            padding-right: 20px;
+            position: relative;
+        }
+
+        .reasons-list li::before {
+            content: "✓";
+            position: absolute;
+            right: 0;
+            color: var(--gold);
+        }
+
+        .challenge-box {
+            border-right: 3px solid #FCD34D;
+            padding-right: 15px;
+            font-size: 0.85rem;
+            opacity: 0.85;
+            margin-bottom: 20px;
+        }
+
+        /* البدائل المتاحة */
+        .alternatives-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: bold;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .alt-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .alt-info h4 {
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .alt-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .alt-score {
+            background: var(--bg-color);
+            color: var(--primary);
+            font-weight: bold;
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        /* الأزرار العامة */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-gold {
+            background-color: var(--gold);
+            color: var(--primary);
+        }
+
+        .btn-gold:hover {
+            background-color: var(--gold-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--bg-color);
+        }
+
+        .btn-block {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .actions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .book-ref {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+            background: var(--bg-color);
+            padding: 8px;
+            border-radius: 6px;
+        }
+
+        /* تحسينات الموبايل */
+        @media (max-width: 600px) {
+            .splash-title { font-size: 1.6rem; }
+            .question-text { font-size: 1.2rem; }
+            .option-btn { font-size: 0.95rem; padding: 14px; }
+            .project-name { font-size: 1.3rem; }
+            .alt-card { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .alt-score { align-self: flex-start; }
+            .actions-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- منطقة إظهار الأخطاء إذا حدثت -->
+    <div id="debug-log" style="display:none; background:#fee; color:#c00; padding:10px; border-radius:8px; margin-bottom:15px; font-family:monospace; text-align:left; direction:ltr; font-size:12px;"></div>
+
+    <!-- 1. شاشة البداية -->
+    <div id="screen-splash" class="screen active">
+        <div class="splash-screen">
+            <div class="splash-icon">🎯</div>
+            <h1 class="splash-title">اختبار اختيار المشروع</h1>
+            <p class="splash-subtitle">لديك 50 مشروعًا في الكتاب... لكن أي واحد يناسبك أنت؟</p>
+            
+            <div class="splash-features">
+                <span class="feature-badge">💰 ميزانيتك</span>
+                <span class="feature-badge">⏱️ وقتك</span>
+                <span class="feature-badge">🧠 خبرتك</span>
+                <span class="feature-badge">⚖️ المخاطرة</span>
+            </div>
+            
+            <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 0.95rem;">
+                أجب عن 8 أسئلة قصيرة، وسنقوم بمطابقة إجاباتك مع خصائص الـ 50 مشروعًا لتحديد أفضل 5 مشاريع مناسبة لظروفك تماماً.<br><br>
+                ⏱️ يستغرق الاختبار حوالي دقيقتين.
+            </p>
+            
+            <button class="btn btn-primary btn-block" onclick="startQuiz()" style="padding: 16px; font-size: 1.1rem;">
+                ابدأ الاختبار ←
+            </button>
+            <button class="btn btn-outline btn-block" id="btn-load-saved" onclick="loadSavedResult()" style="display:none; margin-top:10px;">
+                📂 استعادة نتيجتي السابقة
+            </button>
+        </div>
+    </div>
+
+    <!-- 2. شاشة الأسئلة -->
+    <div id="screen-quiz" class="screen">
+        <div class="quiz-header">
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="question-counter" id="question-counter">السؤال 1 من 8</div>
+        </div>
+        
+        <div class="question-box">
+            <h2 class="question-text" id="question-text">نص السؤال هنا؟</h2>
+            <div class="options-grid" id="options-grid">
+                <!-- الأزرار تضاف برمجياً -->
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <button class="btn btn-outline" id="btn-prev" onclick="prevQuestion()" style="visibility:hidden;">السابق</button>
+            <button class="btn btn-primary" id="btn-next" onclick="nextQuestion()" disabled>التالي ←</button>
+        </div>
+    </div>
+
+    <!-- 3. شاشة التحميل -->
+    <div id="screen-loading" class="screen">
+        <div class="loading-screen" style="margin-top: 100px;">
+            <div class="spinner"></div>
+            <h2 style="color: var(--primary);">جاري تحليل إجاباتك...</h2>
+            <p style="color: var(--text-muted); margin-top: 10px;">نقوم بمطابقة بياناتك مع الـ 50 مشروعاً...</p>
+        </div>
+    </div>
+
+    <!-- 4. شاشة النتائج -->
+    <div id="screen-results" class="screen">
+        <div class="results-header">
+            <h2 class="results-title">🎯 نتيجة المطابقة</h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">نسبة الملاءمة تقديرية بناءً على إجاباتك وليست ضمانًا للنجاح.</p>
+        </div>
+
+        <!-- المشروع الأول -->
+        <div class="top-match-card" id="top-match-card">
+            <!-- المحتوى يضاف برمجياً -->
+        </div>
+
+        <!-- البدائل -->
+        <div class="alternatives-section">
+            <h3 class="section-title">خيارات أخرى قد تناسبك</h3>
+            <div id="alternatives-list">
+                <!-- البدائل تضاف برمجياً -->
+            </div>
+        </div>
+
+        <!-- أزرار الإجراءات -->
+        <div class="book-ref" style="margin-bottom: 20px; text-align: center; background: #FFFBEB; border: 1px solid #FCD34D;">
+            <strong style="color: var(--primary);">💡 خطوتك القادمة:</strong> افتح الكتاب واقرأ التفاصيل التشغيلية والمالية للمشاريع المرشحة لك لتبدأ التخطيط الفعلي.
+        </div>
+
+        <div class="actions-grid">
+            <button class="btn btn-primary" onclick="shareResult()">🔗 مشاركة النتيجة</button>
+            <button class="btn btn-outline" onclick="saveResult()">💾 حفظ نتيجتي</button>
+        </div>
+        <button class="btn btn-outline btn-block" onclick="resetQuiz()">🔄 إعادة الاختبار</button>
+    </div>
+
+</div>
+
+<div id="toast" class="toast">تمت العملية</div>
+
+<script>
+    // التقاط وعرض الأخطاء في حال حدوثها لتسهيل التشخيص
+    window.onerror = function(msg, url, lineNo, columnNo, error) {
+        var log = document.getElementById('debug-log');
+        if(log) {
+            log.style.display = 'block';
+            log.innerHTML += "Error: " + msg + " (Line: " + lineNo + ")<br>";
+        }
+        return false;
+    };
+
+    // ==========================================
+    // 1. قاعدة بيانات المشاريع (المستخرجة من الكتاب بدقة)
+    // ==========================================
+    var projects = [
+        // --- الفصل الأول ---
+        { id: 1, name: "قوالب تصميم رقمية للشركات الناشئة", chapter: "الفصل الأول - المشروع 1", budgetStr: "1,000 - 1,500 ريال", budget_tier: 1, time_type: ["side", "freelance"], env: "remote", audience: "b2b", skill: "digital", risk: "low", nature: "product", challenge: "سهلة النسخ، وتتطلب تسويق مستمر لبناء جمهور." },
+        { id: 2, name: "كتابة وتحسين السير الذاتية بمعايير ATS", chapter: "الفصل الأول - المشروع 2", budgetStr: "500 - 1,500 ريال", budget_tier: 1, time_type: ["side", "freelance"], env: "remote", audience: "b2c", skill: "digital", risk: "low", nature: "service", challenge: "الدخل يعتمد بالكامل على وقتك الشخصي." },
+        { id: 3, name: "إدارة حسابات تواصل اجتماعي للمحلات", chapter: "الفصل الأول - المشروع 3", budgetStr: "1,000 - 2,500 ريال", budget_tier: 1, time_type: ["freelance", "fulltime"], env: "remote", audience: "b2b", skill: "digital", risk: "low", nature: "service", challenge: "منافسة شرسة وتحتاج لإثبات نتائج فعلية للمبيعات." },
+        { id: 4, name: "بطاقات أعمال رقمية NFC", chapter: "الفصل الأول - المشروع 4", budgetStr: "2,000 - 4,000 ريال", budget_tier: 1, time_type: ["side", "freelance"], env: "field", audience: "b2b", skill: "none", risk: "med", nature: "product", challenge: "رأس المال يتجمد في المخزون إذا لم يتم التسويق المباشر." },
+        { id: 5, name: "تحرير ومونتاج فيديوهات قصيرة", chapter: "الفصل الأول - المشروع 5", budgetStr: "1,500 - 3,000 ريال", budget_tier: 1, time_type: ["freelance"], env: "remote", audience: "b2b", skill: "digital", risk: "low", nature: "service", challenge: "سقف الدخل محدود بوقتك كمحرر ما لم توظف آخرين." },
+        { id: 6, name: "كورسات رقمية مصغرة", chapter: "الفصل الأول - المشروع 6", budgetStr: "1,500 - 3,500 ريال", budget_tier: 1, time_type: ["side"], env: "remote", audience: "b2c", skill: "digital", risk: "med", nature: "product", challenge: "جهد إنتاج أولي كبير دون ضمان مبيعات فورية." },
+        { id: 7, name: "ترجمة مستندات", chapter: "الفصل الأول - المشروع 7", budgetStr: "500 - 1,500 ريال", budget_tier: 1, time_type: ["side", "freelance"], env: "remote", audience: "b2b", skill: "digital", risk: "low", nature: "service", challenge: "منافسة سعرية شديدة وتتطلب دقة عالية خالية من الأخطاء." },
+        { id: 8, name: "تنسيق بوكيهات هدايا للمناسبات", chapter: "الفصل الأول - المشروع 8", budgetStr: "1,000 - 2,500 ريال", budget_tier: 1, time_type: ["side"], env: "home", audience: "b2c", skill: "craft", risk: "low", nature: "product", challenge: "طلب موسمي متذبذب جداً (ذروة في الأعياد وضعف باقي العام)." },
+        { id: 9, name: "تحضير وبيع حلويات منزلية", chapter: "الفصل الأول - المشروع 9", budgetStr: "2,000 - 4,500 ريال", budget_tier: 1, time_type: ["side", "freelance"], env: "home", audience: "b2c", skill: "craft", risk: "med", nature: "product", challenge: "جهد بدني كبير واشتراطات صحية ومنافسة شرسة." },
+        { id: 10, name: "قوائم طعام رقمية QR للمطاعم", chapter: "الفصل الأول - المشروع 10", budgetStr: "1,500 - 3,000 ريال", budget_tier: 1, time_type: ["side", "freelance"], env: "field", audience: "b2b", skill: "none", risk: "low", nature: "service", challenge: "يحتاج لمجهود مبيعات ميداني مستمر وليس تسويق رقمي فقط." },
+
+        // --- الفصل الثاني ---
+        { id: 11, name: "تنظيف وتعقيم مكيفات المنازل", chapter: "الفصل الثاني - المشروع 11", budgetStr: "5,000 - 7,500 ريال", budget_tier: 2, time_type: ["freelance"], env: "field", audience: "b2c", skill: "craft", risk: "med", nature: "service", challenge: "عمل بدني مرهق وطلب موسمي قوي مرتبط بالصيف." },
+        { id: 12, name: "تنظيف المفروشات والسجاد", chapter: "الفصل الثاني - المشروع 12", budgetStr: "6,000 - 9,000 ريال", budget_tier: 2, time_type: ["freelance"], env: "field", audience: "b2c", skill: "none", risk: "med", nature: "service", challenge: "نقل معدات ثقيلة بين المواقع وتحدي جفاف المفروشات." },
+        { id: 13, name: "تأسيس وصيانة شبكات واي فاي", chapter: "الفصل الثاني - المشروع 13", budgetStr: "5,500 - 9,000 ريال", budget_tier: 2, time_type: ["freelance"], env: "field", audience: "b2c", skill: "digital", risk: "med", nature: "service", challenge: "يتطلب مهارة تقنية حقيقية والطلب الواحد لا يتكرر بسرعة." },
+        { id: 14, name: "تنسيق مناسبات منزلية صغيرة", chapter: "الفصل الثاني - المشروع 14", budgetStr: "5,000 - 9,000 ريال", budget_tier: 2, time_type: ["freelance"], env: "field", audience: "b2c", skill: "craft", risk: "med", nature: "service", challenge: "العمل يتركز في عطلات نهاية الأسبوع تحت ضغط الوقت." },
+        { id: 15, name: "تأجير مستلزمات الكشتات", chapter: "الفصل الثاني - المشروع 15", budgetStr: "8,000 - 13,000 ريال", budget_tier: 2, time_type: ["side", "freelance"], env: "field", audience: "b2c", skill: "none", risk: "med", nature: "rent", challenge: "موسمي بشدة (شتاء فقط) وخطر تلف المعدات المؤجرة." },
+        { id: 16, name: "تغليف وتجارة التمور الفاخرة", chapter: "الفصل الثاني - المشروع 16", budgetStr: "6,000 - 11,000 ريال", budget_tier: 2, time_type: ["side", "freelance"], env: "home", audience: "b2c", skill: "craft", risk: "med", nature: "product", challenge: "موسمية حادة في رمضان وتجميد المال في المخزون." },
+        { id: 17, name: "توصيل طلبات محلي للمتاجر", chapter: "الفصل الثاني - المشروع 17", budgetStr: "5,000 - 10,000 ريال", budget_tier: 2, time_type: ["fulltime"], env: "field", audience: "b2b", skill: "none", risk: "med", nature: "service", challenge: "ارتباط الدخل بساعات القيادة المجهدة والمنافسة مع التطبيقات الكبرى." },
+        { id: 18, name: "تدريب رياضي شخصي", chapter: "الفصل الثاني - المشروع 18", budgetStr: "5,000 - 8,000 ريال", budget_tier: 2, time_type: ["freelance", "fulltime"], env: "field", audience: "b2c", skill: "none", risk: "med", nature: "service", challenge: "محدود بوقتك الشخصي وفقدان عميل يؤثر ملموساً على الدخل." },
+        { id: 19, name: "غسيل سيارات متنقل بالبخار", chapter: "الفصل الثاني - المشروع 19", budgetStr: "5,000 - 9,000 ريال", budget_tier: 2, time_type: ["fulltime"], env: "field", audience: "b2c", skill: "none", risk: "med", nature: "service", challenge: "منافسة سعرية شرسة وجهد بدني مستمر في الخارج." },
+        { id: 20, name: "صيانة كهرباء وسباكة خفيفة", chapter: "الفصل الثاني - المشروع 20", budgetStr: "6,000 - 12,000 ريال", budget_tier: 2, time_type: ["fulltime"], env: "field", audience: "b2c", skill: "craft", risk: "med", nature: "service", challenge: "يتطلب مهارة فنية حقيقية ومسؤولية عن الأضرار المحتملة." },
+
+        // --- الفصل الثالث ---
+        { id: 21, name: "استوديو تصوير منتجات للمتاجر", chapter: "الفصل الثالث - المشروع 21", budgetStr: "20,000 - 30,000 ريال", budget_tier: 3, time_type: ["fulltime", "freelance"], env: "location", audience: "b2b", skill: "digital", risk: "med", nature: "service", challenge: "يحتاج لمهارة تصوير احترافية وعلاقات مستمرة مع التجار." },
+        { id: 22, name: "عربة قهوة متنقلة للفعاليات", chapter: "الفصل الثالث - المشروع 22", budgetStr: "25,000 - 40,000 ريال", budget_tier: 3, time_type: ["freelance", "fulltime"], env: "field", audience: "b2c", skill: "none", risk: "med", nature: "product", challenge: "الدخل غير منتظم ويرتبط بقدرتك على حجز مواقع في الفعاليات." },
+        { id: 23, name: "مركز تدريب مهاري مصغر", chapter: "الفصل الثالث - المشروع 23", budgetStr: "20,000 - 35,000 ريال", budget_tier: 3, time_type: ["fulltime", "team"], env: "location", audience: "b2c", skill: "admin", risk: "high", nature: "service", challenge: "تكلفة إيجار ثابتة تحمل مخاطرة في الأشهر الضعيفة." },
+        { id: 24, name: "متجر بقالة صحية متخصصة", chapter: "الفصل الثالث - المشروع 24", budgetStr: "30,000 - 48,000 ريال", budget_tier: 3, time_type: ["fulltime", "team"], env: "location", audience: "b2c", skill: "admin", risk: "high", nature: "product", challenge: "هامش ربح التجزئة ضيق ويحتاج لموقع ممتاز وإدارة مخزون حذرة." },
+        { id: 25, name: "ورشة ديكور منزلي يدوي", chapter: "الفصل الثالث - المشروع 25", budgetStr: "15,000 - 25,000 ريال", budget_tier: 3, time_type: ["freelance"], env: "location", audience: "b2c", skill: "craft", risk: "med", nature: "product", challenge: "الإنتاج اليدوي بطيء ومحدود بمهارة الحرفي." },
+        { id: 26, name: "تنظيف مكاتب بعقود دورية", chapter: "الفصل الثالث - المشروع 26", budgetStr: "18,000 - 30,000 ريال", budget_tier: 3, time_type: ["team"], env: "field", audience: "b2b", skill: "admin", risk: "med", nature: "service", challenge: "إدارة فريق عمال ميداني بشكل يومي ومستمر." },
+        { id: 27, name: "مغسلة ملابس بالطلب (توصيل)", chapter: "الفصل الثالث - المشروع 27", budgetStr: "20,000 - 35,000 ريال", budget_tier: 3, time_type: ["team"], env: "location", audience: "b2c", skill: "admin", risk: "med", nature: "service", challenge: "إدارة لوجستية دقيقة لتجنب ضياع وتلف ممتلكات العملاء." },
+        { id: 28, name: "متجر إلكتروني لمستلزمات الرضع", chapter: "الفصل الثالث - المشروع 28", budgetStr: "25,000 - 45,000 ريال", budget_tier: 3, time_type: ["fulltime"], env: "remote", audience: "b2c", skill: "digital", risk: "high", nature: "product", challenge: "تكلفة تسويق إعلاني مرتفعة وتجميد المال في المخزون." },
+        { id: 29, name: "تصميم وتنفيذ حدائق منزلية", chapter: "الفصل الثالث - المشروع 29", budgetStr: "20,000 - 38,000 ريال", budget_tier: 3, time_type: ["team"], env: "field", audience: "b2c", skill: "craft", risk: "med", nature: "service", challenge: "فقدان مشروع واحد مؤثر مالياً وعمل ميداني مرهق." },
+        { id: 30, name: "خدمات طباعة للمحال التجارية", chapter: "الفصل الثالث - المشروع 30", budgetStr: "25,000 - 45,000 ريال", budget_tier: 3, time_type: ["fulltime"], env: "location", audience: "b2b", skill: "digital", risk: "med", nature: "service", challenge: "تكلفة المعدات مرتفعة وتحتاج صيانة ومنافسة بالأسعار." },
+
+        // --- الفصل الرابع ---
+        { id: 31, name: "مركز عناية بالسيارات (سيراميك)", chapter: "الفصل الرابع - المشروع 31", budgetStr: "90,000 - 130,000 ريال", budget_tier: 4, time_type: ["team"], env: "location", audience: "b2c", skill: "admin", risk: "high", nature: "service", challenge: "يحتاج فريق فني ماهر وأشهر لبناء السمعة في سوق مزدحم." },
+        { id: 32, name: "مطبخ سحابي متخصص", chapter: "الفصل الرابع - المشروع 32", budgetStr: "60,000 - 100,000 ريال", budget_tier: 4, time_type: ["team"], env: "location", audience: "b2c", skill: "admin", risk: "high", nature: "product", challenge: "استقطاع عمولات التطبيقات الكبرى ومنافسة شرسة." },
+        { id: 33, name: "صالون تجميل نسائي", chapter: "الفصل الرابع - المشروع 33", budgetStr: "70,000 - 120,000 ريال", budget_tier: 4, time_type: ["team"], env: "location", audience: "b2c", skill: "admin", risk: "high", nature: "service", challenge: "تكاليف إيجار ورواتب ثابتة مرتفعة وتحكم الفنيات بالعملاء." },
+        { id: 34, name: "ورشة تغليف مخصص للمتاجر (B2B)", chapter: "الفصل الرابع - المشروع 34", budgetStr: "55,000 - 90,000 ريال", budget_tier: 4, time_type: ["team"], env: "location", audience: "b2b", skill: "admin", risk: "med", nature: "product", challenge: "النجاح مرتبط بالقدرة على إغلاق عقود توزيع مستمرة مع المتاجر." },
+        { id: 35, name: "ورشة نجارة وتفصيل أثاث", chapter: "الفصل الرابع - المشروع 35", budgetStr: "60,000 - 110,000 ريال", budget_tier: 4, time_type: ["team"], env: "location", audience: "b2c", skill: "craft", risk: "med", nature: "product", challenge: "دورة الإنتاج اليدوية الطويلة تتطلب مهارة فنية مسبقة." },
+        { id: 36, name: "مركز صيانة جوالات", chapter: "الفصل الرابع - المشروع 36", budgetStr: "55,000 - 95,000 ريال", budget_tier: 4, time_type: ["fulltime"], env: "location", audience: "b2c", skill: "craft", risk: "med", nature: "service", challenge: "تقلب أسعار قطع الغيار ومنافسة من محلات غير موثقة." },
+        { id: 37, name: "نادي رياضي متخصص", chapter: "الفصل الرابع - المشروع 37", budgetStr: "90,000 - 140,000 ريال", budget_tier: 4, time_type: ["team"], env: "location", audience: "b2c", skill: "admin", risk: "high", nature: "service", challenge: "تكلفة إيجار ضخمة وبناء مجتمع أعضاء يحتاج أشهر." },
+        { id: 38, name: "تأجير معدات بناء خفيفة", chapter: "الفصل الرابع - المشروع 38", budgetStr: "70,000 - 130,000 ريال", budget_tier: 4, time_type: ["team"], env: "location", audience: "b2b", skill: "admin", risk: "med", nature: "rent", challenge: "رأس مال كبير مجمّد في المعدات وخطر تلفها أثناء التأجير." },
+        { id: 39, name: "تعبئة منتجات غذائية محلية", chapter: "الفصل الرابع - المشروع 39", budgetStr: "50,000 - 90,000 ريال", budget_tier: 4, time_type: ["team"], env: "location", audience: "b2b", skill: "admin", risk: "high", nature: "product", challenge: "تراخيص غذائية صارمة ومخاطر تقلب جودة الموردين الأساسيين." },
+        { id: 40, name: "مركز تدريب فني معتمد", chapter: "الفصل الرابع - المشروع 40", budgetStr: "80,000 - 140,000 ريال", budget_tier: 4, time_type: ["team"], env: "location", audience: "b2b", skill: "admin", risk: "high", nature: "service", challenge: "حساسية نظامية بالغة (يتطلب اعتمادات حقيقية قبل البدء)." },
+
+        // --- الفصل الخامس ---
+        { id: 41, name: "مطعم بمفهوم محدد", chapter: "الفصل الخامس - المشروع 41", budgetStr: "250,000 - 400,000 ريال", budget_tier: 5, time_type: ["team"], env: "location", audience: "b2c", skill: "admin", risk: "high", nature: "product", challenge: "تكاليف ثابتة ضخمة ومعدل فشل مرتفع في هذا القطاع." },
+        { id: 42, name: "توزيع وتركيب طاقة شمسية", chapter: "الفصل الخامس - المشروع 42", budgetStr: "180,000 - 300,000 ريال", budget_tier: 5, time_type: ["team"], env: "field", audience: "b2c", skill: "admin", risk: "high", nature: "service", challenge: "دورة بيع طويلة للعملاء وتتطلب اعتماد هندسي فني." },
+        { id: 43, name: "مصنع منتج غذائي معبأ", chapter: "الفصل الخامس - المشروع 43", budgetStr: "200,000 - 350,000 ريال", budget_tier: 5, time_type: ["team"], env: "location", audience: "b2b", skill: "admin", risk: "high", nature: "product", challenge: "النجاح مرتبط بتوقيع عقود مع سوبرماركت، وهو أمر معقد." },
+        { id: 44, name: "حضانة أطفال معتمدة", chapter: "الفصل الخامس - المشروع 44", budgetStr: "200,000 - 320,000 ريال", budget_tier: 5, time_type: ["team"], env: "location", audience: "b2c", skill: "admin", risk: "high", nature: "service", challenge: "تراخيص واشتراطات أمان صارمة جداً وبناء ثقة بطيء مع الأهالي." },
+        { id: 45, name: "شركة نقل وتوزيع لوجستي", chapter: "الفصل الخامس - المشروع 45", budgetStr: "220,000 - 350,000 ريال", budget_tier: 5, time_type: ["team"], env: "field", audience: "b2b", skill: "admin", risk: "high", nature: "service", challenge: "تكاليف صيانة أسطول مستمرة حتى قبل توقيع عقود كافية." },
+        { id: 46, name: "قاعة مناسبات وأفراح", chapter: "الفصل الخامس - المشروع 46", budgetStr: "300,000 - 500,000 ريال", budget_tier: 5, time_type: ["team"], env: "location", audience: "b2c", skill: "admin", risk: "high", nature: "rent", challenge: "إيجار ضخم جداً للمبنى يتطلب حجوزات مستمرة لتغطيته." },
+        { id: 47, name: "مقاولات تشطيبات داخلية", chapter: "الفصل الخامس - المشروع 47", budgetStr: "180,000 - 300,000 ريال", budget_tier: 5, time_type: ["team"], env: "field", audience: "b2b", skill: "admin", risk: "high", nature: "service", challenge: "إدارة تدفق نقدي معقدة للمشروع قبل استلام الدفعات من العميل." },
+        { id: 48, name: "متجر تجزئة داخل مول", chapter: "الفصل الخامس - المشروع 48", budgetStr: "200,000 - 350,000 ريال", budget_tier: 5, time_type: ["team"], env: "location", audience: "b2c", skill: "admin", risk: "high", nature: "product", challenge: "إيجار المول مرتفع جداً والنجاح مرتبط بموقع المحل الداخلي." },
+        { id: 49, name: "صيانة وتشغيل مرافق (FM)", chapter: "الفصل الخامس - المشروع 49", budgetStr: "180,000 - 280,000 ريال", budget_tier: 5, time_type: ["team"], env: "field", audience: "b2b", skill: "admin", risk: "high", nature: "service", challenge: "تكلفة فريق فني ثابت ضخمة حتى يتم توقيع عقود تشغيل كافية." },
+        { id: 50, name: "استوديو إنتاج فيديو للشركات", chapter: "الفصل الخامس - المشروع 50", budgetStr: "180,000 - 300,000 ريال", budget_tier: 5, time_type: ["team"], env: "location", audience: "b2b", skill: "digital", risk: "high", nature: "service", challenge: "يتطلب علاقات قوية لضمان عقود الإنتاج، ودورة المبيعات للشركات بطيئة." }
+    ];
+
+    // ==========================================
+    // 2. الأسئلة
+    // ==========================================
+    var questions = [
+        {
+            text: "ما هو رأس المال المتوفر لديك للبدء؟",
+            prop: "budget",
+            options: [
+                { text: "أقل من 5,000 ريال", value: 1 },
+                { text: "5,000 إلى 15,000 ريال", value: 2 },
+                { text: "15,000 إلى 50,000 ريال", value: 3 },
+                { text: "50,000 إلى 150,000 ريال", value: 4 },
+                { text: "أكثر من 150,000 ريال", value: 5 }
+            ]
+        },
+        {
+            text: "ما هو الوقت الذي تستطيع تخصيصه للمشروع؟",
+            prop: "time",
+            options: [
+                { text: "مشروع جانبي بضع ساعات (بجانب وظيفتي)", value: "side" },
+                { text: "عمل حر مرن (Freelance)", value: "freelance" },
+                { text: "تفرغ كامل للعمل بنفسي", value: "fulltime" },
+                { text: "تأسيس شركة وتوظيف فريق عمل", value: "team" }
+            ]
+        },
+        {
+            text: "كيف تفضل بيئة عملك؟",
+            prop: "env",
+            options: [
+                { text: "من المنزل أو عبر الكمبيوتر بالكامل", value: "remote" },
+                { text: "عمل ميداني والتنقل للعملاء", value: "field" },
+                { text: "استئجار موقع تجاري (محل، ورشة، مكتب)", value: "location" },
+                { text: "صناعة شيء في المنزل وتوصيله", value: "home" }
+            ]
+        },
+        {
+            text: "من هو عميلك المفضل؟",
+            prop: "audience",
+            options: [
+                { text: "الأفراد والمستهلك العادي (B2C)", value: "b2c" },
+                { text: "الشركات وأصحاب المحلات التجارية (B2B)", value: "b2b" }
+            ]
+        },
+        {
+            text: "أين تكمن خبرتك ومهارتك الحالية؟",
+            prop: "skill",
+            options: [
+                { text: "مهارات رقمية (تصميم، تسويق، كتابة)", value: "digital" },
+                { text: "مهارات مهنية أو يدوية (صيانة، طبخ، نجارة)", value: "craft" },
+                { text: "الإدارة وتوجيه فرق العمل", value: "admin" },
+                { text: "لا توجد خبرة محددة، أفضل مشروعاً سهلاً للبدء", value: "none" }
+            ]
+        },
+        {
+            text: "ما هو مستوى المخاطرة المالي الذي تتقبله؟",
+            prop: "risk",
+            options: [
+                { text: "مخاطرة قليلة جداً (أريد الأمان حتى لو العائد أقل)", value: "low" },
+                { text: "مخاطرة متوسطة (موازنة بين العائد والأمان)", value: "med" },
+                { text: "مخاطرة مرتفعة (مستعد لاستثمار كبير وعقود إيجار)", value: "high" }
+            ]
+        },
+        {
+            text: "ما طبيعة المشروع الأقرب لقلبك؟",
+            prop: "nature",
+            options: [
+                { text: "تقديم خدمة (استثمار الوقت والجهد)", value: "service" },
+                { text: "بيع منتج ملموس (تصنيع أو تجارة)", value: "product" },
+                { text: "تأجير معدات أو أصول أمتلكها", value: "rent" }
+            ]
+        },
+        {
+            text: "إلى أي مدى ترغب في التعامل المباشر مع العملاء؟",
+            prop: "facing",
+            options: [
+                { text: "أحب التعامل المباشر والبيع وبناء العلاقات", value: "high" },
+                { text: "أفضل العمل خلف الكواليس أو التعامل أونلاين", value: "low" }
+            ]
+        }
+    ];
+
+    var currentQIndex = 0;
+    var userAnswers = {};
+    var lastResults = null;
+
+    // ==========================================
+    // 3. منطق التشغيل
+    // ==========================================
+
+    function showScreen(id) {
+        var screens = document.querySelectorAll('.screen');
+        for(var i=0; i<screens.length; i++) {
+            screens[i].classList.remove('active');
+        }
+        document.getElementById(id).classList.add('active');
+    }
+
+    function checkSavedResult() {
+        if(localStorage.getItem('projectQuizResult')) {
+            document.getElementById('btn-load-saved').style.display = 'block';
+        }
+    }
+
+    function loadSavedResult() {
+        var saved = localStorage.getItem('projectQuizResult');
+        if(saved) {
+            renderResults(JSON.parse(saved));
+            showScreen('screen-results');
+            showToast('تم تحميل نتيجتك السابقة');
+        }
+    }
+
+    function startQuiz() {
+        currentQIndex = 0;
+        userAnswers = {};
+        renderQuestion();
+        showScreen('screen-quiz');
+    }
+
+    function renderQuestion() {
+        var q = questions[currentQIndex];
+        document.getElementById('question-counter').innerText = "السؤال " + (currentQIndex + 1) + " من " + questions.length;
+        document.getElementById('progress-bar').style.width = ((currentQIndex / questions.length) * 100) + "%";
+        document.getElementById('question-text').innerText = q.text;
+
+        var optionsGrid = document.getElementById('options-grid');
+        optionsGrid.innerHTML = '';
+
+        for (var i = 0; i < q.options.length; i++) {
+            var opt = q.options[i];
+            var btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt.text;
+            btn.dataset.val = opt.value;
+            
+            if(userAnswers[q.prop] === opt.value) {
+                btn.classList.add('selected');
+            }
+
+            btn.onclick = function() {
+                var val = this.dataset.val;
+                if(q.prop === 'budget') val = parseInt(val);
+                
+                userAnswers[q.prop] = val;
+                
+                var siblings = optionsGrid.children;
+                for(var j=0; j<siblings.length; j++) siblings[j].classList.remove('selected');
+                this.classList.add('selected');
+
+                document.getElementById('btn-next').disabled = false;
+                
+                // تأخير بسيط للانتقال
+                setTimeout(nextQuestion, 300);
+            };
+            optionsGrid.appendChild(btn);
+        }
+
+        document.getElementById('btn-prev').style.visibility = currentQIndex === 0 ? 'hidden' : 'visible';
+        document.getElementById('btn-next').disabled = (userAnswers[q.prop] === undefined);
+        
+        if(currentQIndex === questions.length - 1) {
+            document.getElementById('btn-next').innerText = "اكتشف مشروعك 🎯";
+        } else {
+            document.getElementById('btn-next').innerText = "التالي ←";
+        }
+    }
+
+    function prevQuestion() {
+        if(currentQIndex > 0) {
+            currentQIndex--;
+            renderQuestion();
+        }
+    }
+
+    function nextQuestion() {
+        if(userAnswers[questions[currentQIndex].prop] === undefined) return;
+
+        if(currentQIndex < questions.length - 1) {
+            currentQIndex++;
+            renderQuestion();
+        } else {
+            showScreen('screen-loading');
+            setTimeout(function() {
+                var results = calculateScores();
+                renderResults(results);
+                showScreen('screen-results');
+            }, 1500);
+        }
+    }
+
+    // ==========================================
+    // 4. خوارزمية التطابق الذكية (Scoring)
+    // ==========================================
+    function calculateScores() {
+        var scoredProjects = [];
+        
+        for(var i=0; i<projects.length; i++) {
+            var p = projects[i];
+            var score = 0;
+            var reasons = [];
+
+            if (p.budget_tier === userAnswers.budget) {
+                score += 35;
+                reasons.push("يتناسب تماماً مع رأس المال الذي حددته.");
+            } else if (p.budget_tier < userAnswers.budget) {
+                score += 15;
+                reasons.push("مشروع برأس مال منخفض ضمن حدود ميزانيتك.");
+            } else {
+                score -= 100;
+            }
+
+            if (p.time_type.indexOf(userAnswers.time) !== -1) {
+                score += 15;
+                reasons.push("يتناسب مع جدولك الزمني المفضل للعمل.");
+            }
+
+            if (p.env === userAnswers.env) {
+                score += 15;
+                if(p.env === 'remote') reasons.push("يمكن إدارته من خلف الشاشة بالكامل.");
+                if(p.env === 'location') reasons.push("يلبي رغبتك في امتلاك موقع تجاري ملموس.");
+            }
+
+            if (p.audience === userAnswers.audience) {
+                score += 10;
+            }
+
+            if (p.skill === userAnswers.skill) {
+                score += 15;
+                reasons.push("يستثمر خبراتك الحالية لزيادة فرص النجاح.");
+            } else if (userAnswers.skill === 'none' && p.skill === 'none') {
+                score += 15;
+                reasons.push("سهل التعلم والتشغيل ولا يتطلب خبرة معقدة مسبقاً.");
+            } else if (p.skill !== 'none' && userAnswers.skill === 'none') {
+                score -= 10;
+            }
+
+            if (userAnswers.risk === p.risk) {
+                score += 10;
+            } else if (userAnswers.risk === 'low' && p.risk === 'high') {
+                score -= 20;
+            }
+
+            if (p.nature === userAnswers.nature) {
+                score += 10;
+            }
+
+            if (userAnswers.facing === 'low' && (p.audience === 'b2b' && p.env === 'remote')) {
+                score += 5;
+            } else if (userAnswers.facing === 'high' && p.env !== 'remote') {
+                score += 5;
+            }
+
+            var percent = Math.floor((score / 110) * 100);
+            if(percent > 96) percent = 96;
+            if(percent < 10) percent = 10;
+            if(score < 0) percent = 0;
+            
+            var finalReasons = reasons.slice(0, 3);
+            if(finalReasons.length === 0) finalReasons.push("يطابق بعض تفضيلاتك العامة للعمل.");
+
+            scoredProjects.push({
+                project: p,
+                score: percent,
+                reasons: finalReasons
+            });
+        }
+
+        scoredProjects.sort(function(a, b) { return b.score - a.score; });
+        return scoredProjects.slice(0, 5);
+    }
+
+    // ==========================================
+    // 5. عرض النتائج
+    // ==========================================
+    function renderResults(resultsData) {
+        lastResults = resultsData;
+        var top = resultsData[0];
+        
+        var topCard = document.getElementById('top-match-card');
+        var reasonsHtml = "";
+        for(var r=0; r<top.reasons.length; r++) {
+            reasonsHtml += "<li>" + top.reasons[r] + "</li>";
+        }
+        
+        // استخدام concat للstrings للابتعاد عن مشاكل ال backticks في المتصفحات القديمة
+        var topCardHTML = '<div class="match-badge">' + top.score + '% ملاءمة</div>' +
+            '<div style="margin-top:20px; font-size: 0.9rem; opacity: 0.9;">' + top.project.chapter + '</div>' +
+            '<h3 class="project-name">' + top.project.name + '</h3>' +
+            '<div class="project-meta">' +
+                '<span class="meta-tag">💰 ' + top.project.budgetStr + '</span>' +
+                '<span class="meta-tag">💼 ' + (top.project.nature === 'service' ? 'خدمي' : top.project.nature === 'product' ? 'منتجات' : 'تأجير') + '</span>' +
+            '</div>' +
+            '<div class="reasons-box">' +
+                '<div class="reasons-title">لماذا اخترناه لك؟</div>' +
+                '<ul class="reasons-list">' + reasonsHtml + '</ul>' +
+            '</div>' +
+            '<div class="challenge-box"><strong>⚠️ نقطة انتباه:</strong> ' + top.project.challenge + '</div>';
+            
+        topCard.innerHTML = topCardHTML;
+
+        var altList = document.getElementById('alternatives-list');
+        altList.innerHTML = '';
+
+        for (var i = 1; i < resultsData.length; i++) {
+            var p = resultsData[i];
+            altList.innerHTML += '<div class="alt-card">' +
+                '<div class="alt-info">' +
+                    '<h4>#' + (i+1) + ' ' + p.project.name + '</h4>' +
+                    '<div class="alt-meta">' + p.project.chapter + ' &bull; ' + p.project.budgetStr + '</div>' +
+                '</div>' +
+                '<div class="alt-score">' + p.score + '%</div>' +
+            '</div>';
+        }
+    }
+
+    // ==========================================
+    // 6. الإجراءات المساعدة
+    // ==========================================
+    function saveResult() {
+        if(lastResults) {
+            localStorage.setItem('projectQuizResult', JSON.stringify(lastResults));
+            showToast('تم حفظ النتيجة بنجاح 💾');
+        }
+    }
+
+    function shareResult() {
+        if(!lastResults) return;
+        var top = lastResults[0];
+        
+        // تم تصحيح طريقة كتابة ال String المكون من عدة أسطر لضمان التوافق المطلق
+        var text = "🎯 نتيجة اختبار اختيار المشروع\n\n" +
+                   "المشروع الأنسب لي: " + top.project.name + "\n" +
+                   "نسبة الملاءمة: " + top.score + "%\n" +
+                   "رأس المال المتوقع: " + top.project.budgetStr + "\n\n" +
+                   "اكتشف مشروعك من الكتاب!";
+
+        if (navigator.share) {
+            navigator.share({
+                title: 'نتيجتي في اختبار المشاريع',
+                text: text
+            }).catch(function(e){ console.log(e); });
+        } else {
+            navigator.clipboard.writeText(text).then(function() {
+                showToast('تم نسخ النتيجة للحافظة 📋');
+            });
+        }
+    }
+
+    function resetQuiz() {
+        currentQIndex = 0;
+        userAnswers = {};
+        lastResults = null;
+        showScreen('screen-splash');
+    }
+
+    function showToast(msg) {
+        var toast = document.getElementById('toast');
+        toast.innerText = msg;
+        toast.classList.add('show');
+        setTimeout(function() { toast.classList.remove('show'); }, 3000);
+    }
+
+    window.onload = function() {
+        checkSavedResult();
+    };
+
+</script>
+</body>
+</html>
