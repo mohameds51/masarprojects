@@ -134,11 +134,14 @@
       </div>
       </div>
       <div class="actions">
-        <a class="go" id="pdfDownloadBtn" href="/downloads/dl/masar-best-50-projects.pdf" download="أفضل-50-مشروعًا-في-السعودية-2026.pdf">تحميل الكتاب</a>
+        <a class="go" href="/downloads/dl/masar-best-50-projects.pdf" download="أفضل-50-مشروعًا-في-السعودية-2026.pdf">تحميل الكتاب</a>
         <a class="go-secondary" href="/downloads/masar-best-50-projects.pdf" target="_blank" rel="noopener">أو افتحه أونلاين بدون تحميل</a>
       </div>
     </div>
-    <p class="pdf-note">لو التحميل ما اشتغلش من هنا مباشرة (مثلاً وانت جوه إنستغرام أو فيسبوك)، اضغط على ⋮ أو (⋯) فوق يمين الشاشة واختر <strong>"فتح في المتصفح"</strong>، وجرب تاني.</p>
+    <p class="pdf-note">
+      <strong>على الآيفون؟</strong> بعد ما يفتح الكتاب، اضغط أيقونة المشاركة (<strong>⬆️</strong>) تحت الشاشة واختر <strong>"حفظ في الملفات"</strong> عشان تحفظه على جهازك.<br>
+      لو الرابط ما اشتغلش خالص (مثلاً وانت جوه إنستغرام أو فيسبوك)، اضغط ⋮ أو (⋯) فوق يمين الشاشة واختر <strong>"فتح في المتصفح"</strong>، وجرب تاني.
+    </p>
 
     <div class="card" style="margin-top:22px;">
       <div class="info">
@@ -227,48 +230,5 @@
   </div>
 </div>
 
-
-<script>
-  // Safari (especially iOS) tends to open PDFs in its built-in preview on a normal
-  // tap regardless of Content-Disposition or the download attribute — this is a
-  // native-viewer quirk specific to PDFs, not a general download-attribute issue.
-  // Fetching the file as a blob and downloading from the blob URL sidesteps that,
-  // since Safari treats blob: downloads as an explicit save instruction rather
-  // than a page to preview. Falls back to the plain link if anything goes wrong.
-  (function(){
-    var btn = document.getElementById('pdfDownloadBtn');
-    if(!btn) return;
-    var busy = false;
-    btn.addEventListener('click', function(e){
-      if(busy) return;
-      e.preventDefault();
-      busy = true;
-      var originalText = btn.textContent;
-      btn.textContent = 'جارِ التحضير...';
-      var href = btn.getAttribute('href');
-      var filename = btn.getAttribute('download') || 'masar-best-50-projects.pdf';
-      fetch(href)
-        .then(function(res){ if(!res.ok) throw new Error('fetch failed'); return res.blob(); })
-        .then(function(blob){
-          var blobUrl = URL.createObjectURL(blob);
-          var a = document.createElement('a');
-          a.href = blobUrl;
-          a.download = filename;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          setTimeout(function(){ URL.revokeObjectURL(blobUrl); }, 4000);
-          btn.textContent = originalText;
-          busy = false;
-        })
-        .catch(function(){
-          // fallback: normal navigation, works everywhere even if fetch/blob fails
-          btn.textContent = originalText;
-          busy = false;
-          window.location.href = href;
-        });
-    });
-  })();
-</script>
 </body>
 </html>
