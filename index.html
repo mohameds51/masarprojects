@@ -18,6 +18,24 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Noto+Kufi+Arabic:wght@700;800;900&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Noto+Kufi+Arabic:wght@700;800;900&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Noto+Kufi+Arabic:wght@700;800;900&display=swap"></noscript>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '894972786659768');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 <link rel="preload" as="image" href="/images/book50.webp" fetchpriority="high">
 <link rel="preload" as="image" href="/images/quiz.webp">
 <link rel="preload" as="image" href="/images/calculator.webp">
@@ -804,6 +822,43 @@
     *{transition:none !important;animation:none !important;}
   }
 </style>
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script>
+  // Tracks which Paddle checkout events we've already reported to Meta this session,
+  // since checkout.customer.created can in principle fire more than once for one
+  // checkout (e.g. the customer edits their email) — we only want AddPaymentInfo once.
+  var _fbEventsSent = {};
+
+  Paddle.Initialize({
+    token: 'live_e4e70f430f6ad9878924779d3a4',
+    eventCallback: function(event){
+      if(typeof fbq === 'undefined') return;
+
+      // Customer has entered enough detail (email) to be recognized as a checkout
+      // customer — the closest real signal Paddle exposes to "started entering their
+      // details." Card/payment entry itself happens inside Paddle's own PCI-compliant
+      // flow and is never exposed to us, by design.
+      if(event.name === 'checkout.customer.created' && !_fbEventsSent.addPaymentInfo){
+        _fbEventsSent.addPaymentInfo = true;
+        fbq('track', 'AddPaymentInfo', { value: 99.00, currency: 'SAR' });
+      }
+
+      // After a successful purchase, send the customer straight to their delivery page.
+      if(event.name === 'checkout.completed'){
+        // Fire the browser-side Purchase event with the real Paddle transaction ID as the
+        // eventID. The same ID is sent from the server (Conversions API, via the Paddle
+        // webhook) for the same transaction — Meta dedupes any event pair sharing an
+        // eventID, so this transaction is counted exactly once no matter what (reload,
+        // both signals arriving, iOS blocking the browser pixel and only CAPI landing, etc).
+        var txnId = (event.data && (event.data.transaction_id || event.data.id)) || null;
+        if(txnId){
+          fbq('track', 'Purchase', { value: 99.00, currency: 'SAR' }, { eventID: txnId });
+        }
+        window.location.href = '/access.html';
+      }
+    }
+  });
+</script>
 </head>
 <body>
 
@@ -813,12 +868,12 @@
 <header class="site-header">
   <div class="container">
     <a href="/" class="logo"><img src="/images/logo.webp" alt="مَسار" width="44" height="44"></a>
-    <a href="#offer" class="header-cta">ابدأ مَسارك</a>
+    <a href="#offer" class="header-cta" data-cta="header">ابدأ مَسارك</a>
   </div>
 </header>
 
 <!-- ============ HERO ============ -->
-<section class="hero">
+<section class="hero" data-track="hero">
   <div class="container hero-grid">
     <div class="hero-eyebrow">منظومة متكاملة لبدء المشاريع في السعودية</div>
     <h1>لا تبدأ مشروعك بالتخمين.<br>ابدأه <span class="accent">بمَسار</span>.</h1>
@@ -855,7 +910,7 @@
     </div>
 
     <div class="hero-actions">
-      <a href="#offer" class="btn btn-gold glow-cta">ابدأ مَسارك الآن</a>
+      <a href="#offer" class="btn btn-gold glow-cta" data-cta="hero">ابدأ مَسارك الآن</a>
       <span class="guarantee-chip guarantee-hero">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
         ضمان استرجاع خلال 7 أيام
@@ -877,7 +932,7 @@
 
 
 <!-- ============ PROBLEM ============ -->
-<section class="problem">
+<section class="problem" data-track="problem">
   <div class="container">
     <div class="section-head">
       <div class="eyebrow">قبل ما تبدأ</div>
@@ -898,7 +953,7 @@
 </section>
 
 <!-- ============ IMAGINE / DESIRE ============ -->
-<section class="imagine">
+<section class="imagine" data-track="imagine">
   <div class="container">
     <div class="section-head center on-dark">
       <div class="eyebrow" style="justify-content:center;">تخيل الفرق</div>
@@ -919,7 +974,7 @@
 </section>
 
 <!-- ============ BIG IDEA ============ -->
-<section class="big-idea">
+<section class="big-idea" data-track="big_idea">
   <div class="container">
     <div class="eyebrow" style="justify-content:center;">الفكرة</div>
     <h2>لا تبدأ مشروعك بالتخمين.<br>ابدأه <span class="accent">بمَسار</span>.</h2>
@@ -928,7 +983,7 @@
 </section>
 
 <!-- ============ WHAT IS MASAR ============ -->
-<section class="what-is">
+<section class="what-is" data-track="what_is_masar">
   <div class="container what-grid">
     <div>
       <div class="eyebrow">مَسار</div>
@@ -956,7 +1011,7 @@
 </section>
 
 <!-- ============ 6-PART SYSTEM ============ -->
-<section class="system">
+<section class="system" data-track="six_tools">
   <div class="container">
     <div class="section-head center">
       <div class="eyebrow" style="justify-content:center;">المنظومة</div>
@@ -1023,7 +1078,7 @@
 </section>
 
 <!-- ============ JOURNEY (signature path) ============ -->
-<section class="journey">
+<section class="journey" data-track="journey">
   <div class="container">
     <div class="section-head center on-dark">
       <div class="eyebrow" style="justify-content:center;">مَسارك خطوة بخطوة</div>
@@ -1088,7 +1143,7 @@
 </section>
 
 <!-- ============ BENEFITS ============ -->
-<section class="benefits">
+<section class="benefits" data-track="benefits">
   <div class="container">
     <div class="section-head center">
       <div class="eyebrow" style="justify-content:center;">وش بيتغير بالنسبة لك</div>
@@ -1130,7 +1185,7 @@
 
 <!-- ============ SOCIAL PROOF ============ -->
 <!-- DEMO REVIEWS — REPLACE WITH REAL CUSTOMER REVIEWS ONCE AVAILABLE -->
-<section class="social-proof">
+<section class="social-proof" data-track="reviews">
   <div class="container">
     <div class="section-head center">
       <div class="eyebrow" style="justify-content:center;">قالوا عن مَسار</div>
@@ -1141,6 +1196,7 @@
       <span class="divider"></span>
       <span class="stars">★★★★★</span>
     </div>
+    <span class="demo-tag">* نماذج تجريبية — سيتم استبدالها بتقييمات حقيقية</span>
 
     <div class="reviews-track">
       <div class="review-card">
@@ -1183,7 +1239,7 @@
 </section>
 
 <!-- ============ FOR / NOT FOR ============ -->
-<section class="fit">
+<section class="fit" data-track="who_for">
   <div class="container">
     <div class="section-head center">
       <div class="eyebrow" style="justify-content:center;">هل مَسار مناسب لك؟</div>
@@ -1206,7 +1262,7 @@
 </section>
 
 <!-- ============ PACKAGE VALUE ============ -->
-<section class="value-stack">
+<section class="value-stack" data-track="value_stack">
   <div class="container">
     <div class="section-head center on-dark">
       <div class="eyebrow" style="justify-content:center;">قيمة المنظومة</div>
@@ -1259,7 +1315,7 @@
 </section>
 
 <!-- ============ OFFER ============ -->
-<section class="offer" id="offer">
+<section class="offer" id="offer" data-track="offer">
   <div class="container">
     <div class="offer-card">
       <div class="tag">مَسار</div>
@@ -1294,8 +1350,7 @@
         </span>
       </div>
 
-      <!-- TODO: استبدل href="#" برابط Paddle checkout الفعلي لمنتج مَسار بسعر 99 ريال -->
-      <a href="#" class="btn btn-gold glow-cta" id="mainCta">ابدأ مَسارك الآن</a>
+      <a href="#" class="btn btn-gold glow-cta" id="mainCta" data-cta="offer_main">ابدأ مَسارك الآن</a>
       <span class="btn-sub">فكرتك تستاهل قرار مبني على وضوح، مو تخمين</span>
 
       <!-- TODO: تأكد إن كل بند هنا مطابق فعليًا لسياسة التسليم والاسترجاع لديك قبل النشر -->
@@ -1325,7 +1380,7 @@
 
 <!-- ============ FAQ ============ -->
 <!-- ============ AFTER PURCHASE STEPS ============ -->
-<section class="after-purchase">
+<section class="after-purchase" data-track="after_purchase">
   <div class="container">
     <div class="section-head center">
       <div class="eyebrow" style="justify-content:center;">وضوح من أول لحظة</div>
@@ -1352,7 +1407,7 @@
   </div>
 </section>
 
-<section class="faq">
+<section class="faq" data-track="faq">
   <div class="container">
     <div class="section-head center">
       <div class="eyebrow" style="justify-content:center;">أسئلة شائعة</div>
@@ -1409,7 +1464,7 @@
 </section>
 
 <!-- ============ FINAL CTA ============ -->
-<section class="final-cta">
+<section class="final-cta" data-track="final_cta">
   <div class="container">
     <h2>فكرتك تستاهل أكثر من <span class="accent">مجرد تخمين</span>.</h2>
     <p class="tagline">من فكرة المشروع إلى تحقيق الأرباح.</p>
@@ -1431,7 +1486,7 @@
     </div>
 
     <div>
-      <a href="#offer" class="btn btn-gold glow-cta">ابدأ مَسارك الآن</a>
+      <a href="#offer" class="btn btn-gold glow-cta" data-cta="final">ابدأ مَسارك الآن</a>
     </div>
 
     <span class="guarantee-chip guarantee-hero" style="justify-content:center;margin-top:14px;">
@@ -1466,7 +1521,7 @@
 
 <div class="sticky-cta" id="stickyCta">
   <span class="price">99 ريال — مَسار<span class="discount">خصم 65%</span></span>
-  <a href="#offer" class="btn btn-gold glow-cta">ابدأ الآن</a>
+  <a href="#offer" class="btn btn-gold glow-cta" data-cta="sticky">ابدأ الآن</a>
 </div>
 
 <script>
@@ -1488,6 +1543,11 @@
       } else {
         item.classList.add('open');
         ans.style.maxHeight = ans.scrollHeight + 'px';
+        // Track which specific question they opened — not just "used the FAQ."
+        if(typeof fbq !== 'undefined'){
+          var qText = btn.querySelector('span') ? btn.querySelector('span').textContent.trim() : '';
+          fbq('trackCustom', 'FAQOpen', { question: qText });
+        }
       }
     });
   });
@@ -1670,6 +1730,137 @@
     // Runs continuously — never pauses on hover, so the product story always keeps moving.
     function start(){ if(!timer) scheduleNext(); }
     start();
+  })();
+
+  // Paddle checkout — opens the overlay for مَسار (99 SAR) instead of just scrolling.
+  (function(){
+    var btn = document.getElementById('mainCta');
+    if(!btn) return;
+
+    function getCookie(name){
+      var m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+      return m ? decodeURIComponent(m[1]) : '';
+    }
+
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+
+      // Fires the instant the customer clicks "buy" — the standard funnel event ad
+      // platforms use to find more people likely to reach checkout, not just people
+      // who complete a purchase. This one is entirely under our control (no dependency
+      // on which Paddle events exist), so it fires reliably on every click.
+      if(typeof fbq !== 'undefined'){
+        fbq('track', 'InitiateCheckout', { value: 99.00, currency: 'SAR' });
+      }
+
+      Paddle.Checkout.open({
+        items: [{ priceId: 'pri_01m084s0bfqpy2t4jhd55dm69b', quantity: 1 }],
+        // Passed through to the Paddle transaction and back out in the webhook payload,
+        // so the server-side Conversions API call can match this event to the same
+        // browser/user Meta already saw — this is what keeps iOS match quality high.
+        customData: {
+          fbp: getCookie('_fbp'),
+          fbc: getCookie('_fbc'),
+          event_source_url: window.location.href
+        }
+      });
+    });
+  })();
+
+  // ============================================================
+  // FULL-FUNNEL ENGAGEMENT TRACKING
+  // Everything here is a *custom* event (fbq('trackCustom', ...)) since none of
+  // it maps to Meta's fixed list of standard events — it's for your own analysis
+  // in Events Manager, not for ad-campaign optimization the way Purchase/
+  // InitiateCheckout are. Every event name below shows up as its own row in
+  // Events Manager once real traffic starts flowing.
+  // ============================================================
+  (function(){
+    if(typeof fbq === 'undefined') return;
+
+    // ---- 1. CTA clicks, by exact location on the page ----
+    // (The offer section's own buy button already fires InitiateCheckout
+    // separately — this covers the other four buttons that scroll to it.)
+    document.querySelectorAll('a[data-cta]').forEach(function(el){
+      el.addEventListener('click', function(){
+        fbq('trackCustom', 'CTAClick', { location: el.getAttribute('data-cta') });
+      });
+    });
+
+    // ---- 2. Section views — fires once per section, the first time at least
+    // half of it has actually been visible on screen (not just scrolled past). ----
+    var seenSections = {};
+    if('IntersectionObserver' in window){
+      // A low threshold on purpose: some sections (six-tools, journey) are much
+      // taller than the viewport, so requiring a high % of the section to be
+      // visible would mathematically never fire for them. This just needs to
+      // fire once the section has genuinely started appearing on screen.
+      var sectionObserver = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          var name = entry.target.getAttribute('data-track');
+          if(entry.isIntersecting && name && !seenSections[name]){
+            seenSections[name] = true;
+            fbq('trackCustom', 'SectionView', { section: name });
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('[data-track]').forEach(function(el){
+        sectionObserver.observe(el);
+      });
+    }
+
+    // ---- 3. Scroll depth milestones — fires once each, based on how far down
+    // the full page they've actually scrolled. ----
+    function throttle(fn, wait){
+      var last = 0;
+      return function(){
+        var now = Date.now();
+        if(now - last >= wait){
+          last = now;
+          fn();
+        }
+      };
+    }
+    var scrollMilestones = [25, 50, 75, 90];
+    var scrollFired = {};
+    function checkScrollDepth(){
+      var doc = document.documentElement;
+      var scrollTop = window.scrollY || doc.scrollTop;
+      var docHeight = doc.scrollHeight - doc.clientHeight;
+      if(docHeight <= 0) return;
+      var pct = Math.round((scrollTop / docHeight) * 100);
+      scrollMilestones.forEach(function(m){
+        if(pct >= m && !scrollFired[m]){
+          scrollFired[m] = true;
+          fbq('trackCustom', 'ScrollDepth', { percent: m });
+        }
+      });
+    }
+    window.addEventListener('scroll', throttle(checkScrollDepth, 300), { passive: true });
+
+    // ---- 4. Time-on-page milestones — how long they actually stayed. ----
+    [15, 30, 60, 120].forEach(function(seconds){
+      setTimeout(function(){
+        fbq('trackCustom', 'TimeOnPage', { seconds: seconds });
+      }, seconds * 1000);
+    });
+
+    // ---- 5. Hero product carousel — which tool was on screen when they scrolled
+    // past the hero, useful for seeing which tool actually catches attention. ----
+    var scCounterEl = document.getElementById('scCounter');
+    var heroSection = document.querySelector('[data-track="hero"]');
+    if(scCounterEl && heroSection && 'IntersectionObserver' in window){
+      var heroLeftFired = false;
+      var heroLeftObserver = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(!entry.isIntersecting && !heroLeftFired){
+            heroLeftFired = true;
+            fbq('trackCustom', 'HeroExit', { showing: scCounterEl.textContent.trim() });
+          }
+        });
+      }, { threshold: 0 });
+      heroLeftObserver.observe(heroSection);
+    }
   })();
 
   // Sticky mobile CTA visibility
