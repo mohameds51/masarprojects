@@ -842,29 +842,57 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
   Paddle.Initialize({
     token: 'live_e4e70f430f6ad9878924779d3a4',
     eventCallback: function(event){
-      if(typeof fbq === 'undefined') return;
-
       // Customer has entered enough detail (email) to be recognized as a checkout
       // customer — the closest real signal Paddle exposes to "started entering their
       // details." Card/payment entry itself happens inside Paddle's own PCI-compliant
       // flow and is never exposed to us, by design.
       if(event.name === 'checkout.customer.created' && !_fbEventsSent.addPaymentInfo){
         _fbEventsSent.addPaymentInfo = true;
-        fbq('track', 'AddPaymentInfo', { value: 99.00, currency: 'SAR' });
+        if(typeof fbq !== 'undefined'){
+          fbq('track', 'AddPaymentInfo', { value: 99.00, currency: 'SAR' });
+        }
       }
 
       // After a successful purchase, send the customer straight to their delivery page.
       if(event.name === 'checkout.completed'){
-        // Fire the browser-side Purchase event with the real Paddle transaction ID as the
-        // eventID. The same ID is sent from the server (Conversions API, via the Paddle
-        // webhook) for the same transaction — Meta dedupes any event pair sharing an
-        // eventID, so this transaction is counted exactly once no matter what (reload,
-        // both signals arriving, iOS blocking the browser pixel and only CAPI landing, etc).
+        // The real Paddle transaction ID — used as the dedup key for both Meta
+        // (eventID) and Google Ads (transaction_id) below, so a reload or the
+        // event somehow firing twice never gets counted as two purchases.
         var txnId = (event.data && (event.data.transaction_id || event.data.id)) || null;
-        if(txnId){
-          fbq('track', 'Purchase', { value: 99.00, currency: 'SAR' }, { eventID: txnId });
+        var email = event.data && event.data.customer && event.data.customer.email;
+
+        var fireConversions = function(){
+          if(typeof fbq !== 'undefined' && txnId){
+            fbq('track', 'Purchase', { value: 99.00, currency: 'SAR' }, { eventID: txnId });
+          }
+          if(typeof gtag !== 'undefined' && txnId){
+            gtag('event', 'conversion', {
+              'send_to': 'AW-18239139004/6HBfCPjQ6uMcELzZjPlD',
+              'value': 99.00,
+              'currency': 'SAR',
+              'transaction_id': txnId
+            });
+          }
+          window.location.href = '/access.html';
+        };
+
+        // Enhanced Conversions for Web: gives Google Ads a hashed email to match
+        // against signed-in Google accounts when the browser-side click signal
+        // alone isn't enough (blocked cookies, cross-device, etc). Google's own
+        // client library expects this sent via a separate gtag('set', ...) call
+        // just before the conversion event — so we hash first, then fire both
+        // conversions together, and never let this step delay or block the
+        // redirect if hashing fails for any reason.
+        if(email && typeof gtag !== 'undefined' && window.__masarSha256Hex){
+          window.__masarSha256Hex(email.trim().toLowerCase())
+            .then(function(hashedEmail){
+              gtag('set', 'user_data', { sha256_email_address: hashedEmail });
+            })
+            .catch(function(){})
+            .then(fireConversions);
+        } else {
+          fireConversions();
         }
-        window.location.href = '/access.html';
       }
     }
   });
@@ -1206,6 +1234,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
       <span class="divider"></span>
       <span class="stars">★★★★★</span>
     </div>
+
     <div class="reviews-track">
       <div class="review-card">
         <div class="stars">★★★★★</div>
@@ -1749,6 +1778,28 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
       var m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
       return m ? decodeURIComponent(m[1]) : '';
     }
+    function setCookie(name, value, days){
+      var expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
+      document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/; SameSite=Lax';
+    }
+
+    // Capture the Google Click ID the moment someone arrives from a Google ad, and
+    // keep it around for the length of Google's own attribution window (90 days) —
+    // this is the one piece any future Google-side server tracking will need, so
+    // it's worth storing now even before that integration exists.
+    var gclidFromUrl = new URLSearchParams(window.location.search).get('gclid');
+    if(gclidFromUrl){
+      setCookie('_gclid_masar', gclidFromUrl, 90);
+    }
+
+    async function sha256Hex(text){
+      var enc = new TextEncoder().encode(text);
+      var hashBuffer = await crypto.subtle.digest('SHA-256', enc);
+      return Array.prototype.map.call(new Uint8Array(hashBuffer), function(b){
+        return b.toString(16).padStart(2, '0');
+      }).join('');
+    }
+    window.__masarSha256Hex = sha256Hex; // reused by the checkout.completed handler above
 
     btn.addEventListener('click', function(e){
       e.preventDefault();
@@ -1764,11 +1815,13 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
       Paddle.Checkout.open({
         items: [{ priceId: 'pri_01m084s0bfqpy2t4jhd55dm69b', quantity: 1 }],
         // Passed through to the Paddle transaction and back out in the webhook payload,
-        // so the server-side Conversions API call can match this event to the same
-        // browser/user Meta already saw — this is what keeps iOS match quality high.
+        // so a server-side call (Meta CAPI today; Google's equivalent once that side
+        // is wired up) can match this event to the same browser/user the ad platform
+        // already saw — this is what keeps iOS match quality high.
         customData: {
           fbp: getCookie('_fbp'),
           fbc: getCookie('_fbc'),
+          gclid: getCookie('_gclid_masar'),
           event_source_url: window.location.href
         }
       });
