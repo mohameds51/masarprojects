@@ -33,11 +33,38 @@
 <meta property="og:description" content="6 أدوات متكاملة تاخذك من فكرة المشروع إلى تحقيق الأرباح: اختيار، حساب، دراسة، تأسيس، وتنفيذ — بـ99 ريال فقط.">
 <meta property="og:type" content="product">
 <meta property="og:locale" content="ar_SA">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Noto+Kufi+Arabic:wght@700;800;900&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Noto+Kufi+Arabic:wght@700;800;900&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Noto+Kufi+Arabic:wght@700;800;900&display=swap"></noscript>
+<style>
+  @font-face{
+    font-family:'Almarai';
+    src:url('/fonts/almarai-400.woff2') format('woff2');
+    font-weight:400;font-style:normal;font-display:swap;
+  }
+  @font-face{
+    font-family:'Almarai';
+    src:url('/fonts/almarai-700.woff2') format('woff2');
+    font-weight:700;font-style:normal;font-display:swap;
+  }
+  @font-face{
+    font-family:'Almarai';
+    src:url('/fonts/almarai-800.woff2') format('woff2');
+    font-weight:800;font-style:normal;font-display:swap;
+  }
+  @font-face{
+    font-family:'Noto Kufi Arabic';
+    src:url('/fonts/noto-kufi-arabic-700.woff2') format('woff2');
+    font-weight:700;font-style:normal;font-display:swap;
+  }
+  @font-face{
+    font-family:'Noto Kufi Arabic';
+    src:url('/fonts/noto-kufi-arabic-800.woff2') format('woff2');
+    font-weight:800;font-style:normal;font-display:swap;
+  }
+  @font-face{
+    font-family:'Noto Kufi Arabic';
+    src:url('/fonts/noto-kufi-arabic-900.woff2') format('woff2');
+    font-weight:900;font-style:normal;font-display:swap;
+  }
+</style>
 
 <!-- Meta Pixel Code -->
 <script>
@@ -1824,19 +1851,52 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         fbq('track', 'InitiateCheckout', { value: 99.00, currency: 'SAR' });
       }
 
-      Paddle.Checkout.open({
-        items: [{ priceId: 'pri_01m084s0bfqpy2t4jhd55dm69b', quantity: 1 }],
-        // Passed through to the Paddle transaction and back out in the webhook payload,
-        // so a server-side call (Meta CAPI today; Google's equivalent once that side
-        // is wired up) can match this event to the same browser/user the ad platform
-        // already saw — this is what keeps iOS match quality high.
-        customData: {
-          fbp: getCookie('_fbp'),
-          fbc: getCookie('_fbc'),
-          gclid: getCookie('_gclid_masar'),
-          event_source_url: window.location.href
+      function openCheckout(){
+        Paddle.Checkout.open({
+          items: [{ priceId: 'pri_01m084s0bfqpy2t4jhd55dm69b', quantity: 1 }],
+          // Passed through to the Paddle transaction and back out in the webhook payload,
+          // so a server-side call (Meta CAPI today; Google's equivalent once that side
+          // is wired up) can match this event to the same browser/user the ad platform
+          // already saw — this is what keeps iOS match quality high.
+          customData: {
+            fbp: getCookie('_fbp'),
+            fbc: getCookie('_fbc'),
+            gclid: getCookie('_gclid_masar'),
+            event_source_url: window.location.href
+          }
+        });
+      }
+
+      // Paddle can be genuinely unavailable when this fires — a slow connection means
+      // the deferred SDK script hasn't finished loading yet, or an ad blocker is
+      // blocking cdn.paddle.com outright (common, and it often targets checkout
+      // scripts specifically). Previously this just threw and silently killed the
+      // purchase with no fallback — real sessions showed exactly this pattern.
+      // Now: retry for a few seconds in case it's just still loading, and only show
+      // the customer an actual message if it truly never becomes available.
+      if(typeof Paddle !== 'undefined' && Paddle.Checkout){
+        openCheckout();
+        return;
+      }
+
+      var originalText = btn.textContent;
+      btn.textContent = 'جارِ التحميل...';
+      var attempts = 0;
+      var retryTimer = setInterval(function(){
+        attempts++;
+        if(typeof Paddle !== 'undefined' && Paddle.Checkout){
+          clearInterval(retryTimer);
+          btn.textContent = originalText;
+          openCheckout();
+        } else if(attempts >= 32){ // ~8 seconds at 250ms
+          clearInterval(retryTimer);
+          btn.textContent = originalText;
+          if(typeof fbq !== 'undefined'){
+            fbq('trackCustom', 'CheckoutLoadFailed', {});
+          }
+          alert('في مشكلة مؤقتة في تحميل صفحة الدفع. جرب تحدّث الصفحة وتضغط الزرار تاني — لو المشكلة استمرت، تقدر تتواصل معنا من صفحة "اتصل بنا".');
         }
-      });
+      }, 250);
     });
   })();
 
