@@ -57,11 +57,6 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
 <link rel="preload" as="image" href="/images/book50.webp" fetchpriority="high">
-<link rel="preload" as="image" href="/images/quiz.webp">
-<link rel="preload" as="image" href="/images/calculator.webp">
-<link rel="preload" as="image" href="/images/feasibility.webp">
-<link rel="preload" as="image" href="/images/setup_guide.webp">
-<link rel="preload" as="image" href="/images/first30days.webp">
 <style>
   :root{
     --navy-900:#0a1220;
@@ -842,8 +837,14 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     *{transition:none !important;animation:none !important;}
   }
 </style>
-<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script defer id="paddleSdk" src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 <script>
+  // Deferring the SDK script keeps it out of the critical rendering path (it was
+  // previously blocking the whole page from painting until it finished downloading).
+  // Rather than assuming execution order between two deferred scripts, this listens
+  // for the SDK's own 'load' event — the one guarantee that's unambiguous regardless
+  // of load timing — and only initializes once it has actually arrived.
+  document.getElementById('paddleSdk').addEventListener('load', function(){
   // Tracks which Paddle checkout events we've already reported to Meta this session,
   // since checkout.customer.created can in principle fire more than once for one
   // checkout (e.g. the customer edits their email) — we only want AddPaymentInfo once.
@@ -906,6 +907,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
       }
     }
   });
+  }); // end of paddleSdk 'load' listener
 </script>
 </head>
 <body>
