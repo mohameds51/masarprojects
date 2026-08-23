@@ -378,14 +378,24 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
   /* ============ HERO VIDEO (click-to-load) ============ */
   .hero-video{
     margin:28px auto 0;max-width:420px;width:100%;
-    position:relative;border-radius:16px;overflow:hidden;
-    box-shadow:0 20px 50px -20px rgba(0,0,0,0.6);
-    border:1px solid rgba(255,255,255,0.1);
+  }
+  .hero-video .video-caption-top{
+    margin:0 0 10px;text-align:center;
+    font-family:var(--ff-display);font-weight:700;font-size:14px;color:var(--cream);
   }
   .hero-video button.video-trigger{
     all:unset;display:block;width:100%;cursor:pointer;position:relative;
+    border-radius:16px;overflow:hidden;
+    box-shadow:0 20px 50px -20px rgba(0,0,0,0.6);
+    border:1px solid rgba(255,255,255,0.1);
   }
-  .hero-video img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;}
+  /* Force a true 16:9 landscape box no matter what aspect ratio the source
+     asset actually is — object-fit:cover crops it to fit, so a portrait
+     image/video can never blow the box out tall on mobile. */
+  .hero-video img{
+    width:100%;height:auto;display:block;
+    aspect-ratio:16/9;object-fit:cover;object-position:center;
+  }
   .hero-video .video-overlay{
     position:absolute;inset:0;
     background:linear-gradient(180deg,rgba(10,18,32,0.15),rgba(10,18,32,0.55));
@@ -400,12 +410,12 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
   }
   .hero-video button.video-trigger:hover .play-btn{transform:scale(1.08);}
   .hero-video .play-btn svg{width:22px;height:22px;color:var(--navy-900);margin-inline-start:3px;}
-  .hero-video .video-caption{
-    position:absolute;bottom:0;right:0;left:0;padding:12px 14px;
-    background:linear-gradient(0deg,rgba(10,18,32,0.85),transparent);
-    text-align:center;font-family:var(--ff-display);font-weight:700;font-size:13.5px;color:var(--white);
+  .hero-video video{
+    width:100%;height:auto;display:block;border-radius:16px;
+    aspect-ratio:16/9;object-fit:cover;object-position:center;
+    border:1px solid rgba(255,255,255,0.1);
+    box-shadow:0 20px 50px -20px rgba(0,0,0,0.6);
   }
-  .hero-video video{width:100%;display:block;border-radius:16px;}
 
   @media (prefers-reduced-motion: reduce){
     .sc-item{transition:opacity .3s ease;}
@@ -1038,6 +1048,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     </div>
 
     <div class="hero-video" id="heroVideo">
+      <p class="video-caption-top">شوف بنفسك وش هتستلم بالضبط بعد الدفع</p>
       <button class="video-trigger" id="videoTrigger" aria-label="شغّل الفيديو">
         <img src="/images/video-poster.webp" alt="فيديو يوضح أدوات مَسار" width="1280" height="720" loading="lazy">
         <div class="video-overlay">
@@ -1045,7 +1056,6 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           </div>
         </div>
-        <div class="video-caption">شوف بنفسك وش هتستلم بالضبط بعد الشراء</div>
       </button>
     </div>
 
@@ -1053,7 +1063,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
       <span class="old-line">382 ريال</span>
       <div class="big-price"><span class="big-num">99</span><span class="big-cur">ريال</span></div>
       <span class="savings-pill">وفر 283 ريال (خصم 74%)</span>
-      <span class="usd-note">يتم التحصيل بقيمة 26.40$ عند الدفع</span>
+      <span class="usd-note">نفس مبلغ الـ99 ريال، بيظهر بالدولار (≈26.40$) في كشف حسابك</span>
     </div>
 
     <div class="hero-actions">
@@ -1556,7 +1566,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         <span class="old">382 ريال</span>
         <span class="amount">99</span><span class="cur">ريال</span>
         <span class="caption">دفعة واحدة — بدون اشتراك شهري</span>
-        <span class="usd-note">يتم التحصيل بقيمة 26.40$ عند الدفع</span>
+        <span class="usd-note">نفس مبلغ الـ99 ريال، بيظهر بالدولار (≈26.40$) في كشف حسابك</span>
       </div>
 
       <span class="savings-pill" id="savingsOffer">وفر 283 ريال (خصم 74%)</span>
@@ -1611,18 +1621,22 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     <div class="ap-grid">
       <div class="ap-card">
         <span class="ap-num">١</span>
-        <div><h3>تدفع مرة واحدة</h3><p>99 ريال، بدون اشتراك شهري.</p></div>
+        <div><h3>تضغط "ابدأ مَسارك الآن"</h3><p>بيوديك لصفحة الدفع — أول خطوة تحط بريدك الإلكتروني، وهو اللي هيتبعتلك عليه فاتورة الشراء.</p></div>
       </div>
       <div class="ap-card">
         <span class="ap-num">٢</span>
-        <div><h3>تستلم مَسار فورًا</h3><p>الوصول إلى الأدوات الثمانية كاملة.</p></div>
+        <div><h3>تدفع مرة واحدة</h3><p>تختار وسيلة الدفع المتاحة (Visa، Mastercard، مدى، Apple Pay، Google Pay) وتدفع 99 ريال، بدون اشتراك شهري.</p></div>
       </div>
       <div class="ap-card">
         <span class="ap-num">٣</span>
-        <div><h3>تبدأ من وضعك الحالي</h3><p>عندك فكرة؟ اختبرها. ما عندك فكرة؟ اكتشفها.</p></div>
+        <div><h3>تستلم مَسار فورًا</h3><p>الوصول إلى الأدوات الثمانية كاملة.</p></div>
       </div>
       <div class="ap-card">
         <span class="ap-num">٤</span>
+        <div><h3>تبدأ من وضعك الحالي</h3><p>عندك فكرة؟ اختبرها. ما عندك فكرة؟ اكتشفها.</p></div>
+      </div>
+      <div class="ap-card">
+        <span class="ap-num">٥</span>
         <div><h3>تمشي في المسار خطوة بخطوة</h3><p class="ap-path">استكشف ← اكتشف ← احسب ← ادرس ← أسّس ← نفّذ</p></div>
       </div>
     </div>
@@ -1699,7 +1713,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
       <span class="num">99</span><span class="cur">ريال</span>
     </div>
     <div><span class="savings-pill" id="savingsFinal">وفر 283 ريال (خصم 74%)</span></div>
-    <span class="usd-note" style="display:block;text-align:center;margin-top:4px;">يتم التحصيل بقيمة 26.40$ عند الدفع</span>
+    <span class="usd-note" style="display:block;text-align:center;margin-top:4px;">نفس مبلغ الـ99 ريال، بيظهر بالدولار (≈26.40$) في كشف حسابك</span>
 
     <div class="countdown-banner pulse final-countdown" id="countdownFinal">
       <span class="cd-label">عرض اليوم ينتهي خلال</span>
@@ -2001,8 +2015,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
       video.autoplay = true;
       video.playsInline = true;
       video.setAttribute('poster', '/images/video-poster.webp');
-      container.innerHTML = '';
-      container.appendChild(video);
+      trigger.replaceWith(video);
     });
   })();
 
