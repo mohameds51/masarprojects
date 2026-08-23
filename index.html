@@ -28,9 +28,9 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png">
-<meta name="description" content="مَسار منظومة عملية تساعدك تختار المشروع المناسب لك، تحسب أرقامه، تدرس جدواه، وتبدأ تنفيذه بخطوات واضحة نحو أول عميل وأول أرباح. 6 أدوات متكاملة بـ99 ريال فقط.">
+<meta name="description" content="مَسار منظومة عملية تساعدك تختار المشروع المناسب لك، تحسب أرقامه، تدرس جدواه، تؤسسه، وتسوّق له لحد أول عميل وأول أرباح. 8 أدوات متكاملة بـ99 ريال فقط.">
 <meta property="og:title" content="مَسار — من فكرة المشروع إلى تحقيق الأرباح">
-<meta property="og:description" content="6 أدوات متكاملة تاخذك من فكرة المشروع إلى تحقيق الأرباح: اختيار، حساب، دراسة، تأسيس، وتنفيذ — بـ99 ريال فقط.">
+<meta property="og:description" content="8 أدوات متكاملة تاخذك من فكرة المشروع إلى تحقيق الأرباح: اختيار، حساب، دراسة، تأسيس، تنفيذ، وتسويق — بـ99 ريال فقط.">
 <meta property="og:type" content="product">
 <meta property="og:locale" content="ar_SA">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/noto-kufi-arabic-800.woff2" crossorigin>
@@ -288,6 +288,9 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     color:#7fd8ac;font-family:var(--ff-display);font-weight:700;font-size:12.5px;
     padding:6px 14px;border-radius:100px;
   }
+  .usd-note{
+    display:block;margin-top:8px;font-size:12px;color:var(--slate-light);
+  }
 
   /* ============ GUARANTEE ============ */
   .guarantee-chip{
@@ -371,6 +374,38 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     transition:background .3s ease, transform .3s ease;
   }
   .showcase-dots span.active{background:var(--gold-500);transform:scale(1.5);}
+
+  /* ============ HERO VIDEO (click-to-load) ============ */
+  .hero-video{
+    margin:28px auto 0;max-width:420px;width:100%;
+    position:relative;border-radius:16px;overflow:hidden;
+    box-shadow:0 20px 50px -20px rgba(0,0,0,0.6);
+    border:1px solid rgba(255,255,255,0.1);
+  }
+  .hero-video button.video-trigger{
+    all:unset;display:block;width:100%;cursor:pointer;position:relative;
+  }
+  .hero-video img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;}
+  .hero-video .video-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(10,18,32,0.15),rgba(10,18,32,0.55));
+    display:flex;align-items:center;justify-content:center;
+  }
+  .hero-video .play-btn{
+    width:60px;height:60px;border-radius:50%;
+    background:var(--gold-500);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 24px rgba(0,0,0,0.4);
+    transition:transform .2s ease;
+  }
+  .hero-video button.video-trigger:hover .play-btn{transform:scale(1.08);}
+  .hero-video .play-btn svg{width:22px;height:22px;color:var(--navy-900);margin-inline-start:3px;}
+  .hero-video .video-caption{
+    position:absolute;bottom:0;right:0;left:0;padding:12px 14px;
+    background:linear-gradient(0deg,rgba(10,18,32,0.85),transparent);
+    text-align:center;font-family:var(--ff-display);font-weight:700;font-size:13.5px;color:var(--white);
+  }
+  .hero-video video{width:100%;display:block;border-radius:16px;}
 
   @media (prefers-reduced-motion: reduce){
     .sc-item{transition:opacity .3s ease;}
@@ -489,19 +524,37 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
 
   /* ============ PROBLEM ============ */
   .problem{background:var(--cream);padding:54px 0;}
+
+  /* ============ QUICK ANSWERS (right after hero) ============ */
+  .quick-answers{background:var(--cream-2);padding:50px 0;}
+  .qa-grid{display:grid;grid-template-columns:1fr;gap:12px;max-width:900px;margin:0 auto;}
+  @media(min-width:700px){.qa-grid{grid-template-columns:1fr 1fr;}}
+  .qa-item{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);
+    padding:16px 18px;box-shadow:var(--shadow-card);
+  }
+  .qa-item .q{font-family:var(--ff-display);font-weight:800;font-size:14.5px;color:var(--ink);margin-bottom:4px;}
+  .qa-item .a{font-size:13.5px;color:var(--slate);line-height:1.7;}
   .q-grid{display:grid;grid-template-columns:1fr;gap:12px;}
   @media(min-width:640px){.q-grid{grid-template-columns:1fr 1fr;}}
   @media(min-width:960px){.q-grid{grid-template-columns:1fr 1fr 1fr;}}
   .q-bubble{
     background:var(--white);border:1px solid var(--line);
     border-radius:var(--radius-md);
-    padding:20px 22px;
-    font-family:var(--ff-display);font-weight:700;font-size:15.5px;
-    color:var(--ink);
     box-shadow:var(--shadow-card);
+    overflow:hidden;
+  }
+  .q-bubble .q-q{
+    all:unset;display:flex;align-items:center;gap:10px;cursor:pointer;
+    width:100%;box-sizing:border-box;padding:18px 22px;
+    font-family:var(--ff-display);font-weight:700;font-size:15.5px;color:var(--ink);
     position:relative;
   }
-  .q-bubble::before{content:"؟";position:absolute;top:14px;left:18px;font-family:var(--ff-display);color:var(--gold-500);opacity:.55;font-size:20px;}
+  .q-bubble .q-q::before{content:"؟";color:var(--gold-500);opacity:.7;font-size:18px;flex-shrink:0;}
+  .q-bubble .q-q .q-chevron{margin-inline-start:auto;color:var(--slate-light);transition:transform .2s ease;flex-shrink:0;}
+  .q-bubble.open .q-q .q-chevron{transform:rotate(180deg);}
+  .q-bubble .q-a{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .q-bubble .q-a-inner{padding:0 22px 18px 40px;font-size:14px;color:var(--slate);line-height:1.75;}
   .problem-close{
     margin-top:36px;max-width:680px;
     font-size:17px;color:var(--ink-soft);
@@ -942,7 +995,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
 <body>
 
 <div class="promo-bar" id="promoBar">
-  <span class="promo-msg">عرض اليوم فقط — احصل على مجموعة <strong>مَسار</strong> بـ99 ريال <span class="old">بدل 284 ريال</span></span>
+  <span class="promo-msg">عرض اليوم فقط — احصل على مجموعة <strong>مَسار</strong> بـ99 ريال <span class="old">بدل 382 ريال</span></span>
 </div>
 <header class="site-header">
   <div class="container">
@@ -957,10 +1010,10 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     <div class="hero-eyebrow">منظومة متكاملة لبدء المشاريع في السعودية</div>
     <h1>لا تبدأ مشروعك بالتخمين.<br>ابدأه <span class="accent">بمَسار</span>.</h1>
     <p class="hero-tagline">من فكرة المشروع إلى تحقيق الأرباح</p>
-    <p class="sub">6 أدوات متكاملة تساعدك من اختيار الفكرة وحسابها ودراستها، إلى تأسيسها وبدء أول 30 يوم.</p>
+    <p class="sub">8 أدوات متكاملة تساعدك من اختيار الفكرة وحسابها ودراستها، إلى تأسيسها وتسويقها والبيع لأول عميل.</p>
 
     <div class="showcase" id="showcase">
-      <span class="showcase-badge"><strong>6 أدوات متكاملة</strong> — أكثر من مجرد ملفات PDF</span>
+      <span class="showcase-badge"><strong>8 أدوات متكاملة</strong> — أكثر من مجرد ملفات PDF</span>
 
       <div class="showcase-stage" id="showcaseStage">
         <div class="sc-item" data-index="0"><div class="sc-glow"></div><img src="/images/book50.webp" srcset="/images/book50-sm.webp 340w, /images/book50.webp 640w" sizes="168px" alt="كتاب أفضل 50 مشروعًا في السعودية 2026" width="168" height="204" fetchpriority="high"></div>
@@ -969,6 +1022,8 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         <div class="sc-item" data-index="3"><div class="sc-glow"></div><img src="/images/feasibility.webp" srcset="/images/feasibility-sm.webp 340w, /images/feasibility.webp 640w" sizes="168px" alt="قالب دراسة جدوى جاهز لأي فكرة" width="168" height="204" fetchpriority="high"></div>
         <div class="sc-item" data-index="4"><div class="sc-glow"></div><img src="/images/setup_guide.webp" srcset="/images/setup_guide-sm.webp 340w, /images/setup_guide.webp 640w" sizes="168px" alt="دليل تأسيس المشروع" width="168" height="204" fetchpriority="high"></div>
         <div class="sc-item" data-index="5"><div class="sc-glow"></div><img src="/images/first30days.webp" srcset="/images/first30days-sm.webp 340w, /images/first30days.webp 640w" sizes="168px" alt="خطة أول 30 يوم" width="168" height="204" fetchpriority="high"></div>
+        <div class="sc-item" data-index="6"><div class="sc-glow"></div><img src="/images/ads_book.webp" srcset="/images/ads_book-sm.webp 340w, /images/ads_book.webp 640w" sizes="168px" alt="كتاب من أول إعلان إلى أول عميل" width="168" height="204" fetchpriority="high"></div>
+        <div class="sc-item" data-index="7"><div class="sc-glow"></div><img src="/images/templates.webp" srcset="/images/templates-sm.webp 340w, /images/templates.webp 640w" sizes="168px" alt="قوالب الحصول على أول العملاء" width="168" height="204" fetchpriority="high"></div>
       </div>
 
       <div class="showcase-meta" id="showcaseMeta">
@@ -978,14 +1033,27 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
       </div>
 
       <div class="showcase-dots" id="showcaseDots">
-        <span class="active"></span><span></span><span></span><span></span><span></span><span></span>
+        <span class="active"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
       </div>
     </div>
 
+    <div class="hero-video" id="heroVideo">
+      <button class="video-trigger" id="videoTrigger" aria-label="شغّل الفيديو">
+        <img src="/images/video-poster.webp" alt="فيديو يوضح أدوات مَسار" width="1280" height="720" loading="lazy">
+        <div class="video-overlay">
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="video-caption">شوف بنفسك وش هتستلم بالضبط بعد الشراء</div>
+      </button>
+    </div>
+
     <div class="hero-price">
-      <span class="old-line">284 ريال</span>
+      <span class="old-line">382 ريال</span>
       <div class="big-price"><span class="big-num">99</span><span class="big-cur">ريال</span></div>
-      <span class="savings-pill">وفر 185 ريال (خصم 65%)</span>
+      <span class="savings-pill">وفر 283 ريال (خصم 74%)</span>
+      <span class="usd-note">يتم التحصيل بقيمة 26.40$ عند الدفع</span>
     </div>
 
     <div class="hero-actions">
@@ -1015,17 +1083,41 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
   <div class="container">
     <div class="section-head">
       <div class="eyebrow">قبل ما تبدأ</div>
-      <h2>عندك رغبة تبدأ مشروع... بس عندك أسئلة أكثر من الإجابات</h2>
+      <h2>عندك رغبة تبدأ مشروع... واحتمال هذي أسئلتك</h2>
     </div>
     <div class="q-grid">
-      <div class="q-bubble">وش المشروع المناسب لي؟</div>
-      <div class="q-bubble">رأس مالي يكفي، ولا لأ؟</div>
-      <div class="q-bubble">هل الفكرة تستاهل فعلًا؟</div>
-      <div class="q-bubble">كم ممكن أربح؟</div>
-      <div class="q-bubble">متى أسترجع رأس مالي؟</div>
-      <div class="q-bubble">وش تكاليفي الحقيقية؟</div>
-      <div class="q-bubble">وش أسوي أول؟</div>
-      <div class="q-bubble">من وين أبدأ بالضبط؟</div>
+      <div class="q-bubble">
+        <button class="q-q"><span>وش المشروع المناسب لي؟</span><svg class="q-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="q-a"><div class="q-a-inner">اختبار اختيار المشروع يرشح لك أقرب فكرة لظروفك ورأس مالك في دقايق.</div></div>
+      </div>
+      <div class="q-bubble">
+        <button class="q-q"><span>رأس مالي يكفي، ولا لأ؟</span><svg class="q-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="q-a"><div class="q-a-inner">كتاب الـ50 مشروع مقسّم على 5 شرائح رأس مال، من 500 ريال لفوق — تلاقي فرص تناسب رأس مالك أيًا كان.</div></div>
+      </div>
+      <div class="q-bubble">
+        <button class="q-q"><span>هل الفكرة تستاهل فعلًا؟</span><svg class="q-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="q-a"><div class="q-a-inner">قالب دراسة الجدوى يديك تقييم أولي مكتوب قبل ما تخاطر بريال من رأس مالك.</div></div>
+      </div>
+      <div class="q-bubble">
+        <button class="q-q"><span>كم ممكن أربح؟</span><svg class="q-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="q-a"><div class="q-a-inner">أداة حسابة المشاريع تحسبلك الربح الشهري المتوقع بناءً على أرقامك أنت، مش تخمين.</div></div>
+      </div>
+      <div class="q-bubble">
+        <button class="q-q"><span>متى أسترجع رأس مالي؟</span><svg class="q-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="q-a"><div class="q-a-inner">نفس الحاسبة توريك نقطة التعادل ومدة استرداد رأس المال بالضبط.</div></div>
+      </div>
+      <div class="q-bubble">
+        <button class="q-q"><span>وش تكاليفي الحقيقية؟</span><svg class="q-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="q-a"><div class="q-a-inner">تدخل تكاليفك الثابتة والمتغيرة، والحاسبة توضحلك الصورة الكاملة قبل ما تبدأ.</div></div>
+      </div>
+      <div class="q-bubble">
+        <button class="q-q"><span>وش أسوي أول؟</span><svg class="q-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="q-a"><div class="q-a-inner">دليل تأسيس المشروع يوديك خطوة بخطوة من اختبار السوق لأول عرض تقدمه.</div></div>
+      </div>
+      <div class="q-bubble">
+        <button class="q-q"><span>من وين أبدأ بالضبط؟</span><svg class="q-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="q-a"><div class="q-a-inner">خطة أول 30 يوم تحطك في المسار من أول يوم — يوم بيوم، لحد أول عميل.</div></div>
+      </div>
     </div>
     <p class="problem-close">المشكلة مو في قلة الأفكار. المشكلة في معرفة أي فكرة تستحق وقتك ورأس مالك — وأنت تبي طريقة واحدة مرتبة توديك من الحيرة للقرار.</p>
   </div>
@@ -1077,6 +1169,8 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         <div class="mq-item"><img src="/images/feasibility.webp" srcset="/images/feasibility-sm.webp 340w, /images/feasibility.webp 640w" sizes="140px" alt="قالب دراسة الجدوى" width="140" height="187"></div>
         <div class="mq-item"><img src="/images/setup_guide.webp" srcset="/images/setup_guide-sm.webp 340w, /images/setup_guide.webp 640w" sizes="140px" alt="دليل تأسيس المشروع" width="140" height="140"></div>
         <div class="mq-item"><img src="/images/first30days.webp" srcset="/images/first30days-sm.webp 340w, /images/first30days.webp 640w" sizes="140px" alt="خطة أول 30 يوم" width="140" height="187"></div>
+        <div class="mq-item"><img src="/images/ads_book.webp" srcset="/images/ads_book-sm.webp 340w, /images/ads_book.webp 640w" sizes="140px" alt="من أول إعلان إلى أول عميل" width="140" height="187"></div>
+        <div class="mq-item"><img src="/images/templates.webp" srcset="/images/templates-sm.webp 340w, /images/templates.webp 640w" sizes="140px" alt="قوالب الحصول على أول العملاء" width="140" height="187"></div>
         <!-- duplicated set for seamless infinite loop -->
         <div class="mq-item"><img src="/images/book50.webp" srcset="/images/book50-sm.webp 340w, /images/book50.webp 640w" sizes="140px" alt="" aria-hidden="true" width="140" height="187"></div>
         <div class="mq-item"><img src="/images/quiz.webp" srcset="/images/quiz-sm.webp 340w, /images/quiz.webp 640w" sizes="140px" alt="" aria-hidden="true" width="140" height="140"></div>
@@ -1084,6 +1178,8 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         <div class="mq-item"><img src="/images/feasibility.webp" srcset="/images/feasibility-sm.webp 340w, /images/feasibility.webp 640w" sizes="140px" alt="" aria-hidden="true" width="140" height="187"></div>
         <div class="mq-item"><img src="/images/setup_guide.webp" srcset="/images/setup_guide-sm.webp 340w, /images/setup_guide.webp 640w" sizes="140px" alt="" aria-hidden="true" width="140" height="140"></div>
         <div class="mq-item"><img src="/images/first30days.webp" srcset="/images/first30days-sm.webp 340w, /images/first30days.webp 640w" sizes="140px" alt="" aria-hidden="true" width="140" height="187"></div>
+        <div class="mq-item"><img src="/images/ads_book.webp" srcset="/images/ads_book-sm.webp 340w, /images/ads_book.webp 640w" sizes="140px" alt="" aria-hidden="true" width="140" height="187"></div>
+        <div class="mq-item"><img src="/images/templates.webp" srcset="/images/templates-sm.webp 340w, /images/templates.webp 640w" sizes="140px" alt="" aria-hidden="true" width="140" height="187"></div>
       </div>
     </div>
   </div>
@@ -1094,7 +1190,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
   <div class="container">
     <div class="section-head center">
       <div class="eyebrow" style="justify-content:center;">المنظومة</div>
-      <h2>6 أدوات متكاملة، تعمل معًا في رحلة واحدة</h2>
+      <h2>8 أدوات متكاملة، تعمل معًا في رحلة واحدة</h2>
       <p class="lead">كل أداة تكمل اللي قبلها، وتجهزك للي بعدها.</p>
     </div>
 
@@ -1152,6 +1248,24 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
           <p>خطة يومية تنظم أول شهر بعد ما تبدأ، مع تقييم نهائي لأداء مشروعك مبني على أرقامك الفعلية.</p>
         </div>
       </div>
+
+      <div class="tool-card">
+        <div class="tool-media"><img src="/images/ads_book.webp" srcset="/images/ads_book-sm.webp 340w, /images/ads_book.webp 640w" sizes="220px" alt="كتاب من أول إعلان إلى أول عميل" loading="lazy" width="220" height="190"></div>
+        <div class="tool-body">
+          <div class="tool-num">07 — سوّق</div>
+          <h3>من أول إعلان إلى أول عميل</h3>
+          <p>دليل عملي: تحدد عميلك ومشكلته الحقيقية، تختار القناة المناسبة، وتبني خطة تسويقية بسيطة توديك لأول 5 عملاء بدون تعقيد.</p>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-media"><img src="/images/templates.webp" srcset="/images/templates-sm.webp 340w, /images/templates.webp 640w" sizes="220px" alt="قوالب الحصول على أول العملاء" loading="lazy" width="220" height="190"></div>
+        <div class="tool-body">
+          <div class="tool-num">08 — بِع</div>
+          <h3>قوالب الحصول على أول العملاء</h3>
+          <p>رسائل جاهزة تعدّلها وتبعتها: أول تواصل، تقديم العرض، الرد على "غالي" و"خليني أفكر"، المتابعة، وحتى رسائل ما بعد البيع.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1161,7 +1275,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
   <div class="container">
     <div class="section-head center on-dark">
       <div class="eyebrow" style="justify-content:center;">مَسارك خطوة بخطوة</div>
-      <h2>استكشف ← اكتشف ← احسب ← ادرس ← أسّس ← نفّذ</h2>
+      <h2>استكشف ← اكتشف ← احسب ← ادرس ← أسّس ← نفّذ ← سوّق ← بِع</h2>
       <p class="lead">هذا هو المسار اللي تمشي فيه: من أول نظرة على فرص المشاريع، إلى أول يوم تفتح فيه مشروعك فعليًا.</p>
     </div>
 
@@ -1215,6 +1329,22 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
             <p>تدخل خطة أول 30 يوم، وتتحرك بخطوات عملية نحو أول عميل وأول أرباح.</p>
           </div>
           <div class="step-node">٦</div>
+        </div>
+        <div class="path-step">
+          <div class="step-card">
+            <div class="step-verb">الخطوة 7</div>
+            <h4>سوّق</h4>
+            <p>تحدد عميلك ومشكلته الحقيقية، وتبني خطة تسويقية بسيطة توديك لأول 5 عملاء.</p>
+          </div>
+          <div class="step-node">٧</div>
+        </div>
+        <div class="path-step">
+          <div class="step-card">
+            <div class="step-verb">الخطوة 8</div>
+            <h4>بِع</h4>
+            <p>تستخدم رسائل جاهزة للتواصل والعرض والمتابعة، من أول رسالة إلى أول عميل فعلي.</p>
+          </div>
+          <div class="step-node">٨</div>
         </div>
       </div>
     </div>
@@ -1275,6 +1405,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
       <span class="divider"></span>
       <span class="stars">★★★★★</span>
     </div>
+    <span class="demo-tag">* نماذج تجريبية — سيتم استبدالها بتقييمات حقيقية</span>
 
     <div class="reviews-track">
       <div class="review-card">
@@ -1379,15 +1510,25 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         <div class="v-text"><strong>خطة أول 30 يوم</strong><span>خطة يومية لين تحصل أول عميل وأول أرباح</span></div>
         <span class="v-price">49 ريال</span>
       </div>
+      <div class="value-row">
+        <span class="v-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a2 2 0 11-3.2 2.4"/></svg></span>
+        <div class="v-text"><strong>من أول إعلان إلى أول عميل</strong><span>خطة تسويقية عملية توديك لأول 5 عملاء</span></div>
+        <span class="v-price">59 ريال</span>
+      </div>
+      <div class="value-row">
+        <span class="v-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span>
+        <div class="v-text"><strong>قوالب الحصول على أول العملاء</strong><span>رسائل جاهزة للتواصل والبيع والمتابعة</span></div>
+        <span class="v-price">39 ريال</span>
+      </div>
       <div class="value-row" style="border-bottom:none;padding-top:20px;">
         <div class="v-text"><strong style="font-size:16px;">إجمالي سعر الأدوات منفردة</strong></div>
-        <span class="v-price" style="color:var(--slate-light);text-decoration:line-through;font-size:16px;">284 ريال</span>
+        <span class="v-price" style="color:var(--slate-light);text-decoration:line-through;font-size:16px;">382 ريال</span>
       </div>
     </div>
 
     <div class="value-total">
-      <p>تجيك الأدوات الستة مرة وحدة، جاهزة، تشتغل مع بعض، بدون إنترنت أو اشتراكات، ووصول مدى الحياة.</p>
-      <div class="vt-price">احصل على المنظومة كاملة بـ99 ريال بدل 284 — وفر 185 ريال (خصم 65%)</div>
+      <p>تجيك الأدوات الثمانية مرة وحدة، جاهزة، تشتغل مع بعض، بدون إنترنت أو اشتراكات، ووصول مدى الحياة.</p>
+      <div class="vt-price">احصل على المنظومة كاملة بـ99 ريال بدل 382 — وفر 283 ريال (خصم 74%)</div>
     </div>
   </div>
 </section>
@@ -1398,7 +1539,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     <div class="offer-card">
       <div class="tag">مَسار</div>
       <h3>المنظومة الكاملة</h3>
-      <p class="sub">6 أدوات متكاملة في منظومة واحدة</p>
+      <p class="sub">8 أدوات متكاملة في منظومة واحدة</p>
 
       <ul class="offer-list">
         <li><span class="n">١</span>أفضل 50 مشروعًا في السعودية 2026</li>
@@ -1407,15 +1548,18 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         <li><span class="n">٤</span>قالب دراسة جدوى جاهز لأي فكرة</li>
         <li><span class="n">٥</span>دليل تأسيس المشروع</li>
         <li><span class="n">٦</span>خطة أول 30 يوم</li>
+        <li><span class="n">٧</span>من أول إعلان إلى أول عميل</li>
+        <li><span class="n">٨</span>قوالب الحصول على أول العملاء</li>
       </ul>
 
       <div class="offer-price">
-        <span class="old">284 ريال</span>
+        <span class="old">382 ريال</span>
         <span class="amount">99</span><span class="cur">ريال</span>
         <span class="caption">دفعة واحدة — بدون اشتراك شهري</span>
+        <span class="usd-note">يتم التحصيل بقيمة 26.40$ عند الدفع</span>
       </div>
 
-      <span class="savings-pill" id="savingsOffer">وفر 185 ريال (خصم 65%)</span>
+      <span class="savings-pill" id="savingsOffer">وفر 283 ريال (خصم 74%)</span>
 
       <div class="countdown-banner pulse offer-countdown" id="countdownOffer">
         <span class="cd-label">عرض اليوم ينتهي خلال</span>
@@ -1471,7 +1615,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
       </div>
       <div class="ap-card">
         <span class="ap-num">٢</span>
-        <div><h3>تستلم مَسار فورًا</h3><p>الوصول إلى الأدوات الستة كاملة.</p></div>
+        <div><h3>تستلم مَسار فورًا</h3><p>الوصول إلى الأدوات الثمانية كاملة.</p></div>
       </div>
       <div class="ap-card">
         <span class="ap-num">٣</span>
@@ -1495,11 +1639,11 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     <div class="faq-list">
       <div class="faq-item">
         <button class="faq-q"><span>وش هو مَسار بالضبط؟</span><span class="icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">مَسار منظومة من 6 أدوات تفاعلية توديك من فكرة المشروع لمشروع قابل للتقييم والتنفيذ: اختبار لاختيار المشروع، كتاب فرص، حاسبة أرقام، قالب دراسة جدوى، دليل تأسيس، وخطة أول 30 يوم — كلها تشتغل مع بعض كرحلة واحدة.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">مَسار منظومة من 8 أدوات تفاعلية توديك من فكرة المشروع لمشروع قابل للتقييم والتنفيذ والتسويق: اختبار لاختيار المشروع، كتاب فرص، حاسبة أرقام، قالب دراسة جدوى، دليل تأسيس، خطة أول 30 يوم، دليل تسويقي، وقوالب رسائل بيع — كلها تشتغل مع بعض كرحلة واحدة.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q"><span>وش أحصل عليه بالضبط لما أشتري؟</span><span class="icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">تحصل على الأدوات الستة كاملة: كتاب أفضل 50 مشروعًا، اختبار اختيار المشروع، أداة حسابة المشاريع، قالب دراسة الجدوى، دليل تأسيس المشروع، وخطة أول 30 يوم — منظومة واحدة متكاملة، مو ملفات متفرقة.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">تحصل على الأدوات الثمانية كاملة: كتاب أفضل 50 مشروعًا، اختبار اختيار المشروع، أداة حسابة المشاريع، قالب دراسة الجدوى، دليل تأسيس المشروع، خطة أول 30 يوم، دليل من أول إعلان إلى أول عميل، وقوالب الحصول على أول العملاء — منظومة واحدة متكاملة، مو ملفات متفرقة.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q"><span>هل يناسبني إذا ما اخترت مشروع لين الحين؟</span><span class="icon">+</span></button>
@@ -1530,6 +1674,10 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         <div class="faq-a"><div class="faq-a-inner">أكيد. إذا كنت موظف وتفكر تبدأ مشروع جانبي، مَسار يساعدك تختار فكرة تناسب رأس مالك ووقتك، وتعرف خطوات البداية بدون ما تحتاج تترك وظيفتك من أول يوم.</div></div>
       </div>
       <div class="faq-item">
+        <button class="faq-q"><span>ليش السعر يتحصّل بالدولار مو بالريال؟</span><span class="icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">السعر المعروض 99 ريال سعودي، لكن المدفوعات بتتم عن طريق بوابة دفع عالمية (Paddle) لضمان أمان عمليتك، وهي بتحصّل المبلغ بما يعادله بالدولار الأمريكي (26.40$ تقريبًا) حسب سعر الصرف. المبلغ اللي بتدفعه هو نفسه بالظبط، بس بيظهر بعملة مختلفة في كشف حسابك.</div></div>
+      </div>
+      <div class="faq-item">
         <button class="faq-q"><span>كيف أستلم المنتج بعد الدفع؟</span><span class="icon">+</span></button>
         <div class="faq-a"><div class="faq-a-inner">بعد إتمام عملية الدفع تحصل على وصول لجميع أدوات مَسار.</div></div>
       </div>
@@ -1547,10 +1695,11 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     <h2>فكرتك تستاهل أكثر من <span class="accent">مجرد تخمين</span>.</h2>
     <p class="tagline">من فكرة المشروع إلى تحقيق الأرباح.</p>
     <div class="price-badge">
-      <span class="old">284</span>
+      <span class="old">382</span>
       <span class="num">99</span><span class="cur">ريال</span>
     </div>
-    <div><span class="savings-pill" id="savingsFinal">وفر 185 ريال (خصم 65%)</span></div>
+    <div><span class="savings-pill" id="savingsFinal">وفر 283 ريال (خصم 74%)</span></div>
+    <span class="usd-note" style="display:block;text-align:center;margin-top:4px;">يتم التحصيل بقيمة 26.40$ عند الدفع</span>
 
     <div class="countdown-banner pulse final-countdown" id="countdownFinal">
       <span class="cd-label">عرض اليوم ينتهي خلال</span>
@@ -1598,7 +1747,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
 </footer>
 
 <div class="sticky-cta" id="stickyCta">
-  <span class="price">99 ريال — مَسار<span class="discount">خصم 65%</span></span>
+  <span class="price">99 ريال — مَسار<span class="discount">خصم 74%</span></span>
   <a href="#offer" class="btn btn-gold glow-cta" data-cta="sticky">ابدأ الآن</a>
 </div>
 
@@ -1625,6 +1774,28 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         if(typeof fbq !== 'undefined'){
           var qText = btn.querySelector('span') ? btn.querySelector('span').textContent.trim() : '';
           fbq('trackCustom', 'FAQOpen', { question: qText });
+        }
+      }
+    });
+  });
+
+  // Quick-answers accordion (the "problem" section q-bubbles) — same pattern as
+  // the FAQ accordion, kept as independent open/close (not one-at-a-time) since
+  // these sit in a multi-column grid rather than a single stacked list.
+  document.querySelectorAll('.q-bubble').forEach(function(item){
+    var btn = item.querySelector('.q-q');
+    var ans = item.querySelector('.q-a');
+    btn.addEventListener('click', function(){
+      var isOpen = item.classList.contains('open');
+      if(isOpen){
+        item.classList.remove('open');
+        ans.style.maxHeight = null;
+      } else {
+        item.classList.add('open');
+        ans.style.maxHeight = ans.scrollHeight + 'px';
+        if(typeof fbq !== 'undefined'){
+          var qText = btn.querySelector('span') ? btn.querySelector('span').textContent.trim() : '';
+          fbq('trackCustom', 'QuickAnswerOpen', { question: qText });
         }
       }
     });
@@ -1717,7 +1888,9 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
       { verb: 'احسب',   name: 'أداة حسابة المشاريع' },
       { verb: 'ادرس',   name: 'قالب دراسة جدوى جاهز لأي فكرة' },
       { verb: 'أسّس',   name: 'دليل تأسيس المشروع' },
-      { verb: 'نفّذ',   name: 'خطة أول 30 يوم' }
+      { verb: 'نفّذ',   name: 'خطة أول 30 يوم' },
+      { verb: 'سوّق',   name: 'من أول إعلان إلى أول عميل' },
+      { verb: 'بِع',     name: 'قوالب الحصول على أول العملاء' }
     ];
 
     var total = items.length;
@@ -1729,14 +1902,12 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     var timer = null;
 
     function roleFor(distance){
-      switch(distance){
-        case 0: return 'active';
-        case 1: return 'next1';
-        case 2: return 'next2';
-        case 4: return 'prev2';
-        case 5: return 'prev1';
-        default: return 'hidden'; // distance 3: directly opposite
-      }
+      if(distance === 0) return 'active';
+      if(distance === 1) return 'next1';
+      if(distance === 2) return 'next2';
+      if(distance === total - 1) return 'prev1';
+      if(distance === total - 2) return 'prev2';
+      return 'hidden'; // anything further back on either side
     }
 
     function applyRoles(){
@@ -1768,14 +1939,17 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
 
     function reveal(onDone){
       stage.classList.add('reveal');
+      // Spacing scales inversely with item count so the full spread stays a similar
+      // total width on screen regardless of how many tools are in the carousel.
+      var spacing = 170 / (total - 1);
       items.forEach(function(item, i){
-        var pos = (i - (total - 1) / 2) * 34;
+        var pos = (i - (total - 1) / 2) * spacing;
         item.style.transform = 'translateX(' + pos + '%) scale(.42)';
       });
       meta.classList.add('fading');
       setTimeout(function(){
-        counterEl.textContent = '6 / 6';
-        verbEl.textContent = '6 أدوات متكاملة';
+        counterEl.textContent = total + ' / ' + total;
+        verbEl.textContent = total + ' أدوات متكاملة';
         nameEl.textContent = 'من فكرة المشروع إلى التنفيذ';
         meta.classList.remove('fading');
       }, LABEL_FADE);
@@ -1810,10 +1984,33 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     start();
   })();
 
-  // Paddle checkout — opens the overlay for مَسار (99 SAR) instead of just scrolling.
+  // Hero video — the actual video file (a few MB) never loads until the customer
+  // taps play. Before that, it's just a small poster image, so this costs nothing
+  // on initial page load regardless of how many visitors never click it.
   (function(){
-    var btn = document.getElementById('mainCta');
-    if(!btn) return;
+    var trigger = document.getElementById('videoTrigger');
+    var container = document.getElementById('heroVideo');
+    if(!trigger || !container) return;
+    trigger.addEventListener('click', function(){
+      if(typeof fbq !== 'undefined'){
+        fbq('trackCustom', 'VideoPlay', { location: 'hero' });
+      }
+      var video = document.createElement('video');
+      video.src = '/videos/masar-tour.mp4';
+      video.controls = true;
+      video.autoplay = true;
+      video.playsInline = true;
+      video.setAttribute('poster', '/images/video-poster.webp');
+      container.innerHTML = '';
+      container.appendChild(video);
+    });
+  })();
+
+  // Paddle checkout — every CTA button on the page opens the overlay directly now,
+  // instead of the earlier ones just scrolling down to the offer section.
+  (function(){
+    var buttons = document.querySelectorAll('#mainCta, a[data-cta]');
+    if(!buttons.length) return;
 
     function getCookie(name){
       var m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
@@ -1842,63 +2039,65 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     }
     window.__masarSha256Hex = sha256Hex; // reused by the checkout.completed handler above
 
-    btn.addEventListener('click', function(e){
-      e.preventDefault();
-
-      // Fires the instant the customer clicks "buy" — the standard funnel event ad
-      // platforms use to find more people likely to reach checkout, not just people
-      // who complete a purchase. This one is entirely under our control (no dependency
-      // on which Paddle events exist), so it fires reliably on every click.
-      if(typeof fbq !== 'undefined'){
-        fbq('track', 'InitiateCheckout', { value: 99.00, currency: 'SAR' });
-      }
-
-      function openCheckout(){
-        Paddle.Checkout.open({
-          items: [{ priceId: 'pri_01m084s0bfqpy2t4jhd55dm69b', quantity: 1 }],
-          // Passed through to the Paddle transaction and back out in the webhook payload,
-          // so a server-side call (Meta CAPI today; Google's equivalent once that side
-          // is wired up) can match this event to the same browser/user the ad platform
-          // already saw — this is what keeps iOS match quality high.
-          customData: {
-            fbp: getCookie('_fbp'),
-            fbc: getCookie('_fbc'),
-            gclid: getCookie('_gclid_masar'),
-            event_source_url: window.location.href
-          }
-        });
-      }
-
-      // Paddle can be genuinely unavailable when this fires — a slow connection means
-      // the deferred SDK script hasn't finished loading yet, or an ad blocker is
-      // blocking cdn.paddle.com outright (common, and it often targets checkout
-      // scripts specifically). Previously this just threw and silently killed the
-      // purchase with no fallback — real sessions showed exactly this pattern.
-      // Now: retry for a few seconds in case it's just still loading, and only show
-      // the customer an actual message if it truly never becomes available.
-      if(typeof Paddle !== 'undefined' && Paddle.Checkout){
-        openCheckout();
-        return;
-      }
-
-      var originalText = btn.textContent;
-      btn.textContent = 'جارِ التحميل...';
-      var attempts = 0;
-      var retryTimer = setInterval(function(){
-        attempts++;
-        if(typeof Paddle !== 'undefined' && Paddle.Checkout){
-          clearInterval(retryTimer);
-          btn.textContent = originalText;
-          openCheckout();
-        } else if(attempts >= 32){ // ~8 seconds at 250ms
-          clearInterval(retryTimer);
-          btn.textContent = originalText;
-          if(typeof fbq !== 'undefined'){
-            fbq('trackCustom', 'CheckoutLoadFailed', {});
-          }
-          alert('في مشكلة مؤقتة في تحميل صفحة الدفع. جرب تحدّث الصفحة وتضغط الزرار تاني — لو المشكلة استمرت، تقدر تتواصل معنا من صفحة "اتصل بنا".');
+    function openCheckout(){
+      Paddle.Checkout.open({
+        items: [{ priceId: 'pri_01m084s0bfqpy2t4jhd55dm69b', quantity: 1 }],
+        // Passed through to the Paddle transaction and back out in the webhook payload,
+        // so a server-side call (Meta CAPI today; Google's equivalent once that side
+        // is wired up) can match this event to the same browser/user the ad platform
+        // already saw — this is what keeps iOS match quality high.
+        customData: {
+          fbp: getCookie('_fbp'),
+          fbc: getCookie('_fbc'),
+          gclid: getCookie('_gclid_masar'),
+          event_source_url: window.location.href
         }
-      }, 250);
+      });
+    }
+
+    buttons.forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+
+        // Fires the instant the customer clicks "buy" — the standard funnel event ad
+        // platforms use to find more people likely to reach checkout, not just people
+        // who complete a purchase. This one is entirely under our control (no dependency
+        // on which Paddle events exist), so it fires reliably on every click.
+        if(typeof fbq !== 'undefined'){
+          fbq('track', 'InitiateCheckout', { value: 99.00, currency: 'SAR' });
+        }
+
+        // Paddle can be genuinely unavailable when this fires — a slow connection means
+        // the deferred SDK script hasn't finished loading yet, or an ad blocker is
+        // blocking cdn.paddle.com outright (common, and it often targets checkout
+        // scripts specifically). Previously this just threw and silently killed the
+        // purchase with no fallback — real sessions showed exactly this pattern.
+        // Now: retry for a few seconds in case it's just still loading, and only show
+        // the customer an actual message if it truly never becomes available.
+        if(typeof Paddle !== 'undefined' && Paddle.Checkout){
+          openCheckout();
+          return;
+        }
+
+        var originalText = btn.textContent;
+        btn.textContent = 'جارِ التحميل...';
+        var attempts = 0;
+        var retryTimer = setInterval(function(){
+          attempts++;
+          if(typeof Paddle !== 'undefined' && Paddle.Checkout){
+            clearInterval(retryTimer);
+            btn.textContent = originalText;
+            openCheckout();
+          } else if(attempts >= 32){ // ~8 seconds at 250ms
+            clearInterval(retryTimer);
+            btn.textContent = originalText;
+            if(typeof fbq !== 'undefined'){
+              fbq('trackCustom', 'CheckoutLoadFailed', {});
+            }
+            alert('في مشكلة مؤقتة في تحميل صفحة الدفع. جرب تحدّث الصفحة وتضغط الزرار تاني — لو المشكلة استمرت، تقدر تتواصل معنا من صفحة "اتصل بنا".');
+          }
+        }, 250);
+      });
     });
   })();
 
