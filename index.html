@@ -78,6 +78,27 @@
   fbq('track', 'PageView');
 
   window.clarity = window.clarity || function(){(window.clarity.q=window.clarity.q||[]).push(arguments)};
+
+  // Snap Pixel — base init + PAGE_VIEW (fires on every page) + VIEW_CONTENT
+  // (product-view, only on the landing page). No user_email/phone here: this
+  // is an anonymous visitor at this point, so those fields would only ever
+  // ship empty placeholders — real customer data is attached later, only at
+  // PURCHASE, once Paddle actually hands it to us.
+  (function(e,t,n){if(e.snaptr)return;var a=e.snaptr=function()
+  {a.handleRequest?a.handleRequest.apply(a,arguments):a.queue.push(arguments)};
+  a.queue=[];var s='script';r=t.createElement(s);r.async=!0;
+  r.src=n;var u=t.getElementsByTagName(s)[0];
+  u.parentNode.insertBefore(r,u);})(window,document,
+  'https://sc-static.net/scevent.min.js');
+
+  snaptr('init', 'd419b2dc-f722-4879-b09b-1c5e5d46c5c9');
+  snaptr('track', 'PAGE_VIEW');
+  snaptr('track', 'VIEW_CONTENT', {
+    'price': 99,
+    'currency': 'SAR',
+    'item_ids': ['masar-bundle'],
+    'item_category': 'business-launch'
+  });
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
@@ -966,6 +987,17 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         var fireConversions = function(){
           if(typeof fbq !== 'undefined' && txnId){
             fbq('track', 'Purchase', { value: 99.00, currency: 'SAR' }, { eventID: txnId });
+          }
+          if(typeof snaptr !== 'undefined' && txnId){
+            snaptr('track', 'PURCHASE', {
+              'price': 99,
+              'currency': 'SAR',
+              'transaction_id': txnId,
+              'item_ids': ['masar-bundle'],
+              'item_category': 'business-launch',
+              'number_items': 1,
+              'user_email': email || undefined
+            });
           }
           if(typeof gtag !== 'undefined' && txnId){
             gtag('event', 'conversion', {
@@ -2076,6 +2108,15 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         // on which Paddle events exist), so it fires reliably on every click.
         if(typeof fbq !== 'undefined'){
           fbq('track', 'InitiateCheckout', { value: 99.00, currency: 'SAR' });
+        }
+        if(typeof snaptr !== 'undefined'){
+          snaptr('track', 'START_CHECKOUT', {
+            'price': 99,
+            'currency': 'SAR',
+            'item_ids': ['masar-bundle'],
+            'item_category': 'business-launch',
+            'number_items': 1
+          });
         }
 
         // Paddle can be genuinely unavailable when this fires — a slow connection means
