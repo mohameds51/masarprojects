@@ -2111,16 +2111,11 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     });
   })();
 
-  // Paddle checkout — only the button inside the offer card itself (#mainCta)
-  // opens the overlay directly. Every other CTA on the page (header, hero,
-  // sticky bar, final section) scrolls down to that button instead, so people
-  // see the full offer/price/guarantee before the payment overlay appears.
+  // Paddle checkout — every CTA button on the page opens the overlay directly,
+  // instead of scrolling down to the offer section first.
   (function(){
-    var mainBtn = document.getElementById('mainCta');
-    var secondaryButtons = Array.prototype.slice.call(document.querySelectorAll('a[data-cta]')).filter(function(b){
-      return b !== mainBtn;
-    });
-    if(!mainBtn && !secondaryButtons.length) return;
+    var buttons = document.querySelectorAll('#mainCta, a[data-cta]');
+    if(!buttons.length) return;
 
     function getCookie(name){
       var m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
@@ -2165,8 +2160,8 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
       });
     }
 
-    if(mainBtn){
-      mainBtn.addEventListener('click', function(e){
+    buttons.forEach(function(btn){
+      btn.addEventListener('click', function(e){
         e.preventDefault();
 
         // Fires the instant the customer clicks "buy" — the standard funnel event ad
@@ -2198,35 +2193,24 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
           return;
         }
 
-        var originalText = mainBtn.textContent;
-        mainBtn.textContent = 'جارِ التحميل...';
+        var originalText = btn.textContent;
+        btn.textContent = 'جارِ التحميل...';
         var attempts = 0;
         var retryTimer = setInterval(function(){
           attempts++;
           if(typeof Paddle !== 'undefined' && Paddle.Checkout){
             clearInterval(retryTimer);
-            mainBtn.textContent = originalText;
+            btn.textContent = originalText;
             openCheckout();
           } else if(attempts >= 32){ // ~8 seconds at 250ms
             clearInterval(retryTimer);
-            mainBtn.textContent = originalText;
+            btn.textContent = originalText;
             if(typeof fbq !== 'undefined'){
               fbq('trackCustom', 'CheckoutLoadFailed', {});
             }
             alert('في مشكلة مؤقتة في تحميل صفحة الدفع. جرب تحدّث الصفحة وتضغط الزرار تاني — لو المشكلة استمرت، تقدر تتواصل معنا من صفحة "اتصل بنا".');
           }
         }, 250);
-      });
-    }
-
-    // Header / hero / sticky-bar / final-section CTAs: just bring the real
-    // checkout button into view — they don't open Paddle themselves.
-    secondaryButtons.forEach(function(btn){
-      btn.addEventListener('click', function(e){
-        e.preventDefault();
-        if(mainBtn){
-          mainBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
       });
     });
   })();
