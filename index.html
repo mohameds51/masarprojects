@@ -296,7 +296,26 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     margin-inline:auto;
   }
   .hero-discover{margin-top:18px;display:flex;justify-content:center;}
-  .hero-discover .btn{padding:12px 24px;font-size:14.5px;}
+  .hero-discover .btn{
+    padding:12px 24px;font-size:14.5px;
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(201,162,39,0.1);
+    border:1.5px solid var(--gold-400);color:var(--gold-400);
+    animation:discover-pulse 2.4s ease-in-out infinite;
+  }
+  .hero-discover .btn:hover{background:rgba(201,162,39,0.22);}
+  .hero-discover .btn .chevron{
+    width:14px;height:14px;flex-shrink:0;
+    animation:discover-bounce 1.4s ease-in-out infinite;
+  }
+  @keyframes discover-pulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(201,162,39,0.35);}
+    50%{box-shadow:0 0 0 7px rgba(201,162,39,0);}
+  }
+  @keyframes discover-bounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(3px);}
+  }
   .hero-actions{margin-top:28px;display:flex;flex-direction:column;align-items:center;gap:6px;}
   .price-badge{
     display:flex;align-items:baseline;gap:6px;
@@ -352,8 +371,9 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
 
   /* ============ PRODUCT SHOWCASE (signature) ============ */
   .showcase{margin:34px 0 6px;width:100%;max-width:640px;display:flex;flex-direction:column;align-items:center;}
+  .showcase-badge-row{display:flex;justify-content:center;margin:20px 0 24px;}
   .showcase-badge{
-    display:inline-flex;align-items:center;gap:6px;margin-bottom:22px;
+    display:inline-flex;align-items:center;gap:6px;margin-bottom:0;
     font-family:var(--ff-display);font-size:12px;font-weight:700;color:#a9b1c4;
     background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);
     padding:7px 14px;border-radius:100px;
@@ -1074,11 +1094,13 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     <p class="sub">8 أدوات متكاملة تساعدك من اختيار الفكرة وحسابها ودراستها، إلى تأسيسها وتسويقها والبيع لأول عميل.</p>
 
     <div class="hero-discover">
-      <a href="#heroVideo" class="btn btn-outline">اكتشف المنظومة الآن</a>
+      <a href="#heroVideo" class="btn btn-outline">
+        اكتشف المنظومة الآن
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </a>
     </div>
 
     <div class="showcase" id="showcase">
-      <a href="#six-tools" class="showcase-badge"><strong>8 أدوات متكاملة</strong> — أكثر من مجرد ملفات PDF</a>
 
       <div class="showcase-stage" id="showcaseStage">
         <div class="sc-item" data-index="0"><div class="sc-glow"></div><img src="/images/book50.webp" srcset="/images/book50-sm.webp 227w, /images/book50.webp 427w" sizes="168px" alt="كتاب أفضل 50 مشروعًا في السعودية 2026" width="168" height="204" fetchpriority="high"></div>
@@ -1100,6 +1122,10 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
       <div class="showcase-dots" id="showcaseDots">
         <span class="active"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
       </div>
+    </div>
+
+    <div class="showcase-badge-row">
+      <a href="#six-tools" class="showcase-badge"><strong>8 أدوات متكاملة</strong> — أكثر من مجرد ملفات PDF</a>
     </div>
 
     <div class="hero-video" id="heroVideo">
