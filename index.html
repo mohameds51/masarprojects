@@ -134,6 +134,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
 
   *,*::before,*::after{box-sizing:border-box;}
   html{scroll-behavior:smooth;overflow-x:hidden;}
+  #what-is, #six-tools, #heroVideo, #mainCta, .tool-card{scroll-margin-top:56px;}
   body{
     margin:0;
     font-family:var(--ff-body);
@@ -245,9 +246,18 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     background:var(--gold-500);color:var(--navy-900);
     padding:10px 20px;border-radius:100px;
   }
+  @media(max-width:640px){
+    /* Hiding the header on mobile reclaims ~64px of vertical space up top,
+       so the hero's headline + CTA sit higher and the page doesn't look
+       like a single static screen (the "false bottom" that stops people
+       from scrolling). The promo bar above it stays, since that's what
+       carries the offer/urgency message. */
+    .site-header{display:none;}
+  }
 
   /* ============ HERO ============ */
   .hero{
+    position:relative;
     background:
       radial-gradient(ellipse 900px 500px at 85% -10%, rgba(201,162,39,0.16), transparent 60%),
       radial-gradient(ellipse 700px 500px at 10% 110%, rgba(201,162,39,0.10), transparent 60%),
@@ -265,7 +275,10 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     background:rgba(201,162,39,0.12);border:1px solid rgba(201,162,39,0.35);
     color:var(--gold-400);font-family:var(--ff-display);font-size:13px;font-weight:700;
     padding:8px 16px;border-radius:100px;margin-bottom:22px;
+    text-decoration:none;cursor:pointer;transition:background .18s ease;
   }
+  .hero-eyebrow:hover, .hero-eyebrow:visited{color:var(--gold-400);}
+  .hero-eyebrow:hover{background:rgba(201,162,39,0.2);}
   .hero h1{
     font-size:clamp(30px,5.6vw,50px);
     line-height:1.22;
@@ -282,6 +295,8 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     color:#cbd3e2;max-width:520px;line-height:1.8;
     margin-inline:auto;
   }
+  .hero-discover{margin-top:18px;display:flex;justify-content:center;}
+  .hero-discover .btn{padding:12px 24px;font-size:14.5px;}
   .hero-actions{margin-top:28px;display:flex;flex-direction:column;align-items:center;gap:6px;}
   .price-badge{
     display:flex;align-items:baseline;gap:6px;
@@ -342,7 +357,10 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     font-family:var(--ff-display);font-size:12px;font-weight:700;color:#a9b1c4;
     background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);
     padding:7px 14px;border-radius:100px;
+    text-decoration:none;cursor:pointer;transition:background .18s ease;
   }
+  .showcase-badge:hover, .showcase-badge:visited{color:#a9b1c4;}
+  .showcase-badge:hover{background:rgba(255,255,255,0.08);}
   .showcase-badge strong{color:var(--gold-400);}
   .showcase-stage{
     position:relative;width:100%;
@@ -353,6 +371,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     position:absolute;width:min(168px,42vw);aspect-ratio:3/4;
     transition:transform .6s cubic-bezier(.22,1,.36,1), opacity .6s ease;
     will-change:transform,opacity;
+    cursor:pointer;
   }
   .sc-item .sc-glow{
     position:absolute;inset:-16px;border-radius:18px;z-index:-1;
@@ -1041,20 +1060,25 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
 <header class="site-header">
   <div class="container">
     <a href="/" class="logo"><img src="/images/logo.webp" alt="مَسار" width="44" height="44"></a>
-    <a href="#offer" class="header-cta" data-cta="header">ابدأ مَسارك</a>
+    <a href="#mainCta" class="header-cta" data-cta="header">ابدأ مَسارك</a>
   </div>
 </header>
 
 <!-- ============ HERO ============ -->
 <section class="hero" data-track="hero">
+  <div id="scrollSentinel" style="position:absolute;top:220px;width:1px;height:1px;"></div>
   <div class="container hero-grid">
-    <div class="hero-eyebrow">منظومة متكاملة لبدء المشاريع في السعودية</div>
+    <a href="#what-is" class="hero-eyebrow">منظومة متكاملة لبدء المشاريع في السعودية</a>
     <h1>لا تبدأ مشروعك بالتخمين.<br>ابدأه <span class="accent">بمَسار</span>.</h1>
     <p class="hero-tagline">من فكرة المشروع إلى تحقيق الأرباح</p>
     <p class="sub">8 أدوات متكاملة تساعدك من اختيار الفكرة وحسابها ودراستها، إلى تأسيسها وتسويقها والبيع لأول عميل.</p>
 
+    <div class="hero-discover">
+      <a href="#heroVideo" class="btn btn-outline">اكتشف المنظومة الآن</a>
+    </div>
+
     <div class="showcase" id="showcase">
-      <span class="showcase-badge"><strong>8 أدوات متكاملة</strong> — أكثر من مجرد ملفات PDF</span>
+      <a href="#six-tools" class="showcase-badge"><strong>8 أدوات متكاملة</strong> — أكثر من مجرد ملفات PDF</a>
 
       <div class="showcase-stage" id="showcaseStage">
         <div class="sc-item" data-index="0"><div class="sc-glow"></div><img src="/images/book50.webp" srcset="/images/book50-sm.webp 227w, /images/book50.webp 427w" sizes="168px" alt="كتاب أفضل 50 مشروعًا في السعودية 2026" width="168" height="204" fetchpriority="high"></div>
@@ -1098,7 +1122,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     </div>
 
     <div class="hero-actions">
-      <a href="#offer" class="btn btn-gold glow-cta" data-cta="hero">ابدأ مَسارك الآن</a>
+      <a href="#mainCta" class="btn btn-gold glow-cta" data-cta="hero">ابدأ مَسارك الآن</a>
       <span class="guarantee-chip guarantee-hero">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
         ضمان استرجاع خلال 7 أيام
@@ -1195,7 +1219,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
 </section>
 
 <!-- ============ WHAT IS MASAR ============ -->
-<section class="what-is" data-track="what_is_masar">
+<section class="what-is" id="what-is" data-track="what_is_masar">
   <div class="container what-grid">
     <div>
       <div class="eyebrow">مَسار</div>
@@ -1227,7 +1251,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
 </section>
 
 <!-- ============ 6-PART SYSTEM ============ -->
-<section class="system" data-track="six_tools">
+<section class="system" id="six-tools" data-track="six_tools">
   <div class="container">
     <div class="section-head center">
       <div class="eyebrow" style="justify-content:center;">المنظومة</div>
@@ -1236,7 +1260,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     </div>
 
     <div class="system-grid">
-      <div class="tool-card">
+      <div class="tool-card" id="tool-0">
         <div class="tool-media"><img src="/images/book50.webp" srcset="/images/book50-sm.webp 227w, /images/book50.webp 427w" sizes="220px" alt="كتاب أفضل 50 مشروعًا في السعودية 2026" loading="lazy" width="220" height="190"></div>
         <div class="tool-body">
           <div class="tool-num">01 — استكشف</div>
@@ -1245,7 +1269,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         </div>
       </div>
 
-      <div class="tool-card">
+      <div class="tool-card" id="tool-1">
         <div class="tool-media"><img src="/images/quiz.webp" srcset="/images/quiz-sm.webp 340w, /images/quiz.webp 640w" sizes="220px" alt="اختبار اختيار المشروع" loading="lazy" width="220" height="190"></div>
         <div class="tool-body">
           <div class="tool-num">02 — اكتشف</div>
@@ -1254,7 +1278,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         </div>
       </div>
 
-      <div class="tool-card">
+      <div class="tool-card" id="tool-2">
         <div class="tool-media"><img src="/images/calculator.webp" srcset="/images/calculator-sm.webp 340w, /images/calculator.webp 640w" sizes="220px" alt="أداة حسابة المشاريع" loading="lazy" width="220" height="190"></div>
         <div class="tool-body">
           <div class="tool-num">03 — احسب</div>
@@ -1263,7 +1287,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         </div>
       </div>
 
-      <div class="tool-card">
+      <div class="tool-card" id="tool-3">
         <div class="tool-media"><img src="/images/feasibility.webp" srcset="/images/feasibility-sm.webp 227w, /images/feasibility.webp 427w" sizes="220px" alt="قالب دراسة جدوى" loading="lazy" width="220" height="190"></div>
         <div class="tool-body">
           <div class="tool-num">04 — ادرس</div>
@@ -1272,7 +1296,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         </div>
       </div>
 
-      <div class="tool-card">
+      <div class="tool-card" id="tool-4">
         <div class="tool-media"><img src="/images/setup_guide.webp" srcset="/images/setup_guide-sm.webp 340w, /images/setup_guide.webp 640w" sizes="220px" alt="دليل تأسيس المشروع" loading="lazy" width="220" height="190"></div>
         <div class="tool-body">
           <div class="tool-num">05 — أسّس</div>
@@ -1281,7 +1305,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         </div>
       </div>
 
-      <div class="tool-card">
+      <div class="tool-card" id="tool-5">
         <div class="tool-media"><img src="/images/first30days.webp" srcset="/images/first30days-sm.webp 227w, /images/first30days.webp 427w" sizes="220px" alt="خطة أول 30 يوم" loading="lazy" width="220" height="190"></div>
         <div class="tool-body">
           <div class="tool-num">06 — نفّذ</div>
@@ -1290,7 +1314,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         </div>
       </div>
 
-      <div class="tool-card">
+      <div class="tool-card" id="tool-6">
         <div class="tool-media"><img src="/images/ads_book.webp" srcset="/images/ads_book-sm.webp 255w, /images/ads_book.webp 480w" sizes="220px" alt="كتاب من أول إعلان إلى أول عميل" loading="lazy" width="220" height="190"></div>
         <div class="tool-body">
           <div class="tool-num">07 — سوّق</div>
@@ -1299,7 +1323,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
         </div>
       </div>
 
-      <div class="tool-card">
+      <div class="tool-card" id="tool-7">
         <div class="tool-media"><img src="/images/templates.webp" srcset="/images/templates-sm.webp 227w, /images/templates.webp 427w" sizes="220px" alt="قوالب الحصول على أول العملاء" loading="lazy" width="220" height="190"></div>
         <div class="tool-body">
           <div class="tool-num">08 — بِع</div>
@@ -1757,7 +1781,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     </div>
 
     <div>
-      <a href="#offer" class="btn btn-gold glow-cta" data-cta="final">ابدأ مَسارك الآن</a>
+      <a href="#mainCta" class="btn btn-gold glow-cta" data-cta="final">ابدأ مَسارك الآن</a>
     </div>
 
     <span class="guarantee-chip guarantee-hero" style="justify-content:center;margin-top:14px;">
@@ -1792,7 +1816,7 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
 
 <div class="sticky-cta" id="stickyCta">
   <span class="price">99 ريال — مَسار<span class="discount">خصم 74%</span></span>
-  <a href="#offer" class="btn btn-gold glow-cta" data-cta="sticky">ابدأ الآن</a>
+  <a href="#mainCta" class="btn btn-gold glow-cta" data-cta="sticky">ابدأ الآن</a>
 </div>
 
 <script>
@@ -1926,6 +1950,18 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     var nameEl = document.getElementById('scName');
     var dots = Array.prototype.slice.call(document.querySelectorAll('#showcaseDots span'));
 
+    // Tapping a book in the carousel jumps straight to that tool's full
+    // explanation further down the page, instead of just sitting there as
+    // a picture — matches the same pattern as the eyebrow/badge links above.
+    items.forEach(function(item){
+      item.addEventListener('click', function(){
+        var target = document.getElementById('tool-' + item.dataset.index);
+        if(target){
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
     var steps = [
       { verb: 'استكشف', name: 'أفضل 50 مشروعًا في السعودية 2026' },
       { verb: 'اكتشف',  name: 'اختبار اختيار المشروع المناسب' },
@@ -2049,11 +2085,16 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
     });
   })();
 
-  // Paddle checkout — every CTA button on the page opens the overlay directly now,
-  // instead of the earlier ones just scrolling down to the offer section.
+  // Paddle checkout — only the button inside the offer card itself (#mainCta)
+  // opens the overlay directly. Every other CTA on the page (header, hero,
+  // sticky bar, final section) scrolls down to that button instead, so people
+  // see the full offer/price/guarantee before the payment overlay appears.
   (function(){
-    var buttons = document.querySelectorAll('#mainCta, a[data-cta]');
-    if(!buttons.length) return;
+    var mainBtn = document.getElementById('mainCta');
+    var secondaryButtons = Array.prototype.slice.call(document.querySelectorAll('a[data-cta]')).filter(function(b){
+      return b !== mainBtn;
+    });
+    if(!mainBtn && !secondaryButtons.length) return;
 
     function getCookie(name){
       var m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
@@ -2098,8 +2139,8 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
       });
     }
 
-    buttons.forEach(function(btn){
-      btn.addEventListener('click', function(e){
+    if(mainBtn){
+      mainBtn.addEventListener('click', function(e){
         e.preventDefault();
 
         // Fires the instant the customer clicks "buy" — the standard funnel event ad
@@ -2131,24 +2172,35 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
           return;
         }
 
-        var originalText = btn.textContent;
-        btn.textContent = 'جارِ التحميل...';
+        var originalText = mainBtn.textContent;
+        mainBtn.textContent = 'جارِ التحميل...';
         var attempts = 0;
         var retryTimer = setInterval(function(){
           attempts++;
           if(typeof Paddle !== 'undefined' && Paddle.Checkout){
             clearInterval(retryTimer);
-            btn.textContent = originalText;
+            mainBtn.textContent = originalText;
             openCheckout();
           } else if(attempts >= 32){ // ~8 seconds at 250ms
             clearInterval(retryTimer);
-            btn.textContent = originalText;
+            mainBtn.textContent = originalText;
             if(typeof fbq !== 'undefined'){
               fbq('trackCustom', 'CheckoutLoadFailed', {});
             }
             alert('في مشكلة مؤقتة في تحميل صفحة الدفع. جرب تحدّث الصفحة وتضغط الزرار تاني — لو المشكلة استمرت، تقدر تتواصل معنا من صفحة "اتصل بنا".');
           }
         }, 250);
+      });
+    }
+
+    // Header / hero / sticky-bar / final-section CTAs: just bring the real
+    // checkout button into view — they don't open Paddle themselves.
+    secondaryButtons.forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        if(mainBtn){
+          mainBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
       });
     });
   })();
@@ -2254,14 +2306,19 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
   // forcing a synchronous layout recalculation each time (flagged by PageSpeed
   // as "Forced reflow"). The observer gets the same geometry for free, as part
   // of the browser's own batched layout pass, with zero forced reflows.
+  //
+  // The sentinel sits ~220px down from the top of the hero (roughly one
+  // "first scroll"), not at the bottom of the whole hero section — so the
+  // bar appears as soon as the visitor starts scrolling, not only after
+  // they've scrolled past the entire hero.
   var sticky = document.getElementById('stickyCta');
-  var heroSectionEl = document.querySelector('.hero');
+  var scrollSentinelEl = document.getElementById('scrollSentinel');
   var offerSectionEl = document.getElementById('offer');
-  var heroPastView = false;
+  var scrolledPastTop = false;
   var offerInView = false;
 
   function updateStickyVisibility(){
-    if(heroPastView && !offerInView){
+    if(scrolledPastTop && !offerInView){
       sticky.classList.add('show');
     } else {
       sticky.classList.remove('show');
@@ -2269,9 +2326,9 @@ src="https://www.facebook.com/tr?id=894972786659768&ev=PageView&noscript=1"
   }
 
   new IntersectionObserver(function(entries){
-    heroPastView = entries[0].boundingClientRect.bottom < 0;
+    scrolledPastTop = entries[0].boundingClientRect.top < 0;
     updateStickyVisibility();
-  }, { threshold: 0 }).observe(heroSectionEl);
+  }, { threshold: 0 }).observe(scrollSentinelEl);
 
   new IntersectionObserver(function(entries){
     offerInView = entries[0].isIntersecting;
