@@ -1,19 +1,21 @@
 // api/paddle-webhook.js
 //
 // Receives Paddle Billing webhooks, verifies their signature, and forwards
-// completed transactions to Meta's Conversions API (server-side) as a
-// "Purchase" event. This is what makes conversion counting reliable for iOS
-// traffic, where the browser pixel alone is frequently blocked (App Tracking
-// Transparency) or delayed/dropped (Safari's Intelligent Tracking Prevention).
+// completed transactions to Meta's and Snap's Conversions APIs (server-side)
+// as a "Purchase" event. This is what makes conversion counting reliable for
+// traffic the browser pixel alone misses — iOS App Tracking Transparency,
+// Safari ITP, ad blockers, or the Snapchat in-app browser dropping cookies.
 //
 // ── Deduplication ──────────────────────────────────────────────────────────
 // The event_id sent here is the Paddle transaction ID — the exact same ID
-// the browser-side pixel uses as its eventID when firing Purchase right after
-// checkout.completed (see index.html). Meta deduplicates any Pixel + CAPI
-// event pair that shares an event_id, so a single real purchase is counted
+// the browser-side pixels use as their dedup key when firing Purchase right
+// after checkout.completed (see index.html: `eventID` for Meta,
+// `transaction_id` for Snap). Both platforms deduplicate any Pixel + CAPI
+// event pair that shares that ID, so a single real purchase is counted
 // exactly once even when:
 //   - both the browser pixel and this server call succeed (normal case)
-//   - only this server call succeeds (iOS blocked the browser pixel)
+//   - only this server call succeeds (iOS blocked the browser pixel, or the
+//     buyer completed checkout inside Snapchat's in-app browser)
 //   - Paddle retries the webhook delivery (network hiccup, timeout, etc.)
 //   - the customer reloads /access.html afterwards (nothing here re-fires)
 //
@@ -23,6 +25,10 @@
 //                             this endpoint's live URL)
 //   META_CAPI_ACCESS_TOKEN  — from Meta Events Manager → Data sources → your dataset
 //                             → Settings → Conversions API → "Generate access token"
+//   SNAP_CAPI_ACCESS_TOKEN  — from Snapchat Ads Manager → account menu → Business Details
+//                             → "Conversions API Tokens" section → Generate Token
+//                             (must be an Organization Admin to see this section;
+//                             the token is static/long-lived, no refresh needed)
 //
 // ── One-time setup on Paddle's side ─────────────────────────────────────────
 //   1. Deploy this file (just push to the repo — Vercel auto-detects /api/*.js).
@@ -31,21 +37,28 @@
 //   3. Subscribe it to the "transaction.completed" event.
 //   4. Copy the signing secret Paddle shows you into PADDLE_WEBHOOK_SECRET.
 //   5. Generate the Meta access token and put it in META_CAPI_ACCESS_TOKEN.
-//   6. Redeploy so the new environment variables take effect.
+//   6. Generate the Snap access token and put it in SNAP_CAPI_ACCESS_TOKEN.
+//   7. Redeploy so the new environment variables take effect.
 //
 // ── Verifying it's actually working ─────────────────────────────────────────
 //   - Vercel → Project → your deployment → Functions → paddle-webhook → Logs
-//     will show a line per received webhook and the raw response from Meta.
-//   - Meta Events Manager → Test Events will show incoming CAPI events live
-//     if you trigger a real (or Paddle sandbox) transaction while it's open.
-//   - Meta Events Manager → Diagnostics will start reporting an "Event Match
-//     Quality" score for the Purchase event once real traffic comes through —
-//     that's the number worth watching over the first few days.
+//     will show a line per received webhook and the raw response from Meta
+//     and from Snap.
+//   - Meta Events Manager → Test Events, and Snapchat Events Manager →
+//     Test Events, will show incoming CAPI events live if you trigger a real
+//     (or Paddle sandbox) transaction while each is open.
+//   - Meta Events Manager → Diagnostics, and Snapchat Events Manager →
+//     Ads Readiness, will start reporting match-quality signals for the
+//     Purchase event once real traffic comes through — worth watching over
+//     the first few days.
 
 const crypto = require('crypto');
 
 const PIXEL_ID = '894972786659768';
 const META_API_VERSION = 'v21.0';
+
+const SNAP_PIXEL_ID = 'd419b2dc-f722-4879-b09b-1c5e5d46c5c9';
+const SNAP_CAPI_VERSION = 'v3';
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
@@ -94,11 +107,25 @@ module.exports = async (req, res) => {
     return;
   }
 
-  try {
-    const result = await sendPurchaseToMeta(event.data);
-    console.log('Meta CAPI response for transaction', event.data && event.data.id, ':', JSON.stringify(result));
-  } catch (err) {
-    console.error('Meta CAPI call failed for transaction', event.data && event.data.id, ':', err);
+  const txnId = event.data && event.data.id;
+
+  // Fire both platforms independently — one failing (bad token, transient
+  // network error) must never stop the other's Purchase event from sending.
+  const [metaResult, snapResult] = await Promise.allSettled([
+    sendPurchaseToMeta(event.data),
+    sendPurchaseToSnap(event.data)
+  ]);
+
+  if (metaResult.status === 'fulfilled') {
+    console.log('Meta CAPI response for transaction', txnId, ':', JSON.stringify(metaResult.value));
+  } else {
+    console.error('Meta CAPI call failed for transaction', txnId, ':', metaResult.reason);
+  }
+
+  if (snapResult.status === 'fulfilled') {
+    console.log('Snap CAPI response for transaction', txnId, ':', JSON.stringify(snapResult.value));
+  } else {
+    console.error('Snap CAPI call failed for transaction', txnId, ':', snapResult.reason);
   }
 };
 
@@ -177,6 +204,62 @@ async function sendPurchaseToMeta(txn) {
   };
 
   var url = 'https://graph.facebook.com/' + META_API_VERSION + '/' + PIXEL_ID + '/events?access_token=' + accessToken;
+
+  var resp = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  return resp.json();
+}
+
+async function sendPurchaseToSnap(txn) {
+  var accessToken = process.env.SNAP_CAPI_ACCESS_TOKEN;
+  if (!accessToken) {
+    throw new Error('SNAP_CAPI_ACCESS_TOKEN is not set.');
+  }
+
+  var custom = (txn && txn.custom_data) || {};
+  var email = txn && txn.customer && txn.customer.email;
+
+  var grandTotalMinorUnits =
+    txn && txn.details && txn.details.totals && txn.details.totals.grand_total;
+  var value = grandTotalMinorUnits ? Number(grandTotalMinorUnits) / 100 : 99;
+  var currency = (txn && txn.currency_code) || 'SAR';
+
+  var userData = {};
+  if (email) userData.em = [sha256(email)];
+  // sc_click_id: the &ScCid= param from a Snapchat ad click, if the browser
+  // pixel captured it into custom_data on checkout — improves match rate for
+  // swipe-up traffic but is optional, so this is only sent when present.
+  if (custom.sc_click_id) userData.sc_click_id = custom.sc_click_id;
+  if (custom.sc_cookie1) userData.sc_cookie1 = custom.sc_cookie1;
+
+  var payload = {
+    data: [
+      {
+        event_name: 'PURCHASE',
+        event_time: Math.floor(Date.now() / 1000),
+        // Matches the transaction_id the browser Pixel sends on PURCHASE
+        // (see index.html) — Snap dedupes Pixel + CAPI events that share
+        // this ID, per their Conversions API deduplication guide.
+        event_id: txn && txn.id,
+        action_source: 'WEB',
+        event_source_url: custom.event_source_url || 'https://masarprojects.net/',
+        user_data: userData,
+        custom_data: {
+          currency: currency,
+          value: String(value),
+          content_ids: ['masar-bundle'],
+          content_category: 'business-launch',
+          num_items: 1
+        }
+      }
+    ]
+  };
+
+  var url = 'https://tr.snapchat.com/' + SNAP_CAPI_VERSION + '/' + SNAP_PIXEL_ID + '/events?access_token=' + accessToken;
 
   var resp = await fetch(url, {
     method: 'POST',
