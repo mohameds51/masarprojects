@@ -54,7 +54,7 @@
 
 const crypto = require('crypto');
 
-const PIXEL_ID = '894972786659768';
+const PIXEL_ID = '2179217942658990';
 const META_API_VERSION = 'v21.0';
 
 const SNAP_PIXEL_ID = 'd419b2dc-f722-4879-b09b-1c5e5d46c5c9';
