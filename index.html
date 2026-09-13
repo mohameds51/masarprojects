@@ -1848,6 +1848,12 @@ src="https://www.facebook.com/tr?id=2179217942658990&ev=PageView&noscript=1"
 </div>
 
 <script>
+// Deferred so this doesn't block the browser's first paint of the hero image
+// (PageSpeed's LCP breakdown showed a ~970ms "Element render delay" — the
+// image bytes were ready fast, but the browser was busy running this ~21KB
+// script before it could paint). None of this logic needs to run before
+// first paint, so it's pushed to idle time / a micro-delay instead.
+function __masarDeferredInit(){
   // FAQ accordion
   document.querySelectorAll('.faq-item').forEach(function(item){
     var btn = item.querySelector('.faq-q');
@@ -2346,6 +2352,13 @@ src="https://www.facebook.com/tr?id=2179217942658990&ev=PageView&noscript=1"
     offerInView = entries[0].isIntersecting;
     updateStickyVisibility();
   }, { threshold: 0 }).observe(offerSectionEl);
+} // end __masarDeferredInit
+
+if('requestIdleCallback' in window){
+  requestIdleCallback(__masarDeferredInit, { timeout: 1000 });
+} else {
+  setTimeout(__masarDeferredInit, 1);
+}
 </script>
 
 <!-- Deferred analytics loader — the queue stubs in <head> already let
